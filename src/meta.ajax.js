@@ -17,8 +17,12 @@
 */
 /**
    <function name="Meta.ajax" type="object">
+   <param name="url" type="string">URL</param>
+   <param name="[callback]" type="mixed">Array of functions or a single function, if its an array,the array index is the state callback</param>
+   <param name="[post]" type="string">post</param>
+   <param name="[async]" type="bool">async</param>
    <desc>
-   Ajax function.
+   Ajax function. Returns the XMLHttpRequest object
 
    Ready States:
      0 uninitialized
@@ -41,16 +45,12 @@
      You can pass a single callback, which will be called when the ReadyState is 4.
      Or you can pass an array of callbacks in which each callback will be called by using the ReadyState as the index of the array.
 
-     Returns object with the given methods:
+     Pass to the callbacks an object with the given methods:
       status - Returns the returned status
       text   - Returns the responseText
       json   - Returns the evaluated responseText
       xml    - Returns the responseXML
    </desc>
-   <param name="url" type="string">URL</param>
-   <param name="[callback]" type="mixed">Array of functions or a single function, if its an array,the array index is the state callback</param>
-   <param name="[post]" type="string">post</param>
-   <param name="[async]" type="bool">async</param>
    <test>
    <![CDATA[
    // States callbacks
@@ -86,11 +86,13 @@ Meta.ajax=function(url, callbacks, post, async)
     ? new ActiveXObject("Microsoft.XMLHTTP")
     : new XMLHttpRequest(),
 
-  h={status:function(){return http.status;},
-       text:function(){return http.responseText;},
-       json:function(){return eval('('+(h.text()||'null')+')');},
-        xml:function(){return http.responseXML;}
-  };
+  h={
+    status:function(){return http.status;},
+      text:function(){return http.responseText;},
+      json:function(){return eval('('+(h.text()||'null')+')');},
+       xml:function(){return http.responseXML;}
+  },
+  cbIsArray=Meta.its(callbacks,'array');
 
   http.open("POST", url, async);
 
@@ -98,7 +100,7 @@ Meta.ajax=function(url, callbacks, post, async)
   {
     if(!callbacks)return;
     var s=http.readyState;
-    if(!Meta.its(callbacks,'array') && s==4)callbacks.call(h,h);
+    if(!cbIsArray && s==4)callbacks.call(h,h);
     else if(callbacks[s])callbacks[s].call(h,h);
   };
 

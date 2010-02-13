@@ -122,12 +122,12 @@ var Meta=window.Meta=function()
           d.push(arguments[i]);
 
         /*
-          Map the father.prototype.under method, to this.under,
-          when the father method is called, its called as this
-          if the method uses this.under, it will expect the father.under
+          Map the "father.prototype.under" method, to "this.under",
+          when the "father" method is called, it's called as "this"
+          if the method called uses "this.under", it will expect the "father.under"
           thats why it has to be mapped.
          */
-        this.under=father.prototype.under; // map the this.under, to the father.under
+        this.under=father.prototype.under; // map "this.under" to the "father.under"
         f=father.prototype[a].apply(this,d);
         this.under=g; // restore this.under
         return f;
