@@ -105,7 +105,7 @@ Meta.dom.extend(function()
 	a=a.concat(Meta.obj2array(b));
 
     // Use bro from Meta.array
-    return this.supr.apply(this,a);
+    return this.under.apply(this,a);
   },
 
   /**
@@ -127,7 +127,7 @@ Meta.dom.extend(function()
       if(!Meta.its(i,'number')&&!Meta.its(a,'array'))a=[a];
 
       // Use set from Meta.core
-      return this.supr.apply(this,['set',a,i]);
+      return this.under.apply(this,['set',a,i]);
   },
 
   /**

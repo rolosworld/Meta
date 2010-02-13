@@ -66,7 +66,7 @@ Meta.array.extend(
   */
   get:function(i)
   {
-    var a=this.supr.call(this,'get');
+    var a=this.under.call(this,'get');
     return Meta.its(i,'number')?a[i]:a;
   },
 
@@ -87,7 +87,7 @@ Meta.array.extend(
   set:function(a,i)
   {
     if(Meta.its(i,'number'))this.get()[i]=a;
-    else this.supr.call(this,'set',a);
+    else this.under.call(this,'set',a);
     return this;
   },
 

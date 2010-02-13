@@ -56,7 +56,7 @@ Meta.string.extend(
   */
   set:function(a)
   {
-    return this.supr.call(this,'set',''+a);
+    return this.under.call(this,'set',''+a);
   },
 
   /**

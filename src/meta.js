@@ -24,7 +24,7 @@
    <test>
    <![CDATA[
    var a=Meta();
-   return 'extend' in a && 'supr' in a;
+   return 'extend' in a && 'under' in a;
    ]]>
    </test>
    </function>
@@ -34,8 +34,9 @@ var Meta=window.Meta=function()
   /**
    * Try to guess pre-existent extensions or
    * If the Object is Meta, it creates a new Meta
-   * and extend it to the Object given
-   * object o - Object to expand
+   * and extend it to the Object given.
+   * 
+   * o - Object to expand
    */
 
   function getHim(o)
@@ -61,9 +62,6 @@ var Meta=window.Meta=function()
    */
   function getMe(o)
   {
-    /**
-     * Father
-     */
     var father;
 
     function hasVal(a,b)
@@ -92,9 +90,9 @@ var Meta=window.Meta=function()
     Meta.prototype.info=info; // info is defined on meta.head.js
 
     /**
-       <method name="super" type="mixed">
-       <param name="a" type="string">Name of the parent method</param>
-       <desc>Use the asked parent method</desc>
+       <method name="under" type="mixed">
+       <param name="a" type="string">Name of the under method</param>
+       <desc>Use the asked under method</desc>
        <test>
        <![CDATA[
        var a=Meta({o:function(q){return q;}}),t1,t2,t3,t4;
@@ -104,34 +102,34 @@ var Meta=window.Meta=function()
        a.extend({o:function(q){return q+1;}});
 
        t3=a.o(1)==2;
-       t4=a.supr('o',1)==1;
+       t4=a.under('o',1)==1;
        return t1 && t2 && t3 && t4;
        ]]>
        </test>
        </method>
      */
-    Meta.prototype.supr=function(a)
+    Meta.prototype.under=function(a)
       {
         if(!father)return undefined;
 
         var d=[],
 	    f,
             i,
-            g=this.supr, // cache original this.supr
+            g=this.under, // cache original this.under
 	    j=arguments.length;
 
         for(i=1;i<j;i++)
           d.push(arguments[i]);
 
         /*
-          Map the father.prototype.supr method, to this.supr,
+          Map the father.prototype.under method, to this.under,
           when the father method is called, its called as this
-          if the method uses this.supr, it will expect the father.supr
+          if the method uses this.under, it will expect the father.under
           thats why it has to be mapped.
          */
-        this.supr=father.prototype.supr; // map the this.supr, to the father.supr
+        this.under=father.prototype.under; // map the this.under, to the father.under
         f=father.prototype[a].apply(this,d);
-        this.supr=g; // restore this.supr
+        this.under=g; // restore this.under
         return f;
       };
 
