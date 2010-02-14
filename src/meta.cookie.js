@@ -21,36 +21,36 @@
    <inherit>Meta.core</inherit>
 */
 Meta.cookie=Meta(Meta.core);
-Meta.cookie.extend(
-{
+Meta.cookie.extend({
   /**
-     <method name="create" type="void">
-     <desc>
-     Creates cookie with name, value that expires on days and has path.
+   <method name="create" type="void">
+   <desc>
+   Creates cookie with name, value that expires on days and has path.
 
-     Object attributes:
+   Object attributes:
        value  String value to store in the cookie
        path   If not specified, defaults to the current path of the current document location.
        domain If not specified, defaults to the host portion of the current document location.
        max-age  max-age-in-seconds
        expires  date-in-toUTCString-format If not specified it wil expire at the end of session.
        secure  cookie to only be transmitted over secure protocol as https
-     </desc>
-     <param name="a" type="object">Contains the parameters to include on the cookie.</param>
-     <test>
-     <![CDATA[
-     var a=Meta.cookie.bro('meta');
-     a.create({value:'cookie'});
-     return a.read()=='cookie';
-     ]]>
-     </test>
-     </method>
-  */
+   </desc>
+   <param name="a" type="object">Contains the parameters to include on the cookie.</param>
+   <test>
+   <![CDATA[
+   var a=Meta.cookie.bro('meta');
+   a.create({value:'cookie'});
+   return a.read()=='cookie';
+   ]]>
+   </test>
+   </method>
+   */
   create:function(a)
   {
-    var c=this.get()+'='+a.value,i;
+    var c=this.get()+'='+a.value,
+        i;
 
-    for(var i in a)
+    for(i in a)
       if(i!='value')
 	c+=';'+i+'='+a[i];
 
@@ -58,42 +58,46 @@ Meta.cookie.extend(
   },
 
   /**
-     <method name="read" type="string">
-     <desc>Returns the value of the given variable</desc>
-     <test>
-     <![CDATA[
-     var a=Meta.cookie.bro('meta');
-     a.create({value:'cookie'});
-     return a.read()=='cookie';
-     ]]>
-     </test>
-     </method>
-  */
+   <method name="read" type="string">
+   <desc>Returns the value of the given variable</desc>
+   <test>
+   <![CDATA[
+   var a=Meta.cookie.bro('meta');
+   a.create({value:'cookie'});
+   return a.read()=='cookie';
+   ]]>
+   </test>
+   </method>
+   */
   read:function()
   {
-    var ca=document.cookie.split(";"),c,i=ca.length;
+    var ca=document.cookie.split(";"),
+        c,
+        i=ca.length;
+    
     while(i--)
     {
       c=ca[i].replace(/^\s*|\s*$/g,"").split("=");
-      if(c[0]==this.get())return decodeURIComponent(c[1]);
+      if(c[0]==this.get())
+        return decodeURIComponent(c[1]);
     }
     return null;
   },
 
   /**
-     <method name="erase" type="void">
-     <desc>Erase the variable given by this.obj</desc>
-     <test>
-     <![CDATA[
-     var a=Meta.cookie.bro('meta'),t;
-     a.create({value:'cookie'});
-     t=a.read()=='cookie';
-     a.erase();
-     return t && a.read()==null;
-     ]]>
-     </test>
-     </method>
-  */
+   <method name="erase" type="void">
+   <desc>Erase the variable given by this.obj</desc>
+   <test>
+   <![CDATA[
+   var a=Meta.cookie.bro('meta'),t;
+   a.create({value:'cookie'});
+   t=a.read()=='cookie';
+   a.erase();
+   return t && a.read()==null;
+   ]]>
+   </test>
+   </method>
+   */
   erase:function()
   {
     var a=new Date();

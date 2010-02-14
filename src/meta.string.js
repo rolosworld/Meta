@@ -16,141 +16,140 @@
  along with Meta.  If not, see <http://www.gnu.org/licenses/>.
 */
 /**
-   <class name="Meta.string">
-   <inherit>Meta.core</inherit>
-   <desc>String extensions</desc>
+ <class name="Meta.string">
+ <inherit>Meta.core</inherit>
+ <desc>String extensions</desc>
 */
 Meta.string=Meta(Meta.core);
-Meta.string.extend(
-/** @scope Meta.string */
-{
+Meta.string.extend({
   /**
-     <method name="bro" type="Meta.string">
-     <desc>Custom bro, let it set a value.</desc>
-     <param name="a" type="string">String to be managed</param>
-     <test>
-     <![CDATA[
+   <method name="bro" type="Meta.string">
+   <desc>Custom bro, let it set a value.</desc>
+   <param name="a" type="string">String to be managed</param>
+   <test>
+   <![CDATA[
      var a=Meta.string.bro('foo'),t;
      t=a.get().length==3;
      a=Meta.string.bro('');
      return t && a.get().length==0 && Meta.string.bro().get().length==0;
-     ]]>
-     </test>
-     </method>
-  */
+   ]]>
+   </test>
+   </method>
+   */
   bro:function(a)
   {
     return (new this.constructor()).set(a||'');
   },
 
   /**
-     <method name="set" type="this">
-     <param name="a" type="mixed">Value to set. Tries to convert it to string.</param>
-     <desc>Set the string</desc>
-     <test>
-     <![CDATA[
+   <method name="set" type="this">
+   <param name="a" type="mixed">Value to set. Tries to convert it to string.</param>
+   <desc>Set the string</desc>
+   <test>
+   <![CDATA[
      return Meta.string.bro().set('foo').get().length==3;
-     ]]>
-     </test>
-     </method>
-  */
+   ]]>
+   </test>
+   </method>
+   */
   set:function(a)
   {
     return this.under.call(this,'set',''+a);
   },
 
   /**
-     <method name="len" type="integer">
-     <desc>Get the length of a string</desc>
-     <test>
-     <![CDATA[
+   <method name="len" type="integer">
+   <desc>Get the length of a string</desc>
+   <test>
+   <![CDATA[
      return Meta.string.bro().set('foo').len()==3;
-     ]]>
-     </test>
-     </method>
-  */
+   ]]>
+   </test>
+   </method>
+   */
   len:function()
   {
     return this.get().length;
   },
 
   /**
-     <method name="dos2unix" type="this">
-     <desc>Convert DOS format to Unix txt format</desc>
-     <test>
-     <![CDATA[
+   <method name="dos2unix" type="this">
+   <desc>Convert DOS format to Unix txt format</desc>
+   <test>
+   <![CDATA[
      return Meta.string.bro("foo\r\n").dos2unix().get()=="foo\n";
-     ]]>
-     </test>
-     </method>
-  */
+   ]]>
+   </test>
+   </method>
+   */
   dos2unix:function()
   {
     return this.replace(/\r\n|\r/g,"\n");
   },
 
   /**
-     <method name="unix2dos" type="this">
-     <desc>Convert Unix format to DOS txt format</desc>
-     <test>
-     <![CDATA[
+   <method name="unix2dos" type="this">
+   <desc>Convert Unix format to DOS txt format</desc>
+   <test>
+   <![CDATA[
      return Meta.string.bro("foo\n").unix2dos().get()=="foo\r\n";
-     ]]>
-     </test>
-     </method>
-  */
+   ]]>
+   </test>
+   </method>
+   */
   unix2dos:function()
   {
     return this.replace(/\n/g,"\r\n");
   },
 
   /**
-     <method name="stripTags" type="this">
-     <desc>Strip tags from string object</desc>
-     <test>
-     <![CDATA[
+   <method name="stripTags" type="this">
+   <desc>Strip tags from string object</desc>
+   <test>
+   <![CDATA[
      return Meta.string.bro("<b>foo</b>").stripTags().get()=="foo";
-     ]]>
-     </test>
-     </method>
-  */
+   ]]>
+   </test>
+   </method>
+   */
   stripTags:function()
   {
     return this.replace(/<\/?[^>]+>/g,'');
   },
 
   /**
-     <method name="escapeHTML" type="this">
-     <desc>Tries to return an html friendly version of the string. Converts some special characters to their respective entities.</desc>
-     <test>
-     <![CDATA[
+   <method name="escapeHTML" type="this">
+   <desc>Tries to return an html friendly version of the string. Converts some special characters to their respective entities.</desc>
+   <test>
+   <![CDATA[
      return Meta.string.bro("<b>&nbsp;foo</b>").escapeHTML().get()=="&lt;b&gt;&amp;nbsp;foo&lt;/b&gt;";
-     ]]>
-     </test>
-     </method>
-  */
+   ]]>
+   </test>
+   </method>
+   */
   escapeHTML:function()
   {
-    return this.replace(/&/g,'&amp;')
-      .replace(/</g,'&lt;')
-      .replace(/>/g,'&gt;')
-      .replace(/'/g,'&#39;')
-      .replace(/"/g,'&#34;');
+    return this.
+      replace(/&/g,'&amp;').
+      replace(/</g,'&lt;').
+      replace(/>/g,'&gt;').
+      replace(/'/g,'&#39;').
+      replace(/"/g,'&#34;');
   },
 
   /**
-     <method name="unescapeHTML" type="this">
-     <desc>
-     Returns only the text content of the object. Converts the HTML entities into their respective characters.
-     Uses HTML DOM, not compatible with XHTML.
-     </desc>
-     <test>
-     <![CDATA[
-     return Meta.string.bro("&lt;b&gt;foo&lt;/b&gt;").unescapeHTML().get()=="<b>foo</b>";
-     ]]>
-     </test>
-     </method>
-  */
+   <method name="unescapeHTML" type="this">
+   <desc>
+    Returns only the text content of the object. Converts the HTML entities into their respective characters.
+    Uses HTML DOM, not compatible with XHTML.
+   </desc>
+   <test>
+   <![CDATA[
+    return Meta.string.bro("&lt;b&gt;foo&lt;/b&gt;").unescapeHTML().get()=="<b>foo</b>";
+   ]]>
+   </test>
+   </method>
+   */
   unescapeHTML:function()
   {
     var div=document.createElement('div');
@@ -159,62 +158,62 @@ Meta.string.extend(
   },
 
   /**
-     <method name="trim" type="this">
-     <desc>trim a string</desc>
-     <test>
-     <![CDATA[
-     return Meta.string.bro(" foo ").trim().get()=="foo";
-     ]]>
-     </test>
-     </method>
-  */
+   <method name="trim" type="this">
+   <desc>trim a string</desc>
+   <test>
+   <![CDATA[
+   return Meta.string.bro(" foo ").trim().get()=="foo";
+   ]]>
+   </test>
+   </method>
+   */
   trim:function()
   {
     return this.replace(/^\s+|\s+$/g,"");
   },
 
   /**
-     <method name="rtrim" type="this">
-     <desc>right trim a string</desc>
-     <test>
-     <![CDATA[
-     return Meta.string.bro(" foo ").rtrim().get()==" foo";
-     ]]>
-     </test>
-     </method>
-  */
+   <method name="rtrim" type="this">
+   <desc>right trim a string</desc>
+   <test>
+   <![CDATA[
+   return Meta.string.bro(" foo ").rtrim().get()==" foo";
+   ]]>
+   </test>
+   </method>
+   */
   rtrim:function()
   {
     return this.replace(/\s+$/,"");
   },
 
   /**
-     <method name="ltrim" type="this">
-     <desc>left trim a string</desc>
-     <test>
-     <![CDATA[
-     return Meta.string.bro(" foo ").ltrim().get()=="foo ";
-     ]]>
-     </test>
-     </method>
-  */
+   <method name="ltrim" type="this">
+   <desc>left trim a string</desc>
+   <test>
+   <![CDATA[
+   return Meta.string.bro(" foo ").ltrim().get()=="foo ";
+   ]]>
+   </test>
+   </method>
+   */
   ltrim:function()
   {
     return this.replace(/^\s+/,"");
   },
 
   /**
-     <method name="insertAt" type="this">
-     <desc>Insert string on position p</desc>
-     <param name="p" type="integer">Position</param>
-     <param name="c" type="string">String to be inserted</param>
-     <test>
-     <![CDATA[
-     return Meta.string.bro("foo").insertAt(3,'s').get()=="foos";
-     ]]>
-     </test>
-     </method>
-  */
+   <method name="insertAt" type="this">
+   <desc>Insert string on position p</desc>
+   <param name="p" type="integer">Position</param>
+   <param name="c" type="string">String to be inserted</param>
+   <test>
+   <![CDATA[
+   return Meta.string.bro("foo").insertAt(3,'s').get()=="foos";
+   ]]>
+   </test>
+   </method>
+   */
   insertAt:function(p,c)
   {
     var a=this.get();
@@ -222,63 +221,65 @@ Meta.string.extend(
   },
 
   /**
-     <method name="addSlashes" type="this">
-     <desc>Add Slashes for single quote strings.</desc>
-     <test>
-     <![CDATA[
-     return Meta.string.bro("f'oo").addSlashes().get()=='f\\\'oo';
-     ]]>
-     </test>
-     </method>
-  */
+   <method name="addSlashes" type="this">
+   <desc>Add Slashes for single quote strings.</desc>
+   <test>
+   <![CDATA[
+   return Meta.string.bro("f'oo").addSlashes().get()=='f\\\'oo';
+   ]]>
+   </test>
+   </method>
+   */
   addSlashes:function()
   {
-    return this.replace(/\\/g,"\\\\")
-    //.replace(/\"/g,"\\\"")
-      .replace(/\'/g,"\\'");
+    return this.
+      replace(/\\/g,"\\\\").
+    //replace(/\"/g,"\\\"").
+      replace(/\'/g,"\\'");
   },
 
   /**
-     <method name="stripSlashes" type="this">
-     <desc>Strip Slashes. For single quote strings.</desc>
-     <test>
-     <![CDATA[
-     return Meta.string.bro('f\\\\oo').stripSlashes().get()=='f\\oo';
-     ]]>
-     </test>
-     </method>
-  */
+   <method name="stripSlashes" type="this">
+   <desc>Strip Slashes. For single quote strings.</desc>
+   <test>
+   <![CDATA[
+   return Meta.string.bro('f\\\\oo').stripSlashes().get()=='f\\oo';
+   ]]>
+   </test>
+   </method>
+   */
   stripSlashes:function()
   {
-    return this.replace(/\\'/g,"'")
-    //.replace(/\\"/g,'"')
-      .replace(/\\\\/g,'\\');
+    return this.
+      replace(/\\'/g,"'").
+    //replace(/\\"/g,'"').
+      replace(/\\\\/g,'\\');
   },
 
   /**
-     <method name="nl2br" type="this">
-     <desc>Convert new line character to <br/> string</desc>
-     <test>
-     <![CDATA[
+   <method name="nl2br" type="this">
+   <desc>Convert new line character to <br/> string</desc>
+   <test>
+   <![CDATA[
      return Meta.string.bro("foo\n").nl2br().get()=='foo<br/>';
-     ]]>
-     </test>
-     </method>
-  */
+   ]]>
+   </test>
+   </method>
+   */
   nl2br:function()
   {
     return this.dos2unix().replace(/\n/g,"<br/>");
   },
 
   /**
-     <method name="br2nl" type="this">
-     <desc>Convert <br/> string to new line character</desc>
-     <test>
-     <![CDATA[
+   <method name="br2nl" type="this">
+   <desc>Convert <br/> string to new line character</desc>
+   <test>
+   <![CDATA[
      return Meta.string.bro("foo<br>").br2nl().get()=="foo\n";
-     ]]>
-     </test>
-     </method>
+   ]]>
+   </test>
+   </method>
   */
   br2nl:function()
   {
@@ -287,14 +288,14 @@ Meta.string.extend(
 
 
   /**
-     <method name="toInt" type="integer">
-     <desc>Strip all non numeric characters from the string and returns it as an integer.</desc>
-     <test>
-     <![CDATA[
+   <method name="toInt" type="integer">
+   <desc>Strip all non numeric characters from the string and returns it as an integer.</desc>
+   <test>
+   <![CDATA[
      return Meta.string.bro("1a2b3").toInt()=="123";
-     ]]>
-     </test>
-     </method>
+   ]]>
+   </test>
+   </method>
   */
   toInt:function()
   {
@@ -303,84 +304,84 @@ Meta.string.extend(
 });
 
 /**
-   <method name="replace" type="this">
-   <desc>Replaces some characters with some other characters in all the strings.</desc>
-   <param name="a" type="mixed">String value to find. Will be replaced. Can be a regexp.</param>
-   <param name="b" type="string">String to insert.</param>
-   </method>
+ <method name="replace" type="this">
+ <desc>Replaces some characters with some other characters in all the strings.</desc>
+ <param name="a" type="mixed">String value to find. Will be replaced. Can be a regexp.</param>
+ <param name="b" type="string">String to insert.</param>
+ </method>
 
-   <method name="concat" type="string">
-   <desc>Join two or more strings into the strings.</desc>
-   <param name="..." type="string">One or more string objects to be joined to the strings.</param>
-   </method>
+ <method name="concat" type="string">
+ <desc>Join two or more strings into the strings.</desc>
+ <param name="..." type="string">One or more string objects to be joined to the strings.</param>
+ </method>
+ 
+ <method name="substr" type="this">
+ <desc>Extracts a specified number of characters in a string, from a start index.</desc>
+ <param name="a" type="integer">Index of where to start the extraction. Can be negative to start from the end.</param>
+ <param name="[b]" type="integer">How many characters to extract.</param>
+ </method>
+ 
+ <method name="substring" type="this">
+ <desc>Extracts the characters in a string between two specified indices.</desc>
+ <param name="a" type="integer">Index of where to start the extraction. Starts at 0.</param>
+ <param name="[b]" type="integer">Index of where to stop the extraction.</param>
+ </method>
+ 
+ <method name="slice" type="this">
+ <desc>Extracts a part of the strings.</desc>
+ <param name="a" type="integer">Index where to start the selection. Can be negative to start from the end.</param>
+ <param name="[b]" type="integer">Index where to end the selection.</param>
+ </method>
+ 
+ <method name="toUpperCase" type="this">
+ <desc>Sets the strings to uppercase letters.</desc>
+ </method>
+ 
+ <method name="toLowerCase" type="this">
+ <desc>Sets the strings to lower letters.</desc>
+ </method>
 
-   <method name="substr" type="this">
-   <desc>Extracts a specified number of characters in a string, from a start index.</desc>
-   <param name="a" type="integer">Index of where to start the extraction. Can be negative to start from the end.</param>
-   <param name="[b]" type="integer">How many characters to extract.</param>
-   </method>
-
-   <method name="substring" type="this">
-   <desc>Extracts the characters in a string between two specified indices.</desc>
-   <param name="a" type="integer">Index of where to start the extraction. Starts at 0.</param>
-   <param name="[b]" type="integer">Index of where to stop the extraction.</param>
-   </method>
-
-   <method name="slice" type="this">
-   <desc>Extracts a part of the strings.</desc>
-   <param name="a" type="integer">Index where to start the selection. Can be negative to start from the end.</param>
-   <param name="[b]" type="integer">Index where to end the selection.</param>
-   </method>
-
-   <method name="toUpperCase" type="this">
-   <desc>Sets the strings to uppercase letters.</desc>
-   </method>
-
-   <method name="toLowerCase" type="this">
-   <desc>Sets the strings to lower letters.</desc>
-   </method>
-
-   <method name="charAt" type="string">
-   <param name="a" type="integer">Index of the character to return.</param>
-   <desc>Returns the character at a specified position.</desc>
-   </method>
-
-   <method name="charCodeAt" type="string">
-   <param name="a" type="integer">Index of the character to return.</param>
-   <desc>Returns the unicode of the character at a specified position.</desc>
-   </method>
-
-   <method name="indexOf" type="integer">
-   <param name="a" type="string">String value to search for.</param>
-   <param name="[b]" type="integer">Index of the character where to start the search.</param>
-   <desc>Returns the position of the first occurrence of a specified string value in a string.</desc>
-   </method>
-
-   <method name="lastIndexOf" type="integer">
-   <param name="a" type="string">String value to search for.</param>
-   <param name="[b]" type="integer">Index of the character where to start the search.</param>
-   <desc>Returns the position of the last occurrence of a specified string value in a string.</desc>
-   </method>
-
-   <method name="search" type="integer">
-   <param name="a" type="mixed">String value to search for. Can be Regexp</param>
-   <desc>Search a string for a specified value and returns its position.</desc>
-   </method>
-
-   <method name="match" type="string">
-   <param name="a" type="mixed">String value to search for. Can be Regexp</param>
-   <desc>Search a string for a specified value and return the value found.</desc>
-   </method>
-
-   <method name="split" type="array">
-   <param name="a" type="mixed">String value where to split. Can be Regexp</param>
-   <param name="[b]" type="integer">Number of splits to return.</param>
-   <desc>Split a string into an array of strings.</desc>
-   </method>
-
-   <method name="valueOf" type="string">
-   <desc>Returns the primitive value of the specified object.</desc>
-   </method>
+ <method name="charAt" type="string">
+ <param name="a" type="integer">Index of the character to return.</param>
+ <desc>Returns the character at a specified position.</desc>
+ </method>
+ 
+ <method name="charCodeAt" type="string">
+ <param name="a" type="integer">Index of the character to return.</param>
+ <desc>Returns the unicode of the character at a specified position.</desc>
+ </method>
+ 
+ <method name="indexOf" type="integer">
+ <param name="a" type="string">String value to search for.</param>
+ <param name="[b]" type="integer">Index of the character where to start the search.</param>
+ <desc>Returns the position of the first occurrence of a specified string value in a string.</desc>
+ </method>
+ 
+ <method name="lastIndexOf" type="integer">
+ <param name="a" type="string">String value to search for.</param>
+ <param name="[b]" type="integer">Index of the character where to start the search.</param>
+ <desc>Returns the position of the last occurrence of a specified string value in a string.</desc>
+ </method>
+ 
+ <method name="search" type="integer">
+ <param name="a" type="mixed">String value to search for. Can be Regexp</param>
+ <desc>Search a string for a specified value and returns its position.</desc>
+ </method>
+ 
+ <method name="match" type="string">
+ <param name="a" type="mixed">String value to search for. Can be Regexp</param>
+ <desc>Search a string for a specified value and return the value found.</desc>
+ </method>
+ 
+ <method name="split" type="array">
+ <param name="a" type="mixed">String value where to split. Can be Regexp</param>
+ <param name="[b]" type="integer">Number of splits to return.</param>
+ <desc>Split a string into an array of strings.</desc>
+ </method>
+ 
+ <method name="valueOf" type="string">
+ <desc>Returns the primitive value of the specified object.</desc>
+ </method>
 
 */
 Meta.string.extend(function()

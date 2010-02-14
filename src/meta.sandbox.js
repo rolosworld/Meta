@@ -19,18 +19,21 @@
 // *** Dean Edwards discovered this ***
 // http://dean.edwards.name/weblog/2006/11/sandbox/
 /**
-<function name="Meta.sandbox" type="object">
-<desc>Returns a sandbox object</desc>
-</function>
-*/
+ <function name="Meta.sandbox" type="object">
+ <desc>Returns a sandbox object</desc>
+ </function>
+ */
 /**
-   <class name="Meta.sandbox">
-   <desc>Sandbox object</desc>
+ <class name="Meta.sandbox">
+ <desc>Sandbox object</desc>
  */
 Meta.sandbox=function()
 {
   // create an <iframe>
-  var f1=document.createElement("iframe"),doc,f2;
+  var f1=document.createElement("iframe"),
+      doc,
+      f2;
+  
   f1.style.display = "none";
   document.body.appendChild(f1);
 
@@ -42,19 +45,19 @@ Meta.sandbox=function()
 
   return {
     /**
-    <method name="eval" type="mixed">
-    <param name="a" type="string">JS program to evaluate.</param>
-    <desc>Evaluates a JS program in a sandbox.</desc>
-    </method>
-    */
+     <method name="eval" type="mixed">
+     <param name="a" type="string">JS program to evaluate.</param>
+     <desc>Evaluates a JS program in a sandbox.</desc>
+     </method>
+     */
     eval:function(a){return f2.sandbox.eval(a);},
 
     /**
-    <method name="include" type="void">
-    <param name="a" type="string">Script to include in the sandbox.</param>
-    <desc>Includes new scripts into the sandbox.</desc>
-    </method>
-    */
+     <method name="include" type="void">
+     <param name="a" type="string">Script to include in the sandbox.</param>
+     <desc>Includes new scripts into the sandbox.</desc>
+     </method>
+     */
     include:function(a)
     {
       var b=doc.createElement('script');

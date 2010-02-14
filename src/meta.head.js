@@ -15,11 +15,14 @@
  You should have received a copy of the GNU General Public License
  along with Meta.  If not, see <http://www.gnu.org/licenses/>.
 */
-(function(){
-   var window=this,undefined,isIE=!!window.ActiveXObject,
-  info={
-    name:"Meta",
-    author:"Rolando González, rolosworld@gmail.com",
-    version:"2010.02.10" // Year.Month.Day
-  };
+(function()
+ {
+   var window=this,
+       undefined,
+       isIE=!!window.ActiveXObject,
+       info={
+         name:"Meta",
+         author:"Rolando González, rolosworld@gmail.com",
+         version:"2010.02.10" // Year.Month.Day
+       };
 

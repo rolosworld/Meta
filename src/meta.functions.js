@@ -19,17 +19,17 @@
 // *** Crockford invented this method ***
 // http://javascript.crockford.com/
 /**
-   <function name="Meta.son" type="object">
-   <param name="a" type="object">Object</param>
-   <desc>Clone of the object</desc>
-   <test>
-   <![CDATA[
-   var a={a:1};
-   var b=Meta.son(a);
-   return 'a' in b;
-   ]]>
-   </test>
-   </function>
+ <function name="Meta.son" type="object">
+ <param name="a" type="object">Object</param>
+ <desc>Clone of the object</desc>
+ <test>
+ <![CDATA[
+ var a={a:1};
+ var b=Meta.son(a);
+ return 'a' in b;
+ ]]>
+ </test>
+ </function>
  */
 Meta.son=function(a)
 {
@@ -40,46 +40,47 @@ Meta.son=function(a)
 
 
 /**
-   <function name="Meta.extend" type="object">
-   <param name="a" type="object">Object to be expanded</param>
-   <param name="b" type="object">Object that will be used to expand</param>
-   <desc>Extend a given object with another object</desc>
-   <test>
-   <![CDATA[
-   var a={a:1};
-   var b=Meta.extend(a,{b:1});
-   return 'a' in b && 'b' in b;
-   ]]>
-   </test>
-   </function>
+ <function name="Meta.extend" type="object">
+ <param name="a" type="object">Object to be expanded</param>
+ <param name="b" type="object">Object that will be used to expand</param>
+ <desc>Extend a given object with another object</desc>
+ <test>
+ <![CDATA[
+ var a={a:1};
+ var b=Meta.extend(a,{b:1});
+ return 'a' in b && 'b' in b;
+ ]]>
+ </test>
+ </function>
  */
 Meta.extend=function(a,b)
 {
   // import the methods
   for(var i in b)
     // copy pointers of methods to local variables
-    if(a!=b[i])a[i]=b[i];
+    if(a!=b[i])
+      a[i]=b[i];
   return a;
 };
 
 
 /**
-   <function name="Meta.each" type="bool">
-   <param name="a" type="array">Array to loop</param>
-   <param name="f" type="function">Callback function, its called with this as the value and can accept index and value attributes, function(index,value)</param>
-   <param name="[m]" type="bool">Method flag, default is numerical</param>
-   <desc>
+ <function name="Meta.each" type="bool">
+ <param name="a" type="array">Array to loop</param>
+ <param name="f" type="function">Callback function, its called with this as the value and can accept index and value attributes, function(index,value)</param>
+ <param name="[m]" type="bool">Method flag, default is numerical</param>
+ <desc>
    Execute given function on each array value, if the call returns false it breaks the loop.
    Bool true if it doesn't break, else false
-   </desc>
-   <test>
-   <![CDATA[
-   var a=[1,1],t=[];
-   Meta.each(a,function(v,i){t[i]=v==1;});
-   return t[0] && t[1];
-   ]]>
-   </test>
-   </function>
+ </desc>
+ <test>
+ <![CDATA[
+ var a=[1,1],t=[];
+ Meta.each(a,function(v,i){t[i]=v==1;});
+ return t[0] && t[1];
+ ]]>
+ </test>
+ </function>
  */
 Meta.each=function(a,f,m)
 {
@@ -87,22 +88,24 @@ Meta.each=function(a,f,m)
   if(!m)
   {
     for(i=0,j=a.length;i<j;i++)
-      if(f.call(a,a[i],i)===false)return false;
+      if(f.call(a,a[i],i)===false)
+        return false;
   }
   else
   {
     for(i in a)
-      if(f.call(a,a[i],i)===false)return false;
+      if(f.call(a,a[i],i)===false)
+        return false;
   }
   return true;
 };
 
 
 /**
-   <function name="Meta.its" type="string">
-   <param name="o" type="Object"></param>
-   <param name="[a]" type="string">Type you want to compare</param>
-   <desc>
+ <function name="Meta.its" type="string">
+ <param name="o" type="Object"></param>
+ <param name="[a]" type="string">Type you want to compare</param>
+ <desc>
    Try to get the type of data of the variable as a string.
    Returns the data type.
    Posible types:<ul>
@@ -120,9 +123,9 @@ Meta.each=function(a,f,m)
    <li>array</li>
    <li>date</li>
    <li>regexp</li></ul>
-   </desc>
-   <test>
-   <![CDATA[
+ </desc>
+ <test>
+ <![CDATA[
    var a,b=function(){},c=new b();
    return Meta.its('','string') &&
    Meta.its(0,'number') &&
@@ -156,52 +159,57 @@ Meta.each=function(a,f,m)
    Meta.its(new Date())=='date' &&
    Meta.its(/a/)=='regexp';
    ]]>
-   </test>
-   </function>
+ </test>
+ </function>
  */
 Meta.its=function(o,a)
 {
   var t=typeof o;
-  if(a==t)return true;
+  if(a==t)
+    return true;
 
   if(t=='object'||t=='function')
-    {
-      if(!o)
-	t='null';
+  {
+    if(!o)
+      t='null';
 
-      else if(o.nodeType)
-	t='element';
+    else if(o.nodeType)
+      t='element';
 
-      //http://thinkweb2.com/projects/prototype/instanceof-considered-harmful-or-how-to-write-a-robust-isarray/
-      else
-	t=Object.prototype.toString.call(o).match(/^\[object\s(.*)\]$/)[1].toLowerCase();
-    }
+    //http://thinkweb2.com/projects/prototype/instanceof-considered-harmful-or-how-to-write-a-robust-isarray/
+    else
+      t=Object.prototype.toString.call(o).match(/^\[object\s(.*)\]$/)[1].toLowerCase();
+  }
   else if(t=='number')
-    {
-      if(isNaN(o))t='nan';
-      else if(!isFinite(o))t=o>0?'infinite':'-infinite';
-    }
+  {
+    if(isNaN(o))
+      t='nan';
+    else if(!isFinite(o))
+      t=o>0?'infinite':'-infinite';
+  }
 
   if(t=="meta"&&
-     Meta.has(o,'info')&&
-     Meta.has(o.info,'name'))
+    Meta.has(o,'info')&&
+    Meta.has(o.info,'name'))
       {
-	  if(a==t)return true;
-	  t=o.info.name;
+	if(a==t)
+          return true;
+	t=o.info.name;
       }
 
-  if(a)return a==t;
+  if(a)
+    return a==t;
 
   return t;
 };
 
 /**
-   <function name="Meta.obj2array" type="array">
-   <param name="a" type="object">Array to loop</param>
-   <param name="c" type="bool">Flag to switch types of loop</param>
-   <desc>Conver an object to an array</desc>
-   <test>
-   <![CDATA[
+ <function name="Meta.obj2array" type="array">
+ <param name="a" type="object">Array to loop</param>
+ <param name="c" type="bool">Flag to switch types of loop</param>
+ <desc>Conver an object to an array</desc>
+ <test>
+ <![CDATA[
    var a={0:0,1:1,length:1},
    b=Meta.obj2array(a),t1,t2;
    t1=b.length==1;
@@ -212,66 +220,68 @@ Meta.its=function(o,a)
      b[1]==1 &&
      b[2]==1;
    ]]>
-   </test>
-   </function>
+ </test>
+ </function>
  */
 Meta.obj2array=function(a,c)
 {
   if(!c&&!isIE)
     return Array.prototype.slice.call(a);
   else
-    {
-      var b=[];
-      Meta.each(a,function(v){b.push(v);},c);
-      return b;
-    }
+  {
+    var b=[];
+    Meta.each(a,function(v){b.push(v);},c);
+    return b;
+  }
 };
 
 /**
-   <function name="Meta.indexOf" type="integer">
-   <param name="a" type="array">Array to search</param>
-   <param name="b" type="mixed">Value to search</param>
-   <param name="[c]" type="bool">Not Strict comparison</param>
-   <desc>
+ <function name="Meta.indexOf" type="integer">
+ <param name="a" type="array">Array to search</param>
+ <param name="b" type="mixed">Value to search</param>
+ <param name="[c]" type="bool">Not Strict comparison</param>
+ <desc>
    Search an array for a given value index. Can do not strict comparison.
    -1 if not found else 0...
-   </desc>
-   <test>
-   <![CDATA[
+ </desc>
+ <test>
+ <![CDATA[
    var a=[0,1];
    return Meta.indexOf(a,2)<0 &&
           Meta.indexOf(a,1)==1 &&
           Meta.indexOf(a,"1")<0 &&
           Meta.indexOf(a,2,1)<0 &&
           Meta.indexOf(a,1,1)==1;
-   ]]>
-   </test>
-   </function>
+ ]]>
+ </test>
+ </function>
  */
 Meta.indexOf=function(a,b,c)
 {
   var i=a.length;
   while(i--)
     if(!c)
-      {
-	if(a[i] === b)break;
-      }
-    else if(a[i] == b)break;
+    {
+      if(a[i] === b)
+        break;
+    }
+    else if(a[i] == b)
+      break;
   return i;
 };
 
 /**
-   <function name="Meta.unique" type="array">
-   <param name="a" type="array"></param>
-   <desc>Remove duplicate values from an array</desc>
-   <test>
-   <![CDATA[
+ <function name="Meta.unique" type="array">
+ <param name="a" type="array"></param>
+ <desc>Remove duplicate values from an array</desc>
+ <test>
+ <![CDATA[
    var a=[0,0,1,1],
    b=Meta.unique(a);
    return b.length==2 && b[0]==0 && b[1]==1;
-   ]]>
-   </test>
-   </function>
+ ]]>
+ </test>
+ </function>
  */
 Meta.unique=function(a)
 {
@@ -283,17 +293,17 @@ Meta.unique=function(a)
 };
 
 /**
-   <function name="Meta.has" type="bool">
-   <param name="a" type="object"></param>
-   <param name="b" type="string"></param>
-   <desc>Test if the object has the given property. If the property has null as value, it will be considered as not defined. You can test global variables with Meta.has(window,'document') for example</desc>
-   <test>
-   <![CDATA[
+ <function name="Meta.has" type="bool">
+ <param name="a" type="object"></param>
+ <param name="b" type="string"></param>
+ <desc>Test if the object has the given property. If the property has null as value, it will be considered as not defined. You can test global variables with Meta.has(window,'document') for example</desc>
+ <test>
+ <![CDATA[
    var a={a:1};
    return Meta.has(a,'a') && !Meta.has(a,'b');
-   ]]>
-   </test>
-   </function>
+ ]]>
+ </test>
+ </function>
  */
 Meta.has=function(a,b)
 {

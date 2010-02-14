@@ -17,16 +17,15 @@
 */
 
 /**
-   <class name="Meta.domevent">
-   <desc>DOM events manager</desc>
-   <inherit>Meta.array</inherit>
-   <extend>Meta.events</extend>
-*/
+ <class name="Meta.domevent">
+ <desc>DOM events manager</desc>
+ <inherit>Meta.array</inherit>
+ <extend>Meta.events</extend>
+ */
 //Meta.domevent=Meta(Meta.events);
 Meta.domevent=Meta(Meta.array);
 Meta.domevent.extend(Meta.events,{exclude:['bro','sup','get','set']});
-Meta.domevent.extend(
-{
+Meta.domevent.extend({
   valid_type:' abort blur change click dblclick error focus keydown keypress keyup load mousedown mousemove mouseout mouseover mouseup reset resize select submit unload ',
 
   onNewEvent:function(a)
@@ -68,49 +67,50 @@ Meta.domevent.extend(
   },
 
   /**
-     <method name="on" type="mixed">
-     <desc>
-     Adds a new event.
-     Returns this.
-     </desc>
-     <param name="a" type="string">Event type</param>
-     <param name="b" type="function">Callback for the event</param>
-     </method>
-  */
+   <method name="on" type="mixed">
+   <desc>
+   Adds a new event.
+   Returns this.
+   </desc>
+   <param name="a" type="string">Event type</param>
+   <param name="b" type="function">Callback for the event</param>
+   </method>
+   */
   on:function(a,b)
   {
     var me=this;
-    if(b)return me.forEach(function(v){me.addEvent(a,v,b);});
+    if(b)
+      return me.forEach(function(v){me.addEvent(a,v,b);});
   },
 
   /**
-     <method name="fire" type="mixed">
-     <desc>
-     Fires the given event type.
-     Returns this.
-     </desc>
-     <param name="a" type="string">Event type</param>
-     </method>
-  */
+   <method name="fire" type="mixed">
+   <desc>
+   Fires the given event type.
+   Returns this.
+   </desc>
+   <param name="a" type="string">Event type</param>
+   </method>
+   */
   fire:function(a)
   {
     var me=this;
     return me.forEach(function(v)
-		      {
-			if(v['on'+a])
-			  v['on'+a]();
-
-			me.fireEvent(a,v);
-		      });
+      {
+	if(v['on'+a])
+	  v['on'+a]();
+        
+	me.fireEvent(a,v);
+      });
   },
 
   /**
-     <method name="rmOn" type="this">
-     <desc>Remove the given event callback</desc>
-     <param name="a" type="string">Event type</param>
-     <param name="[b]" type="function">Callback on current event</param>
-     </method>
-  */
+   <method name="rmOn" type="this">
+   <desc>Remove the given event callback</desc>
+   <param name="a" type="string">Event type</param>
+   <param name="[b]" type="function">Callback on current event</param>
+   </method>
+   */
   rmOn:function(a,b)
   {
     var me=this;
@@ -118,9 +118,9 @@ Meta.domevent.extend(
   },
 
   /**
-     <method name="cleanEvents" type="this">
-     <desc>Remove events that from elements without parentNode</desc>
-     </method>
+   <method name="cleanEvents" type="this">
+   <desc>Remove events that from elements without parentNode</desc>
+   </method>
   */
   cleanEvents:function()
   {
@@ -129,11 +129,9 @@ Meta.domevent.extend(
 });
 /** </class> */
 
-Meta.domevent.addEvent('unload',
-		       window,
-		       function()
-		       {
-			 Meta.events.flush();
-			 if(document && document.body)
-			   Meta.dom.purge(document.body);
-		       });
+Meta.domevent.addEvent('unload',window,function()
+  {
+    Meta.events.flush();
+    if(document && document.body)
+      Meta.dom.purge(document.body);
+  });

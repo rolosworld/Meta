@@ -16,8 +16,8 @@
  along with Meta.  If not, see <http://www.gnu.org/licenses/>.
 */
 /**
-   <function name="Meta.popup" type="void">
-   <desc>
+ <function name="Meta.popup" type="void">
+ <desc>
    Opens a popup window.
 
    Configuration object attributes:
@@ -26,16 +26,16 @@
      params Optional. Parameters to be passed to the window.open method.
      title  Optional. Title to use if no src is given, will use this. If not set will use the name (given or generated).
      write  Optional. Content to be writen if no src is given.
-   </desc>
-   <param name="[a]" type="object">Configuration object</param>
-   <test>
-   <![CDATA[
+ </desc>
+ <param name="[a]" type="object">Configuration object</param>
+ <test>
+ <![CDATA[
    var a=Meta.popup({title:'Test'});
    a.close();
    return true;
-   ]]>
-   </test>
-   </function>
+ ]]>
+ </test>
+ </function>
 */
 Meta.popup=function(a)
 {
@@ -43,8 +43,8 @@ Meta.popup=function(a)
   a.src=a.src||'';
 
   var w=w=window.open(a.src,
-		      a.name||(a.name='meta'+(new Date()).getTime()),
-		      a.params||'');
+    a.name||(a.name='meta'+(new Date()).getTime()),
+    a.params||'');
 
   if(a.src==''&&w&&w.document)
   {
@@ -54,7 +54,8 @@ Meta.popup=function(a)
   }
 
   // check if for some reason the window is not available (...popup blockers...)
-  if(!w)w=null;
+  if(!w)
+    w=null;
 
   return w;
 };

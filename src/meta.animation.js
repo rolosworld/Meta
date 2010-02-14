@@ -23,18 +23,20 @@ Meta.animation=function()
 {
   var ev=Meta.events.bro(),
       fps=1000/30,
-      bakList=['width',
-               'height',
-               'left',
-               'top',
-               'display',
-               'visibility',
-               'overflow',
-               'filter',
-               'MozOpacity',
-               'zoom',
-               'opacity',
-               'KHTMLOpacity'];
+      bakList=[
+        'width',
+        'height',
+        'left',
+        'top',
+        'display',
+        'visibility',
+        'overflow',
+        'filter',
+        'MozOpacity',
+        'zoom',
+        'opacity',
+        'KHTMLOpacity'
+      ];
 
   ev.onFireEvent=function(a,b)
   {
@@ -74,7 +76,8 @@ Meta.animation=function()
           x=x0+(t-t0)*dx/dt; // Translacion lineal
 
       // Termino la animacion
-      if(t>=t1)return false;
+      if(t>=t1)
+        return false;
 
       fn.call(obj,x);
       return undefined;
@@ -82,7 +85,8 @@ Meta.animation=function()
 
     function frk2()
     {
-      if(cb)cb.call(me,obj);
+      if(cb)
+        cb.call(me,obj);
     };
 
     ev.addEvent('frameStep',ev,frk);
@@ -93,107 +97,109 @@ Meta.animation=function()
   return {
     data:'data-meta_',
 
-      /**
-         <method name="cssBackup" type="this">
-         <desc>Backup important element css</desc>
-         </method>
-      */
-      cssBackup:function()
-      {
-        var a=Meta.dom.bro(),
-	    b=bakList,c,
-	    me=this;
+    /**
+     <method name="cssBackup" type="this">
+     <desc>Backup important element css</desc>
+     </method>
+     */
+    cssBackup:function()
+    {
+      var a=Meta.dom.bro(),
+          b=bakList,c,
+	  me=this;
 
-        return me.forEach(function(v)
-                          {
-			    a.set(v);
+      return me.forEach(function(v)
+        {
+	  a.set(v);
+          
+	  var d=parseInt(a.attr(me.data+'bak'),10)||0;
+	  a.attr(me.data+'bak',d+1);
 
-			    var d=parseInt(a.attr(me.data+'bak'),10)||0;
-			    a.attr(me.data+'bak',d+1);
+	  if(d)
+	    return;
+          
+	  Meta.each(b,function(v)
+            {
+	      c=a.css(v);
+	      if(c!==null)
+                a.attr(me.data+v,c);
+	    });
+          
+	  if(!a.attr(me.data+'size_w'))
+	  {
+	    c=a.dims();
+	    a.attr(me.data+'size_w',c.width).
+              attr(me.data+'size_h',c.height);
+	  }
 
-			    if(d)
-			      return;
-
-			    Meta.each(b,function(v)
-				      {
-					c=a.css(v);
-					if(c!==null)a.attr(me.data+v,c);
-				      });
-
-			    if(!a.attr(me.data+'size_w'))
-			    {
-			      c=a.dims();
-			      a.attr(me.data+'size_w',c.width)
-				.attr(me.data+'size_h',c.height);
-			    }
-
-			    if(!a.attr(me.data+'pos_l'))
-			    {
-			      c=a.dims();
-			      a.attr(me.data+'pos_l',c.left)
-				.attr(me.data+'pos_t',c.top);
-			    }
-			  });
+	  if(!a.attr(me.data+'pos_l'))
+	  {
+	    c=a.dims();
+	    a.attr(me.data+'pos_l',c.left).
+              attr(me.data+'pos_t',c.top);
+	  }
+	});
       },
 
-      /**
-       <method name="cssRestore" type="this">
-       <param name="[d]" type="string">CSS to restore.</param>
-       <desc>Restore important element css</desc>
-       </method>
-      */
-      cssRestore:function(d)
+    /**
+     <method name="cssRestore" type="this">
+     <param name="[d]" type="string">CSS to restore.</param>
+     <desc>Restore important element css</desc>
+     </method>
+     */
+    cssRestore:function(d)
+    {
+      var a=Meta.dom.bro(),
+          b=bakList,c,
+	  me=this;
+
+      function restore(v)
       {
-        var a=Meta.dom.bro(),
-	    b=bakList,c,
-	    me=this;
+	c=a.attr(me.data+v);
+        a.css(v,'');
+        if(c!==null)
+          a.css(v,c);
+      };
 
-	function restore(v)
-	{
-	  c=a.attr(me.data+v);
-	  a.css(v,'');
-	  if(c!==null)a.css(v,c);
-	};
+      return me.forEach(function(v)
+        {
+	  if(!a.set(v).attr(me.data+'bak'))
+	    return;
+          
+	  if(d)
+	    restore(d);
+	  else
+	    Meta.each(b,restore);
+        });
+    },
 
-        return me.forEach(function(v)
-                          {
-			    if(!a.set(v).attr(me.data+'bak'))
-			      return;
+    /**
+     <method name="cssBackupClear" type="this">
+     <desc>Clears the css backup important element css</desc>
+     </method>
+     */
+    cssBackupClear:function()
+    {
+      var a=Meta.dom.bro(),
+          b=bakList,
+	  me=this;
 
-			    if(d)
-			      restore(d);
-			    else
-			      Meta.each(b,restore);
-                          });
-      },
+      return me.forEach(function(v)
+        {
+	  a.set(v);
+          
+	  Meta.each(b,function(v)
+	    {
+	      a.attr(me.data+v,null);
+	    });
 
-      /**
-       <method name="cssBackupClear" type="this">
-       <desc>Clears the css backup important element css</desc>
-       </method>
-      */
-      cssBackupClear:function()
-      {
-        var a=Meta.dom.bro(),
-            b=bakList,
-	    me=this;
-
-        return me.forEach(function(v)
-                          {
-			    a.set(v);
-
-			    Meta.each(b,function(v)
-				      {
-					a.attr(me.data+v,null);
-				      });
-
-			    a.attr(me.data+'bak',null).
-			      attr(me.data+'size_w',null).
-			      attr(me.data+'size_h',null).
-			      attr(me.data+'pos_l',null).
-			      attr(me.data+'pos_t',null);
-                          });
-      },
+	  a.attr(me.data+'bak',null).
+	    attr(me.data+'size_w',null).
+	    attr(me.data+'size_h',null).
+	    attr(me.data+'pos_l',null).
+	    attr(me.data+'pos_t',null);
+        });
+    },
 
     /**
      <method name="animate" type="this">
@@ -214,20 +220,20 @@ Meta.animation=function()
       me.cssRestore('display');
 
       if(!me.__)ev.addEvent('stopAnim',ev,function()
-			    {
-			      if(r)
-				{
-				  me.cssRestore();
-				  me.cssBackupClear();
-				}
-			      me.__=0;
-			    });
+	{
+	  if(r)
+	  {
+	    me.cssRestore();
+	    me.cssBackupClear();
+	  }
+	  me.__=0;
+	});
       me.__=1;
 
       return this.forEach(function(v)
-			  {
-			    anim.call(me,cb,x0.call(v),x1.call(v),speed,fn,v);
-			  });
+	{
+	  anim.call(me,cb,x0.call(v),x1.call(v),speed,fn,v);
+	});
     },
 
     /**
@@ -288,59 +294,61 @@ Meta.animation=function()
       // Devuelve el elemento a la normalidad
       cb0=function(o)
 	{
-          if(cb)cb.call(me,o);
+          if(cb)
+            cb.call(me,o);
         },
 
       // Esconde por completo el elemento y llamar el callback
       cb1=function(o)
 	{
           a.set(o).hide();
-          if(cb)cb.call(me,o);
+          if(cb)
+            cb.call(me,o);
         };
 
 
 
       // Tipos de animaciones
       switch(md)
-	{
-	  case 'up-left':
-            x0=s3;
-            x1=s0;
-            fn=wh;
-            cb0=cb1;
-            break;
-          case 'right':
-            x0=s0;
-            x1=s1;
-            fn=w;
-	    r=1;
-            break;
-          case 'left':
-            x0=s1;
-            x1=s0;
-            fn=w;
-            cb0=cb1;
-            break;
-          case 'up':
-            x0=s2;
-            x1=s0;
-            fn=h;
-            cb0=cb1;
-            break;
-          case 'down':
-            x0=s0;
-            x1=s2;
-            fn=h;
-	    r=1;
-            break;
-          default: //down-right
-            x0=s0;
-            x1=s3;
-            fn=wh;
-	    r=1;
-        }
+      {
+        case 'up-left':
+          x0=s3;
+          x1=s0;
+          fn=wh;
+          cb0=cb1;
+          break;
+        case 'right':
+          x0=s0;
+          x1=s1;
+          fn=w;
+	  r=1;
+          break;
+        case 'left':
+          x0=s1;
+          x1=s0;
+          fn=w;
+          cb0=cb1;
+          break;
+        case 'up':
+          x0=s2;
+          x1=s0;
+          fn=h;
+          cb0=cb1;
+          break;
+        case 'down':
+          x0=s0;
+          x1=s2;
+          fn=h;
+	  r=1;
+          break;
+        default: //down-right
+          x0=s0;
+          x1=s3;
+          fn=wh;
+	  r=1;
+      }
 
-	return me.animate(x0,x1,speed,fn,cb0,r);
+      return me.animate(x0,x1,speed,fn,cb0,r);
     },
 
     /**
@@ -377,14 +385,16 @@ Meta.animation=function()
       // Devuelve el elemento a la normalidad
       cb0=function(o)
 	{
-	  if(cb)cb.call(me,o);
+	  if(cb)
+            cb.call(me,o);
         },
 
       // Esconde por completo el elemento
       cb1=function(o)
         {
           a.set(o).hide();
-          if(cb)cb.call(me,o);
+          if(cb)
+            cb.call(me,o);
         };
 
       // Tipos de animaciones

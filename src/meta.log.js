@@ -16,34 +16,41 @@
  along with Meta.  If not, see <http://www.gnu.org/licenses/>.
 */
 /**
-   <function name="Meta.log" type="void">
-   <desc>Opens a popup window where to show output</desc>
-   <param name="a" type="string">Text to show on the log window</param>
-   <test>
-   <![CDATA[
+ <function name="Meta.log" type="void">
+ <desc>Opens a popup window where to show output</desc>
+ <param name="a" type="string">Text to show on the log window</param>
+ <test>
+ <![CDATA[
    var a=Meta.log("Hello World!");
    a.close();
    return true;
-   ]]>
-   </test>
-   </function>
+ ]]>
+ </test>
+ </function>
 */
 Meta.log=function()
 {
   var logw=null,
-  b=Meta.dom.bro(),
-  c=Meta.string.bro(),
-  d=Meta.dom.bro(),
-  size=0,
-  t;
+      b=Meta.dom.bro(),
+      c=Meta.string.bro(),
+      d=Meta.dom.bro(),
+      size=0,
+      t;
 
-  Meta.dom.addEvent('unload',window,function(){if(logw&&!logw.closed)logw.close();});
+  Meta.dom.addEvent('unload',window,function()
+    {
+      if(logw&&!logw.closed)
+        logw.close();
+    });
 
   return function(a)
   {
     // check if the window is open
     if(!logw||logw.closed)
-      logw=Meta.popup({title:'Meta.log',params:'width=400,height=400,location=0,menubar=0,status=0,toolbar=0,directories=0,personalbar=0,resizable=1,scrollbars=1,dependent=1'});
+      logw=Meta.popup({
+        title:'Meta.log',
+        params:'width=400,height=400,location=0,menubar=0,status=0,toolbar=0,directories=0,personalbar=0,resizable=1,scrollbars=1,dependent=1'
+      });
 
     // check if for some reason the window is not available (...popup blockers...)
     if(!logw||!logw.document||!logw.document.body||logw.closed)
@@ -54,7 +61,8 @@ Meta.log=function()
 
     b.set(logw.document.body).doc(logw.document);
     b.append('<div style="border-bottom:1px solid #ccc;padding:4px;font-size:12px;font-family:arial;">'+c.set(a).trim().escapeHTML().nl2br().get()+'</div>');
-    if(size>Meta.log.buff)d.set(b.get().firstChild).doc(b.doc()).remove();
+    if(size>Meta.log.buff)
+      d.set(b.get().firstChild).doc(b.doc()).remove();
     logw.scrollBy(0,b.dims().height);
     logw.focus();
 
