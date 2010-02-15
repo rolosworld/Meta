@@ -257,7 +257,7 @@ Meta.dom.extend(function()
      */
     glue:function(e,t)
     {
-      if(e=='')
+      if(e==='')
         return this;
 
       var i,
@@ -946,7 +946,7 @@ Meta.dom.extend(function()
       while(i--)
       {
         v=x[i];
-        if(v.className)
+        if('className' in v)
         {
           v.className=z.set(y.set(v.className.split(' ')).
             insert(a).

@@ -16,13 +16,16 @@
  You should have received a copy of the GNU General Public License
  along with Meta.  If not, see <http://www.gnu.org/licenses/>.
 */
-(function(){
-   var window=this,undefined,isIE=!!window.ActiveXObject,
-  info={
-    name:"Meta",
-    author:"Rolando González, rolosworld@gmail.com",
-    version:"2010.02.10" // Year.Month.Day
-  };
+(function()
+ {
+   var window=this,
+       undefined,
+       isIE=!!window.ActiveXObject,
+       info={
+         name:"Meta",
+         author:"Rolando González, rolosworld@gmail.com",
+         version:"2010.02.10" // Year.Month.Day
+       };
 
 
 /*
@@ -149,12 +152,12 @@ var Meta=window.Meta=function()
           d.push(arguments[i]);
 
         /*
-          Map the father.prototype.under method, to this.under,
-          when the father method is called, its called as this
-          if the method uses this.under, it will expect the father.under
+          Map the "father.prototype.under" method, to "this.under",
+          when the "father" method is called, it's called as "this"
+          if the method called uses "this.under", it will expect the "father.under"
           thats why it has to be mapped.
          */
-        this.under=father.prototype.under; // map the this.under, to the father.under
+        this.under=father.prototype.under; // map "this.under" to the "father.under"
         f=father.prototype[a].apply(this,d);
         this.under=g; // restore this.under
         return f;
@@ -247,17 +250,17 @@ Meta.extensions={};
 // *** Crockford invented this method ***
 // http://javascript.crockford.com/
 /**
-   <function name="Meta.son" type="object">
-   <param name="a" type="object">Object</param>
-   <desc>Clone of the object</desc>
-   <test>
-   <![CDATA[
-   var a={a:1};
-   var b=Meta.son(a);
-   return 'a' in b;
-   ]]>
-   </test>
-   </function>
+ <function name="Meta.son" type="object">
+ <param name="a" type="object">Object</param>
+ <desc>Clone of the object</desc>
+ <test>
+ <![CDATA[
+ var a={a:1};
+ var b=Meta.son(a);
+ return 'a' in b;
+ ]]>
+ </test>
+ </function>
  */
 Meta.son=function(a)
 {
@@ -268,46 +271,47 @@ Meta.son=function(a)
 
 
 /**
-   <function name="Meta.extend" type="object">
-   <param name="a" type="object">Object to be expanded</param>
-   <param name="b" type="object">Object that will be used to expand</param>
-   <desc>Extend a given object with another object</desc>
-   <test>
-   <![CDATA[
-   var a={a:1};
-   var b=Meta.extend(a,{b:1});
-   return 'a' in b && 'b' in b;
-   ]]>
-   </test>
-   </function>
+ <function name="Meta.extend" type="object">
+ <param name="a" type="object">Object to be expanded</param>
+ <param name="b" type="object">Object that will be used to expand</param>
+ <desc>Extend a given object with another object</desc>
+ <test>
+ <![CDATA[
+ var a={a:1};
+ var b=Meta.extend(a,{b:1});
+ return 'a' in b && 'b' in b;
+ ]]>
+ </test>
+ </function>
  */
 Meta.extend=function(a,b)
 {
   // import the methods
   for(var i in b)
     // copy pointers of methods to local variables
-    if(a!=b[i])a[i]=b[i];
+    if(a!=b[i])
+      a[i]=b[i];
   return a;
 };
 
 
 /**
-   <function name="Meta.each" type="bool">
-   <param name="a" type="array">Array to loop</param>
-   <param name="f" type="function">Callback function, its called with this as the value and can accept index and value attributes, function(index,value)</param>
-   <param name="[m]" type="bool">Method flag, default is numerical</param>
-   <desc>
+ <function name="Meta.each" type="bool">
+ <param name="a" type="array">Array to loop</param>
+ <param name="f" type="function">Callback function, its called with this as the value and can accept index and value attributes, function(index,value)</param>
+ <param name="[m]" type="bool">Method flag, default is numerical</param>
+ <desc>
    Execute given function on each array value, if the call returns false it breaks the loop.
    Bool true if it doesn't break, else false
-   </desc>
-   <test>
-   <![CDATA[
-   var a=[1,1],t=[];
-   Meta.each(a,function(v,i){t[i]=v==1;});
-   return t[0] && t[1];
-   ]]>
-   </test>
-   </function>
+ </desc>
+ <test>
+ <![CDATA[
+ var a=[1,1],t=[];
+ Meta.each(a,function(v,i){t[i]=v==1;});
+ return t[0] && t[1];
+ ]]>
+ </test>
+ </function>
  */
 Meta.each=function(a,f,m)
 {
@@ -315,22 +319,24 @@ Meta.each=function(a,f,m)
   if(!m)
   {
     for(i=0,j=a.length;i<j;i++)
-      if(f.call(a,a[i],i)===false)return false;
+      if(f.call(a,a[i],i)===false)
+        return false;
   }
   else
   {
     for(i in a)
-      if(f.call(a,a[i],i)===false)return false;
+      if(f.call(a,a[i],i)===false)
+        return false;
   }
   return true;
 };
 
 
 /**
-   <function name="Meta.its" type="string">
-   <param name="o" type="Object"></param>
-   <param name="[a]" type="string">Type you want to compare</param>
-   <desc>
+ <function name="Meta.its" type="string">
+ <param name="o" type="Object"></param>
+ <param name="[a]" type="string">Type you want to compare</param>
+ <desc>
    Try to get the type of data of the variable as a string.
    Returns the data type.
    Posible types:<ul>
@@ -348,9 +354,9 @@ Meta.each=function(a,f,m)
    <li>array</li>
    <li>date</li>
    <li>regexp</li></ul>
-   </desc>
-   <test>
-   <![CDATA[
+ </desc>
+ <test>
+ <![CDATA[
    var a,b=function(){},c=new b();
    return Meta.its('','string') &&
    Meta.its(0,'number') &&
@@ -384,52 +390,57 @@ Meta.each=function(a,f,m)
    Meta.its(new Date())=='date' &&
    Meta.its(/a/)=='regexp';
    ]]>
-   </test>
-   </function>
+ </test>
+ </function>
  */
 Meta.its=function(o,a)
 {
   var t=typeof o;
-  if(a==t)return true;
+  if(a==t)
+    return true;
 
   if(t=='object'||t=='function')
-    {
-      if(!o)
-	t='null';
+  {
+    if(!o)
+      t='null';
 
-      else if(o.nodeType)
-	t='element';
+    else if(o.nodeType)
+      t='element';
 
-      //http://thinkweb2.com/projects/prototype/instanceof-considered-harmful-or-how-to-write-a-robust-isarray/
-      else
-	t=Object.prototype.toString.call(o).match(/^\[object\s(.*)\]$/)[1].toLowerCase();
-    }
+    //http://thinkweb2.com/projects/prototype/instanceof-considered-harmful-or-how-to-write-a-robust-isarray/
+    else
+      t=Object.prototype.toString.call(o).match(/^\[object\s(.*)\]$/)[1].toLowerCase();
+  }
   else if(t=='number')
-    {
-      if(isNaN(o))t='nan';
-      else if(!isFinite(o))t=o>0?'infinite':'-infinite';
-    }
+  {
+    if(isNaN(o))
+      t='nan';
+    else if(!isFinite(o))
+      t=o>0?'infinite':'-infinite';
+  }
 
   if(t=="meta"&&
-     Meta.has(o,'info')&&
-     Meta.has(o.info,'name'))
+    Meta.has(o,'info')&&
+    Meta.has(o.info,'name'))
       {
-	  if(a==t)return true;
-	  t=o.info.name;
+	if(a==t)
+          return true;
+	t=o.info.name;
       }
 
-  if(a)return a==t;
+  if(a)
+    return a==t;
 
   return t;
 };
 
 /**
-   <function name="Meta.obj2array" type="array">
-   <param name="a" type="object">Array to loop</param>
-   <param name="c" type="bool">Flag to switch types of loop</param>
-   <desc>Conver an object to an array</desc>
-   <test>
-   <![CDATA[
+ <function name="Meta.obj2array" type="array">
+ <param name="a" type="object">Array to loop</param>
+ <param name="c" type="bool">Flag to switch types of loop</param>
+ <desc>Conver an object to an array</desc>
+ <test>
+ <![CDATA[
    var a={0:0,1:1,length:1},
    b=Meta.obj2array(a),t1,t2;
    t1=b.length==1;
@@ -440,66 +451,68 @@ Meta.its=function(o,a)
      b[1]==1 &&
      b[2]==1;
    ]]>
-   </test>
-   </function>
+ </test>
+ </function>
  */
 Meta.obj2array=function(a,c)
 {
   if(!c&&!isIE)
     return Array.prototype.slice.call(a);
   else
-    {
-      var b=[];
-      Meta.each(a,function(v){b.push(v);},c);
-      return b;
-    }
+  {
+    var b=[];
+    Meta.each(a,function(v){b.push(v);},c);
+    return b;
+  }
 };
 
 /**
-   <function name="Meta.indexOf" type="integer">
-   <param name="a" type="array">Array to search</param>
-   <param name="b" type="mixed">Value to search</param>
-   <param name="[c]" type="bool">Not Strict comparison</param>
-   <desc>
+ <function name="Meta.indexOf" type="integer">
+ <param name="a" type="array">Array to search</param>
+ <param name="b" type="mixed">Value to search</param>
+ <param name="[c]" type="bool">Not Strict comparison</param>
+ <desc>
    Search an array for a given value index. Can do not strict comparison.
    -1 if not found else 0...
-   </desc>
-   <test>
-   <![CDATA[
+ </desc>
+ <test>
+ <![CDATA[
    var a=[0,1];
    return Meta.indexOf(a,2)<0 &&
           Meta.indexOf(a,1)==1 &&
           Meta.indexOf(a,"1")<0 &&
           Meta.indexOf(a,2,1)<0 &&
           Meta.indexOf(a,1,1)==1;
-   ]]>
-   </test>
-   </function>
+ ]]>
+ </test>
+ </function>
  */
 Meta.indexOf=function(a,b,c)
 {
   var i=a.length;
   while(i--)
     if(!c)
-      {
-	if(a[i] === b)break;
-      }
-    else if(a[i] == b)break;
+    {
+      if(a[i] === b)
+        break;
+    }
+    else if(a[i] == b)
+      break;
   return i;
 };
 
 /**
-   <function name="Meta.unique" type="array">
-   <param name="a" type="array"></param>
-   <desc>Remove duplicate values from an array</desc>
-   <test>
-   <![CDATA[
+ <function name="Meta.unique" type="array">
+ <param name="a" type="array"></param>
+ <desc>Remove duplicate values from an array</desc>
+ <test>
+ <![CDATA[
    var a=[0,0,1,1],
    b=Meta.unique(a);
    return b.length==2 && b[0]==0 && b[1]==1;
-   ]]>
-   </test>
-   </function>
+ ]]>
+ </test>
+ </function>
  */
 Meta.unique=function(a)
 {
@@ -511,17 +524,17 @@ Meta.unique=function(a)
 };
 
 /**
-   <function name="Meta.has" type="bool">
-   <param name="a" type="object"></param>
-   <param name="b" type="string"></param>
-   <desc>Test if the object has the given property. If the property has null as value, it will be considered as not defined. You can test global variables with Meta.has(window,'document') for example</desc>
-   <test>
-   <![CDATA[
+ <function name="Meta.has" type="bool">
+ <param name="a" type="object"></param>
+ <param name="b" type="string"></param>
+ <desc>Test if the object has the given property. If the property has null as value, it will be considered as not defined. You can test global variables with Meta.has(window,'document') for example</desc>
+ <test>
+ <![CDATA[
    var a={a:1};
    return Meta.has(a,'a') && !Meta.has(a,'b');
-   ]]>
-   </test>
-   </function>
+ ]]>
+ </test>
+ </function>
  */
 Meta.has=function(a,b)
 {
@@ -599,177 +612,176 @@ Meta.toggle=function(a,b,c)
    <desc>Core extension</desc>
  */
 Meta.core=Meta();
-Meta.core.extend(
-{
+Meta.core.extend({
   /**
-     <public name="_" type="array">Internal variable where the data is stored.</public>
+   <public name="_" type="array">Internal variable where the data is stored.</public>
    */
-    _:null,
+  _:null,
 
-    /**
-       <method name="son" type="Meta.core">
-       <desc>Returns a new child of the object. Adds the passed arguments to the object if any is given.</desc>
-       <param name="[...]" type="mixed">List values to add</param>
-       <test>
-       <![CDATA[
-       var a=Meta.core.son();
-       return 'son' in a;
-       ]]>
-       </test>
-       </method>
-     */
-    son:function()
-      {
-	  return Meta.son(this);
-      },
+  /**
+   <method name="son" type="Meta.core">
+   <desc>Returns a new child of the object. Adds the passed arguments to the object if any is given.</desc>
+   <param name="[...]" type="mixed">List values to add</param>
+   <test>
+   <![CDATA[
+   var a=Meta.core.son();
+   return 'son' in a;
+   ]]>
+   </test>
+   </method>
+   */
+  son:function()
+  {
+    return Meta.son(this);
+  },
 
-    /**
-       <method name="bro" type="Meta.core">
-       <desc>Returns a new clone of the object. Set the passed value to the object if any is given.</desc>
-       <param name="a" type="mixed">Values to set</param>
-       <test>
-       <![CDATA[
-       var a=Meta.core.bro();
-       return 'bro' in a;
-       ]]>
-       </test>
-       </method>
-     */
-    bro:function(a)
-      {
-	return (new this.constructor()).set(a);
-      },
+  /**
+   <method name="bro" type="Meta.core">
+   <desc>Returns a new clone of the object. Set the passed value to the object if any is given.</desc>
+   <param name="a" type="mixed">Values to set</param>
+   <test>
+   <![CDATA[
+   var a=Meta.core.bro();
+   return 'bro' in a;
+   ]]>
+   </test>
+   </method>
+   */
+  bro:function(a)
+  {
+    return (new this.constructor()).set(a);
+  },
 
-    /**
-       <method name="its" type="mixed">
-       <param name="[a]" type="string">Type to compare with</param>
-       <desc>Returns the data type of the object or bool</desc>
-       <test>
-       <![CDATA[
-       var a=Meta.core.bro();
-       a.set("abc");
-       return a.its()=='string' && a.its('string');
-       ]]>
-       </test>
-       </method>
-    */
-    its:function(a)
-      {
-	  return Meta.its(this._,a);
-      },
+  /**
+   <method name="its" type="mixed">
+   <param name="[a]" type="string">Type to compare with</param>
+   <desc>Returns the data type of the object or bool</desc>
+   <test>
+   <![CDATA[
+   var a=Meta.core.bro();
+   a.set("abc");
+   return a.its()=='string' && a.its('string');
+   ]]>
+   </test>
+   </method>
+   */
+  its:function(a)
+  {
+    return Meta.its(this._,a);
+  },
 
-    /**
-       <method name="get" type="mixed">
-       <desc>Get the value</desc>
-       <test>
-       <![CDATA[
-       var a=Meta.core.bro();
-       return a.get()==null;
-       ]]>
-       </test>
-       </method>
-     */
-    get:function()
-      {
-	  return this._;
-      },
+  /**
+   <method name="get" type="mixed">
+   <desc>Get the value</desc>
+   <test>
+   <![CDATA[
+   var a=Meta.core.bro();
+   return a.get()==null;
+   ]]>
+   </test>
+   </method>
+   */
+  get:function()
+  {
+    return this._;
+  },
 
-    /**
-       <method name="set" type="this">
-       <param name="a" type="mixed">Value to set</param>
-       <desc>Set the value</desc>
-       <test>
-       <![CDATA[
-       var a=Meta.core.bro();
-       a.set(1);
-       return a.get()==1;
-       ]]>
-       </test>
-       </method>
-     */
-    set:function(a)
-    {
-	this._=a;
-	return this;
-    },
+  /**
+   <method name="set" type="this">
+   <param name="a" type="mixed">Value to set</param>
+   <desc>Set the value</desc>
+   <test>
+   <![CDATA[
+   var a=Meta.core.bro();
+   a.set(1);
+   return a.get()==1;
+   ]]>
+   </test>
+   </method>
+   */
+  set:function(a)
+  {
+    this._=a;
+    return this;
+  },
 
-    /**
-       <method name="wrap" type="array">
-       <param name="b" type="string">Method name</param>
-       <param name="c" type="array">arguments</param>
-       <desc>
-       Wrap a method to one owned by the data, executes it and returns the value.
-       </desc>
-       <test>
-       <![CDATA[
-       var a=Meta.core.bro();
-       a.set("abc");
-       return a.wrap('charAt',[1])=='b';
-       ]]>
-       </test>
-       </method>
-     */
-    wrap:function(b,c)
-    {
-      return this._[b].apply(this._,c);
-    },
+  /**
+   <method name="wrap" type="array">
+   <param name="b" type="string">Method name</param>
+   <param name="c" type="array">arguments</param>
+   <desc>
+   Wrap a method to one owned by the data, executes it and returns the value.
+   </desc>
+   <test>
+   <![CDATA[
+   var a=Meta.core.bro();
+   a.set("abc");
+   return a.wrap('charAt',[1])=='b';
+   ]]>
+   </test>
+   </method>
+   */
+  wrap:function(b,c)
+  {
+    return this._[b].apply(this._,c);
+  },
 
-    /**
-       <method name="copy" type="this">
-       <desc>Get a copy of the current Meta</desc>
-       <test>
-       <![CDATA[
-       var a=Meta.core.bro(),b;
-       a.set("abc");
-       b=a.copy();
-       return b.get()=='abc';
-       ]]>
-       </test>
-       </method>
-     */
-    copy:function()
-    {
-      return this.bro().set(this.get());
-    },
+  /**
+   <method name="copy" type="this">
+   <desc>Get a copy of the current Meta</desc>
+   <test>
+   <![CDATA[
+   var a=Meta.core.bro(),b;
+   a.set("abc");
+   b=a.copy();
+   return b.get()=='abc';
+   ]]>
+   </test>
+   </method>
+   */
+  copy:function()
+  {
+    return this.bro().set(this.get());
+  },
 
-    /**
-       <method name="callback" type="function">
-       <desc>Returna a function that executes the given method with the given arguments from the current object. It returns whatever the method returns.</desc>
-       <param name="a" type="string">Method name</param>
-       <param name="[...]" type="mixed">Arguments to be sent when the callback is called</param>
-       <test>
-       <![CDATA[
-       var a=Meta.core.bro(),b,t;
-       b=a.callback("set","abc");
-       t=a.get()==null;
-       b();
-       return t && a.get()=='abc';
-       ]]>
-       </test>
-       </method>
-     */
-    callback:function(a)
-    {
-	var me=this,b=[],i=1,c=arguments;
-	for(;i<c.length;i++)b.push(c[i]);
-	return function(){return me[a].apply(me,b);};
-    },
+  /**
+   <method name="callback" type="function">
+   <desc>Returna a function that executes the given method with the given arguments from the current object. It returns whatever the method returns.</desc>
+   <param name="a" type="string">Method name</param>
+   <param name="[...]" type="mixed">Arguments to be sent when the callback is called</param>
+   <test>
+   <![CDATA[
+   var a=Meta.core.bro(),b,t;
+   b=a.callback("set","abc");
+   t=a.get()==null;
+   b();
+   return t && a.get()=='abc';
+   ]]>
+   </test>
+   </method>
+   */
+  callback:function(a)
+  {
+    var me=this,b=[],i=1,c=arguments;
+    for(;i<c.length;i++)b.push(c[i]);
+    return function(){return me[a].apply(me,b);};
+  },
 
-    /**
-       <method name="getMe" type="this">
-       <desc>Returna this. This method purpose is to be used with the callback function to pass this object.</desc>
-       <test>
-       <![CDATA[
-       var a=Meta.core.bro(),b=a.getMe();
-       b.set('abc');
-       return a.get()=='abc';
-       ]]>
-       </test>
-       </method>
-     */
-    getMe:function(){return this;}
-
- });
+  /**
+   <method name="getMe" type="this">
+   <desc>Returna this. This method purpose is to be used with the callback function to pass this object.</desc>
+   <test>
+   <![CDATA[
+   var a=Meta.core.bro(),b=a.getMe();
+   b.set('abc');
+   return a.get()=='abc';
+   ]]>
+   </test>
+   </method>
+   */
+  getMe:function(){return this;}
+  
+});
 /** </class> */
 
 /*
@@ -791,8 +803,12 @@ Meta.core.extend(
 */
 /**
    <function name="Meta.ajax" type="object">
+   <param name="url" type="string">URL</param>
+   <param name="[callback]" type="mixed">Array of functions or a single function, if its an array,the array index is the state callback</param>
+   <param name="[post]" type="string">post</param>
+   <param name="[async]" type="bool">async</param>
    <desc>
-   Ajax function.
+   Ajax function. Returns the XMLHttpRequest object
 
    Ready States:
      0 uninitialized
@@ -815,16 +831,12 @@ Meta.core.extend(
      You can pass a single callback, which will be called when the ReadyState is 4.
      Or you can pass an array of callbacks in which each callback will be called by using the ReadyState as the index of the array.
 
-     Returns object with the given methods:
+     Pass to the callbacks an object with the given methods:
       status - Returns the returned status
       text   - Returns the responseText
       json   - Returns the evaluated responseText
       xml    - Returns the responseXML
    </desc>
-   <param name="url" type="string">URL</param>
-   <param name="[callback]" type="mixed">Array of functions or a single function, if its an array,the array index is the state callback</param>
-   <param name="[post]" type="string">post</param>
-   <param name="[async]" type="bool">async</param>
    <test>
    <![CDATA[
    // States callbacks
@@ -860,11 +872,13 @@ Meta.ajax=function(url, callbacks, post, async)
     ? new ActiveXObject("Microsoft.XMLHTTP")
     : new XMLHttpRequest(),
 
-  h={status:function(){return http.status;},
-       text:function(){return http.responseText;},
-       json:function(){return eval('('+(h.text()||'null')+')');},
-        xml:function(){return http.responseXML;}
-  };
+  h={
+    status:function(){return http.status;},
+      text:function(){return http.responseText;},
+      json:function(){return eval('('+(h.text()||'null')+')');},
+       xml:function(){return http.responseXML;}
+  },
+  cbIsArray=Meta.its(callbacks,'array');
 
   http.open("POST", url, async);
 
@@ -872,7 +886,7 @@ Meta.ajax=function(url, callbacks, post, async)
   {
     if(!callbacks)return;
     var s=http.readyState;
-    if(!Meta.its(callbacks,'array') && s==4)callbacks.call(h,h);
+    if(!cbIsArray && s==4)callbacks.call(h,h);
     else if(callbacks[s])callbacks[s].call(h,h);
   };
 
@@ -910,141 +924,140 @@ Meta.ajax.async=true;
  along with Meta.  If not, see <http://www.gnu.org/licenses/>.
 */
 /**
-   <class name="Meta.string">
-   <inherit>Meta.core</inherit>
-   <desc>String extensions</desc>
+ <class name="Meta.string">
+ <inherit>Meta.core</inherit>
+ <desc>String extensions</desc>
 */
 Meta.string=Meta(Meta.core);
-Meta.string.extend(
-/** @scope Meta.string */
-{
+Meta.string.extend({
   /**
-     <method name="bro" type="Meta.string">
-     <desc>Custom bro, let it set a value.</desc>
-     <param name="a" type="string">String to be managed</param>
-     <test>
-     <![CDATA[
+   <method name="bro" type="Meta.string">
+   <desc>Custom bro, let it set a value.</desc>
+   <param name="a" type="string">String to be managed</param>
+   <test>
+   <![CDATA[
      var a=Meta.string.bro('foo'),t;
      t=a.get().length==3;
      a=Meta.string.bro('');
      return t && a.get().length==0 && Meta.string.bro().get().length==0;
-     ]]>
-     </test>
-     </method>
-  */
+   ]]>
+   </test>
+   </method>
+   */
   bro:function(a)
   {
     return (new this.constructor()).set(a||'');
   },
 
   /**
-     <method name="set" type="this">
-     <param name="a" type="mixed">Value to set. Tries to convert it to string.</param>
-     <desc>Set the string</desc>
-     <test>
-     <![CDATA[
+   <method name="set" type="this">
+   <param name="a" type="mixed">Value to set. Tries to convert it to string.</param>
+   <desc>Set the string</desc>
+   <test>
+   <![CDATA[
      return Meta.string.bro().set('foo').get().length==3;
-     ]]>
-     </test>
-     </method>
-  */
+   ]]>
+   </test>
+   </method>
+   */
   set:function(a)
   {
     return this.under.call(this,'set',''+a);
   },
 
   /**
-     <method name="len" type="integer">
-     <desc>Get the length of a string</desc>
-     <test>
-     <![CDATA[
+   <method name="len" type="integer">
+   <desc>Get the length of a string</desc>
+   <test>
+   <![CDATA[
      return Meta.string.bro().set('foo').len()==3;
-     ]]>
-     </test>
-     </method>
-  */
+   ]]>
+   </test>
+   </method>
+   */
   len:function()
   {
     return this.get().length;
   },
 
   /**
-     <method name="dos2unix" type="this">
-     <desc>Convert DOS format to Unix txt format</desc>
-     <test>
-     <![CDATA[
+   <method name="dos2unix" type="this">
+   <desc>Convert DOS format to Unix txt format</desc>
+   <test>
+   <![CDATA[
      return Meta.string.bro("foo\r\n").dos2unix().get()=="foo\n";
-     ]]>
-     </test>
-     </method>
-  */
+   ]]>
+   </test>
+   </method>
+   */
   dos2unix:function()
   {
     return this.replace(/\r\n|\r/g,"\n");
   },
 
   /**
-     <method name="unix2dos" type="this">
-     <desc>Convert Unix format to DOS txt format</desc>
-     <test>
-     <![CDATA[
+   <method name="unix2dos" type="this">
+   <desc>Convert Unix format to DOS txt format</desc>
+   <test>
+   <![CDATA[
      return Meta.string.bro("foo\n").unix2dos().get()=="foo\r\n";
-     ]]>
-     </test>
-     </method>
-  */
+   ]]>
+   </test>
+   </method>
+   */
   unix2dos:function()
   {
     return this.replace(/\n/g,"\r\n");
   },
 
   /**
-     <method name="stripTags" type="this">
-     <desc>Strip tags from string object</desc>
-     <test>
-     <![CDATA[
+   <method name="stripTags" type="this">
+   <desc>Strip tags from string object</desc>
+   <test>
+   <![CDATA[
      return Meta.string.bro("<b>foo</b>").stripTags().get()=="foo";
-     ]]>
-     </test>
-     </method>
-  */
+   ]]>
+   </test>
+   </method>
+   */
   stripTags:function()
   {
     return this.replace(/<\/?[^>]+>/g,'');
   },
 
   /**
-     <method name="escapeHTML" type="this">
-     <desc>Tries to return an html friendly version of the string. Converts some special characters to their respective entities.</desc>
-     <test>
-     <![CDATA[
+   <method name="escapeHTML" type="this">
+   <desc>Tries to return an html friendly version of the string. Converts some special characters to their respective entities.</desc>
+   <test>
+   <![CDATA[
      return Meta.string.bro("<b>&nbsp;foo</b>").escapeHTML().get()=="&lt;b&gt;&amp;nbsp;foo&lt;/b&gt;";
-     ]]>
-     </test>
-     </method>
-  */
+   ]]>
+   </test>
+   </method>
+   */
   escapeHTML:function()
   {
-    return this.replace(/&/g,'&amp;')
-      .replace(/</g,'&lt;')
-      .replace(/>/g,'&gt;')
-      .replace(/'/g,'&#39;')
-      .replace(/"/g,'&#34;');
+    return this.
+      replace(/&/g,'&amp;').
+      replace(/</g,'&lt;').
+      replace(/>/g,'&gt;').
+      replace(/'/g,'&#39;').
+      replace(/"/g,'&#34;');
   },
 
   /**
-     <method name="unescapeHTML" type="this">
-     <desc>
-     Returns only the text content of the object. Converts the HTML entities into their respective characters.
-     Uses HTML DOM, not compatible with XHTML.
-     </desc>
-     <test>
-     <![CDATA[
-     return Meta.string.bro("&lt;b&gt;foo&lt;/b&gt;").unescapeHTML().get()=="<b>foo</b>";
-     ]]>
-     </test>
-     </method>
-  */
+   <method name="unescapeHTML" type="this">
+   <desc>
+    Returns only the text content of the object. Converts the HTML entities into their respective characters.
+    Uses HTML DOM, not compatible with XHTML.
+   </desc>
+   <test>
+   <![CDATA[
+    return Meta.string.bro("&lt;b&gt;foo&lt;/b&gt;").unescapeHTML().get()=="<b>foo</b>";
+   ]]>
+   </test>
+   </method>
+   */
   unescapeHTML:function()
   {
     var div=document.createElement('div');
@@ -1053,62 +1066,62 @@ Meta.string.extend(
   },
 
   /**
-     <method name="trim" type="this">
-     <desc>trim a string</desc>
-     <test>
-     <![CDATA[
-     return Meta.string.bro(" foo ").trim().get()=="foo";
-     ]]>
-     </test>
-     </method>
-  */
+   <method name="trim" type="this">
+   <desc>trim a string</desc>
+   <test>
+   <![CDATA[
+   return Meta.string.bro(" foo ").trim().get()=="foo";
+   ]]>
+   </test>
+   </method>
+   */
   trim:function()
   {
     return this.replace(/^\s+|\s+$/g,"");
   },
 
   /**
-     <method name="rtrim" type="this">
-     <desc>right trim a string</desc>
-     <test>
-     <![CDATA[
-     return Meta.string.bro(" foo ").rtrim().get()==" foo";
-     ]]>
-     </test>
-     </method>
-  */
+   <method name="rtrim" type="this">
+   <desc>right trim a string</desc>
+   <test>
+   <![CDATA[
+   return Meta.string.bro(" foo ").rtrim().get()==" foo";
+   ]]>
+   </test>
+   </method>
+   */
   rtrim:function()
   {
     return this.replace(/\s+$/,"");
   },
 
   /**
-     <method name="ltrim" type="this">
-     <desc>left trim a string</desc>
-     <test>
-     <![CDATA[
-     return Meta.string.bro(" foo ").ltrim().get()=="foo ";
-     ]]>
-     </test>
-     </method>
-  */
+   <method name="ltrim" type="this">
+   <desc>left trim a string</desc>
+   <test>
+   <![CDATA[
+   return Meta.string.bro(" foo ").ltrim().get()=="foo ";
+   ]]>
+   </test>
+   </method>
+   */
   ltrim:function()
   {
     return this.replace(/^\s+/,"");
   },
 
   /**
-     <method name="insertAt" type="this">
-     <desc>Insert string on position p</desc>
-     <param name="p" type="integer">Position</param>
-     <param name="c" type="string">String to be inserted</param>
-     <test>
-     <![CDATA[
-     return Meta.string.bro("foo").insertAt(3,'s').get()=="foos";
-     ]]>
-     </test>
-     </method>
-  */
+   <method name="insertAt" type="this">
+   <desc>Insert string on position p</desc>
+   <param name="p" type="integer">Position</param>
+   <param name="c" type="string">String to be inserted</param>
+   <test>
+   <![CDATA[
+   return Meta.string.bro("foo").insertAt(3,'s').get()=="foos";
+   ]]>
+   </test>
+   </method>
+   */
   insertAt:function(p,c)
   {
     var a=this.get();
@@ -1116,63 +1129,65 @@ Meta.string.extend(
   },
 
   /**
-     <method name="addSlashes" type="this">
-     <desc>Add Slashes for single quote strings.</desc>
-     <test>
-     <![CDATA[
-     return Meta.string.bro("f'oo").addSlashes().get()=='f\\\'oo';
-     ]]>
-     </test>
-     </method>
-  */
+   <method name="addSlashes" type="this">
+   <desc>Add Slashes for single quote strings.</desc>
+   <test>
+   <![CDATA[
+   return Meta.string.bro("f'oo").addSlashes().get()=='f\\\'oo';
+   ]]>
+   </test>
+   </method>
+   */
   addSlashes:function()
   {
-    return this.replace(/\\/g,"\\\\")
-    //.replace(/\"/g,"\\\"")
-      .replace(/\'/g,"\\'");
+    return this.
+      replace(/\\/g,"\\\\").
+    //replace(/\"/g,"\\\"").
+      replace(/\'/g,"\\'");
   },
 
   /**
-     <method name="stripSlashes" type="this">
-     <desc>Strip Slashes. For single quote strings.</desc>
-     <test>
-     <![CDATA[
-     return Meta.string.bro('f\\\\oo').stripSlashes().get()=='f\\oo';
-     ]]>
-     </test>
-     </method>
-  */
+   <method name="stripSlashes" type="this">
+   <desc>Strip Slashes. For single quote strings.</desc>
+   <test>
+   <![CDATA[
+   return Meta.string.bro('f\\\\oo').stripSlashes().get()=='f\\oo';
+   ]]>
+   </test>
+   </method>
+   */
   stripSlashes:function()
   {
-    return this.replace(/\\'/g,"'")
-    //.replace(/\\"/g,'"')
-      .replace(/\\\\/g,'\\');
+    return this.
+      replace(/\\'/g,"'").
+    //replace(/\\"/g,'"').
+      replace(/\\\\/g,'\\');
   },
 
   /**
-     <method name="nl2br" type="this">
-     <desc>Convert new line character to <br/> string</desc>
-     <test>
-     <![CDATA[
+   <method name="nl2br" type="this">
+   <desc>Convert new line character to <br/> string</desc>
+   <test>
+   <![CDATA[
      return Meta.string.bro("foo\n").nl2br().get()=='foo<br/>';
-     ]]>
-     </test>
-     </method>
-  */
+   ]]>
+   </test>
+   </method>
+   */
   nl2br:function()
   {
     return this.dos2unix().replace(/\n/g,"<br/>");
   },
 
   /**
-     <method name="br2nl" type="this">
-     <desc>Convert <br/> string to new line character</desc>
-     <test>
-     <![CDATA[
+   <method name="br2nl" type="this">
+   <desc>Convert <br/> string to new line character</desc>
+   <test>
+   <![CDATA[
      return Meta.string.bro("foo<br>").br2nl().get()=="foo\n";
-     ]]>
-     </test>
-     </method>
+   ]]>
+   </test>
+   </method>
   */
   br2nl:function()
   {
@@ -1181,14 +1196,14 @@ Meta.string.extend(
 
 
   /**
-     <method name="toInt" type="integer">
-     <desc>Strip all non numeric characters from the string and returns it as an integer.</desc>
-     <test>
-     <![CDATA[
+   <method name="toInt" type="integer">
+   <desc>Strip all non numeric characters from the string and returns it as an integer.</desc>
+   <test>
+   <![CDATA[
      return Meta.string.bro("1a2b3").toInt()=="123";
-     ]]>
-     </test>
-     </method>
+   ]]>
+   </test>
+   </method>
   */
   toInt:function()
   {
@@ -1197,84 +1212,84 @@ Meta.string.extend(
 });
 
 /**
-   <method name="replace" type="this">
-   <desc>Replaces some characters with some other characters in all the strings.</desc>
-   <param name="a" type="mixed">String value to find. Will be replaced. Can be a regexp.</param>
-   <param name="b" type="string">String to insert.</param>
-   </method>
+ <method name="replace" type="this">
+ <desc>Replaces some characters with some other characters in all the strings.</desc>
+ <param name="a" type="mixed">String value to find. Will be replaced. Can be a regexp.</param>
+ <param name="b" type="string">String to insert.</param>
+ </method>
 
-   <method name="concat" type="string">
-   <desc>Join two or more strings into the strings.</desc>
-   <param name="..." type="string">One or more string objects to be joined to the strings.</param>
-   </method>
+ <method name="concat" type="string">
+ <desc>Join two or more strings into the strings.</desc>
+ <param name="..." type="string">One or more string objects to be joined to the strings.</param>
+ </method>
+ 
+ <method name="substr" type="this">
+ <desc>Extracts a specified number of characters in a string, from a start index.</desc>
+ <param name="a" type="integer">Index of where to start the extraction. Can be negative to start from the end.</param>
+ <param name="[b]" type="integer">How many characters to extract.</param>
+ </method>
+ 
+ <method name="substring" type="this">
+ <desc>Extracts the characters in a string between two specified indices.</desc>
+ <param name="a" type="integer">Index of where to start the extraction. Starts at 0.</param>
+ <param name="[b]" type="integer">Index of where to stop the extraction.</param>
+ </method>
+ 
+ <method name="slice" type="this">
+ <desc>Extracts a part of the strings.</desc>
+ <param name="a" type="integer">Index where to start the selection. Can be negative to start from the end.</param>
+ <param name="[b]" type="integer">Index where to end the selection.</param>
+ </method>
+ 
+ <method name="toUpperCase" type="this">
+ <desc>Sets the strings to uppercase letters.</desc>
+ </method>
+ 
+ <method name="toLowerCase" type="this">
+ <desc>Sets the strings to lower letters.</desc>
+ </method>
 
-   <method name="substr" type="this">
-   <desc>Extracts a specified number of characters in a string, from a start index.</desc>
-   <param name="a" type="integer">Index of where to start the extraction. Can be negative to start from the end.</param>
-   <param name="[b]" type="integer">How many characters to extract.</param>
-   </method>
-
-   <method name="substring" type="this">
-   <desc>Extracts the characters in a string between two specified indices.</desc>
-   <param name="a" type="integer">Index of where to start the extraction. Starts at 0.</param>
-   <param name="[b]" type="integer">Index of where to stop the extraction.</param>
-   </method>
-
-   <method name="slice" type="this">
-   <desc>Extracts a part of the strings.</desc>
-   <param name="a" type="integer">Index where to start the selection. Can be negative to start from the end.</param>
-   <param name="[b]" type="integer">Index where to end the selection.</param>
-   </method>
-
-   <method name="toUpperCase" type="this">
-   <desc>Sets the strings to uppercase letters.</desc>
-   </method>
-
-   <method name="toLowerCase" type="this">
-   <desc>Sets the strings to lower letters.</desc>
-   </method>
-
-   <method name="charAt" type="string">
-   <param name="a" type="integer">Index of the character to return.</param>
-   <desc>Returns the character at a specified position.</desc>
-   </method>
-
-   <method name="charCodeAt" type="string">
-   <param name="a" type="integer">Index of the character to return.</param>
-   <desc>Returns the unicode of the character at a specified position.</desc>
-   </method>
-
-   <method name="indexOf" type="integer">
-   <param name="a" type="string">String value to search for.</param>
-   <param name="[b]" type="integer">Index of the character where to start the search.</param>
-   <desc>Returns the position of the first occurrence of a specified string value in a string.</desc>
-   </method>
-
-   <method name="lastIndexOf" type="integer">
-   <param name="a" type="string">String value to search for.</param>
-   <param name="[b]" type="integer">Index of the character where to start the search.</param>
-   <desc>Returns the position of the last occurrence of a specified string value in a string.</desc>
-   </method>
-
-   <method name="search" type="integer">
-   <param name="a" type="mixed">String value to search for. Can be Regexp</param>
-   <desc>Search a string for a specified value and returns its position.</desc>
-   </method>
-
-   <method name="match" type="string">
-   <param name="a" type="mixed">String value to search for. Can be Regexp</param>
-   <desc>Search a string for a specified value and return the value found.</desc>
-   </method>
-
-   <method name="split" type="array">
-   <param name="a" type="mixed">String value where to split. Can be Regexp</param>
-   <param name="[b]" type="integer">Number of splits to return.</param>
-   <desc>Split a string into an array of strings.</desc>
-   </method>
-
-   <method name="valueOf" type="string">
-   <desc>Returns the primitive value of the specified object.</desc>
-   </method>
+ <method name="charAt" type="string">
+ <param name="a" type="integer">Index of the character to return.</param>
+ <desc>Returns the character at a specified position.</desc>
+ </method>
+ 
+ <method name="charCodeAt" type="string">
+ <param name="a" type="integer">Index of the character to return.</param>
+ <desc>Returns the unicode of the character at a specified position.</desc>
+ </method>
+ 
+ <method name="indexOf" type="integer">
+ <param name="a" type="string">String value to search for.</param>
+ <param name="[b]" type="integer">Index of the character where to start the search.</param>
+ <desc>Returns the position of the first occurrence of a specified string value in a string.</desc>
+ </method>
+ 
+ <method name="lastIndexOf" type="integer">
+ <param name="a" type="string">String value to search for.</param>
+ <param name="[b]" type="integer">Index of the character where to start the search.</param>
+ <desc>Returns the position of the last occurrence of a specified string value in a string.</desc>
+ </method>
+ 
+ <method name="search" type="integer">
+ <param name="a" type="mixed">String value to search for. Can be Regexp</param>
+ <desc>Search a string for a specified value and returns its position.</desc>
+ </method>
+ 
+ <method name="match" type="string">
+ <param name="a" type="mixed">String value to search for. Can be Regexp</param>
+ <desc>Search a string for a specified value and return the value found.</desc>
+ </method>
+ 
+ <method name="split" type="array">
+ <param name="a" type="mixed">String value where to split. Can be Regexp</param>
+ <param name="[b]" type="integer">Number of splits to return.</param>
+ <desc>Split a string into an array of strings.</desc>
+ </method>
+ 
+ <method name="valueOf" type="string">
+ <desc>Returns the primitive value of the specified object.</desc>
+ </method>
 
 */
 Meta.string.extend(function()
@@ -1907,36 +1922,36 @@ Meta.extensions.Array=Meta.array;
    <inherit>Meta.core</inherit>
 */
 Meta.cookie=Meta(Meta.core);
-Meta.cookie.extend(
-{
+Meta.cookie.extend({
   /**
-     <method name="create" type="void">
-     <desc>
-     Creates cookie with name, value that expires on days and has path.
+   <method name="create" type="void">
+   <desc>
+   Creates cookie with name, value that expires on days and has path.
 
-     Object attributes:
+   Object attributes:
        value  String value to store in the cookie
        path   If not specified, defaults to the current path of the current document location.
        domain If not specified, defaults to the host portion of the current document location.
        max-age  max-age-in-seconds
        expires  date-in-toUTCString-format If not specified it wil expire at the end of session.
        secure  cookie to only be transmitted over secure protocol as https
-     </desc>
-     <param name="a" type="object">Contains the parameters to include on the cookie.</param>
-     <test>
-     <![CDATA[
-     var a=Meta.cookie.bro('meta');
-     a.create({value:'cookie'});
-     return a.read()=='cookie';
-     ]]>
-     </test>
-     </method>
-  */
+   </desc>
+   <param name="a" type="object">Contains the parameters to include on the cookie.</param>
+   <test>
+   <![CDATA[
+   var a=Meta.cookie.bro('meta');
+   a.create({value:'cookie'});
+   return a.read()=='cookie';
+   ]]>
+   </test>
+   </method>
+   */
   create:function(a)
   {
-    var c=this.get()+'='+a.value,i;
+    var c=this.get()+'='+a.value,
+        i;
 
-    for(var i in a)
+    for(i in a)
       if(i!='value')
 	c+=';'+i+'='+a[i];
 
@@ -1944,42 +1959,46 @@ Meta.cookie.extend(
   },
 
   /**
-     <method name="read" type="string">
-     <desc>Returns the value of the given variable</desc>
-     <test>
-     <![CDATA[
-     var a=Meta.cookie.bro('meta');
-     a.create({value:'cookie'});
-     return a.read()=='cookie';
-     ]]>
-     </test>
-     </method>
-  */
+   <method name="read" type="string">
+   <desc>Returns the value of the given variable</desc>
+   <test>
+   <![CDATA[
+   var a=Meta.cookie.bro('meta');
+   a.create({value:'cookie'});
+   return a.read()=='cookie';
+   ]]>
+   </test>
+   </method>
+   */
   read:function()
   {
-    var ca=document.cookie.split(";"),c,i=ca.length;
+    var ca=document.cookie.split(";"),
+        c,
+        i=ca.length;
+    
     while(i--)
     {
       c=ca[i].replace(/^\s*|\s*$/g,"").split("=");
-      if(c[0]==this.get())return decodeURIComponent(c[1]);
+      if(c[0]==this.get())
+        return decodeURIComponent(c[1]);
     }
     return null;
   },
 
   /**
-     <method name="erase" type="void">
-     <desc>Erase the variable given by this.obj</desc>
-     <test>
-     <![CDATA[
-     var a=Meta.cookie.bro('meta'),t;
-     a.create({value:'cookie'});
-     t=a.read()=='cookie';
-     a.erase();
-     return t && a.read()==null;
-     ]]>
-     </test>
-     </method>
-  */
+   <method name="erase" type="void">
+   <desc>Erase the variable given by this.obj</desc>
+   <test>
+   <![CDATA[
+   var a=Meta.cookie.bro('meta'),t;
+   a.create({value:'cookie'});
+   t=a.read()=='cookie';
+   a.erase();
+   return t && a.read()==null;
+   ]]>
+   </test>
+   </method>
+   */
   erase:function()
   {
     var a=new Date();
@@ -2010,18 +2029,21 @@ Meta.cookie.extend(
 // *** Dean Edwards discovered this ***
 // http://dean.edwards.name/weblog/2006/11/sandbox/
 /**
-<function name="Meta.sandbox" type="object">
-<desc>Returns a sandbox object</desc>
-</function>
-*/
+ <function name="Meta.sandbox" type="object">
+ <desc>Returns a sandbox object</desc>
+ </function>
+ */
 /**
-   <class name="Meta.sandbox">
-   <desc>Sandbox object</desc>
+ <class name="Meta.sandbox">
+ <desc>Sandbox object</desc>
  */
 Meta.sandbox=function()
 {
   // create an <iframe>
-  var f1=document.createElement("iframe"),doc,f2;
+  var f1=document.createElement("iframe"),
+      doc,
+      f2;
+  
   f1.style.display = "none";
   document.body.appendChild(f1);
 
@@ -2033,19 +2055,19 @@ Meta.sandbox=function()
 
   return {
     /**
-    <method name="eval" type="mixed">
-    <param name="a" type="string">JS program to evaluate.</param>
-    <desc>Evaluates a JS program in a sandbox.</desc>
-    </method>
-    */
+     <method name="eval" type="mixed">
+     <param name="a" type="string">JS program to evaluate.</param>
+     <desc>Evaluates a JS program in a sandbox.</desc>
+     </method>
+     */
     eval:function(a){return f2.sandbox.eval(a);},
 
     /**
-    <method name="include" type="void">
-    <param name="a" type="string">Script to include in the sandbox.</param>
-    <desc>Includes new scripts into the sandbox.</desc>
-    </method>
-    */
+     <method name="include" type="void">
+     <param name="a" type="string">Script to include in the sandbox.</param>
+     <desc>Includes new scripts into the sandbox.</desc>
+     </method>
+     */
     include:function(a)
     {
       var b=doc.createElement('script');
@@ -2074,8 +2096,8 @@ Meta.sandbox=function()
  along with Meta.  If not, see <http://www.gnu.org/licenses/>.
 */
 /**
-   <class name="Meta.events">
-   <desc>
+ <class name="Meta.events">
+ <desc>
    Events extensions.
    Event data structure (EDS):
    {
@@ -2085,76 +2107,79 @@ Meta.sandbox=function()
 		],
      ...
    }
-   </desc>
-   <inherit>Meta.core</inherit>
-*/
+ </desc>
+ <inherit>Meta.core</inherit>
+ */
 //Meta.events=Meta(Meta.array);
 Meta.events=Meta(Meta.core);
-Meta.events.extend(
-function()
+Meta.events.extend(function()
 {
   /**
-      Private and static variable where the events are stored.
+   Private and static variable where the events are stored.
    */
-  var events={},arr=Meta.array.bro();
+  var events={},
+      arr=Meta.array.bro();
 
   /**
-      <method name="onNewEvent" type="void">
-      <desc>Callback for when a new event type is inserted for a given object</desc>
-      <param name="a" type="object">EDS</param>
-      </method>
+   <method name="onNewEvent" type="void">
+   <desc>Callback for when a new event type is inserted for a given object</desc>
+   <param name="a" type="object">EDS</param>
+   </method>
    */
   this.onNewEvent=function(){};
 
   /**
-      <method name="onEmptyEvent" type="void">
-      <desc>Callback for when the object has no event of the given type</desc>
-      <param name="a" type="object">EDS</param>
-      </method>
+   <method name="onEmptyEvent" type="void">
+   <desc>Callback for when the object has no event of the given type</desc>
+   <param name="a" type="object">EDS</param>
+   </method>
    */
   this.onEmptyEvent=function(){};
 
   /**
-      <method name="onFireEvent" type="void">
-      <desc>Callback for when a single callback of the given type is called</desc>
-      <param name="a" type="object">EDS</param>
-      <param name="b" type="bool">true if every callback returned true, else false</param>
-      <param name="c" type="array">arguments</param>
-      </method>
+   <method name="onFireEvent" type="void">
+   <desc>Callback for when a single callback of the given type is called</desc>
+   <param name="a" type="object">EDS</param>
+   <param name="b" type="bool">true if every callback returned true, else false</param>
+   <param name="c" type="array">arguments</param>
+   </method>
    */
   this.onFireEvent=function(){};
 
   /**
-      <method name="addEvent" type="this">
-      <desc>Add a new callback to the event of the given object</desc>
-      <param name="a" type="string">Event type</param>
-      <param name="b" type="object">Object</param>
-      <param name="c" type="mixed">Single function callback or array of callbacks</param>
-      <param name="[e]" type="bool">Repeat flag. Only works for single functions. Default 1, it repeats.</param>
-      <test>
-      <![CDATA[
-      var a=Meta.events.bro(),d,b={},c=function(){d=true;};
-      a.addEvent('addEvent',b,c); // added
-      a.addEvent('addEvent',b,c); // added
-      a.addEvent('addEvent',b,c,0); // ignored, since its already added
-      a.fireEvent('addEvent',b);
-      a.rmEvent('addEvent',b);
-      return d;
-      ]]>
-      </test>
-      </method>
-  */
+   <method name="addEvent" type="this">
+   <desc>Add a new callback to the event of the given object</desc>
+   <param name="a" type="string">Event type</param>
+   <param name="b" type="object">Object</param>
+   <param name="c" type="mixed">Single function callback or array of callbacks</param>
+   <param name="[e]" type="bool">Repeat flag. Only works for single functions. Default 1, it repeats.</param>
+   <test>
+   <![CDATA[
+   var a=Meta.events.bro(),d,b={},c=function(){d=true;};
+   a.addEvent('addEvent',b,c); // added
+   a.addEvent('addEvent',b,c); // added
+   a.addEvent('addEvent',b,c,0); // ignored, since its already added
+   a.fireEvent('addEvent',b);
+   a.rmEvent('addEvent',b);
+   return d;
+   ]]>
+   </test>
+   </method>
+   */
   this.addEvent=function(a,b,c,e)
   {
     e=e===undefined?1:e;
 
-    var d=-1,me=this;
+    var d=-1,
+        me=this;
 
     // Event type not initialized, so initialize it
-    if(!events[a])events[a]=[];
+    if(!events[a])
+      events[a]=[];
 
     // Check if object is defined on the event, else add it
-    else d=me.indexOfEvent(a,b);
+    else
+      d=me.indexOfEvent(a,b);
 
     if(d<0)
     {
@@ -2163,7 +2188,10 @@ function()
 	obj:b,
 	cb:function()
 	{
-	  return me.fireEvent.apply(me,arr.set([a,b]).concat(Meta.obj2array(arguments)).get());
+	  return me.fireEvent.apply(me,arr.
+            set([a,b]).
+            concat(Meta.obj2array(arguments)).
+            get());
 	},
 	fn:[]
       };
@@ -2171,7 +2199,8 @@ function()
       events[a].push(d);
       me.onNewEvent(d);
     }
-    else d=events[a][d];
+    else
+      d=events[a][d];
 
     // Add the callback function, can be repeated
     arr.set(d.fn);
@@ -2191,117 +2220,130 @@ function()
   };
 
   /**
-      <method name="getEvent" type="object">
-      <desc>Get the EDS of the event from the given object. Returns null if none found.</desc>
-      <param name="a" type="string">Event type</param>
-      <param name="b" type="integer">EDS id</param>
-      <test>
-      <![CDATA[
-      var a=Meta.events.bro(),b={},c=function(){},d,e;
-      a.addEvent('getEvent',b,c);
-      d=a.getEvent('getEvent',a.indexOfEvent('getEvent',{}));
-      e=d===null;
-      d=a.getEvent('getEvent',a.indexOfEvent('getEvent',b));
-      e=d && d.obj===b;
-      a.rmEvent('getEvent',b);
-      return e;
-      ]]>
-      </test>
-      </method>
+   <method name="getEvent" type="object">
+   <desc>Get the EDS of the event from the given object. Returns null if none found.</desc>
+   <param name="a" type="string">Event type</param>
+   <param name="b" type="integer">EDS id</param>
+   <test>
+   <![CDATA[
+   var a=Meta.events.bro(),b={},c=function(){},d,e;
+   a.addEvent('getEvent',b,c);
+   d=a.getEvent('getEvent',a.indexOfEvent('getEvent',{}));
+   e=d===null;
+   d=a.getEvent('getEvent',a.indexOfEvent('getEvent',b));
+   e=d && d.obj===b;
+   a.rmEvent('getEvent',b);
+   return e;
+   ]]>
+   </test>
+   </method>
    */
   this.getEvent=function(a,b)
   {
     if(events[a]&&events[a][b])
       return events[a][b];
-    else return null;
+    else
+      return null;
   };
 
   /**
-      <method name="getObjectEvents" type="array">
-      <desc>Get all the EDS of the given object. Returns [] if none found.</desc>
-      <param name="a" type="object">Object</param>
-      <test>
-      <![CDATA[
-      var a=Meta.events.bro(),b={},c=function(){},d,e;
-      a.addEvent('event1',b,c);
-      a.addEvent('event1',b,c);
-      a.addEvent('event2',b,c);
-      a.addEvent('event2',b,c);
-      d=a.getObjectEvents(b);
-      e=d.length==2;
-      a.rmEvent('event1',b);
-      a.rmEvent('event2',b);
-      return e;
-      ]]>
-      </test>
-      </method>
+   <method name="getObjectEvents" type="array">
+   <desc>Get all the EDS of the given object. Returns [] if none found.</desc>
+   <param name="a" type="object">Object</param>
+   <test>
+   <![CDATA[
+   var a=Meta.events.bro(),b={},c=function(){},d,e;
+   a.addEvent('event1',b,c);
+   a.addEvent('event1',b,c);
+   a.addEvent('event2',b,c);
+   a.addEvent('event2',b,c);
+   d=a.getObjectEvents(b);
+   e=d.length==2;
+   a.rmEvent('event1',b);
+   a.rmEvent('event2',b);
+   return e;
+   ]]>
+   </test>
+   </method>
    */
   this.getObjectEvents=function(a)
   {
-    var b=[],c,me=this;
+    var b=[],
+        c,
+        me=this;
+    
     for(var i in events)
     {
       c=me.indexOfEvent(i,a);
-      if(c>-1)b.push(events[i][c]);
+      if(c>-1)
+        b.push(events[i][c]);
     }
+    
     return b;
   };
 
   /**
-      <method name="indexOfEvent" type="integer">
-      <desc>Index of the EDS of the event from the given object. Returns -1 if none found.</desc>
-      <param name="a" type="string">Event type</param>
-      <param name="b" type="object">Object</param>
-      <test>
-      <![CDATA[
-      var a=Meta.events.bro(),b={},c=function(){},d;
-      a.addEvent('indexOfEvent',b,c);
-      d=a.indexOfEvent('indexOfEvent',b);
-      a.rmEvent('indexOfEvent',b);
-      return d==0;
-      ]]>
-      </test>
-      </method>
+   <method name="indexOfEvent" type="integer">
+   <desc>Index of the EDS of the event from the given object. Returns -1 if none found.</desc>
+   <param name="a" type="string">Event type</param>
+   <param name="b" type="object">Object</param>
+   <test>
+   <![CDATA[
+   var a=Meta.events.bro(),b={},c=function(){},d;
+   a.addEvent('indexOfEvent',b,c);
+   d=a.indexOfEvent('indexOfEvent',b);
+   a.rmEvent('indexOfEvent',b);
+   return d==0;
+   ]]>
+   </test>
+   </method>
    */
   this.indexOfEvent=function(a,b)
   {
     var c=-1;
-    if(!events[a])return c;
+    if(!events[a])
+      return c;
     arr.set(events[a]).every(function(v,i)
-			     {
-			       if(v.obj==b)
-			       {
-				 c=i;
-				 return false;
-			       }
-			       return true;
-			     });
+      {
+	if(v.obj==b)
+	{
+	  c=i;
+	  return false;
+	}
+	return true;
+      });
     return c;
   };
 
   /**
-      <method name="fireEvent" type="bool">
-      <desc>Fire the given event type for the given object. Returns false if any callback returns false, else true.</desc>
-      <param name="a" type="string">Event type</param>
-      <param name="b" type="object">Object</param>
-      <param name="[...]" type="mixed">Custom arguments to pass to the callbacks</param>
-      <test>
-      <![CDATA[
-      var a=Meta.events.bro(),d,b={},c=function(){d=true;};
-      a.addEvent('fireEvent',b,c); // added
-      a.addEvent('fireEvent',b,c); // added
-      a.addEvent('fireEvent',b,c,0); // ignores, since its already added
-      a.fireEvent('fireEvent',b);
-      a.rmEvent('fireEvent',b);
-      return d;
-      ]]>
-      </test>
-      </method>
+   <method name="fireEvent" type="bool">
+   <desc>Fire the given event type for the given object. Returns false if any callback returns false, else true.</desc>
+   <param name="a" type="string">Event type</param>
+   <param name="b" type="object">Object</param>
+   <param name="[...]" type="mixed">Custom arguments to pass to the callbacks</param>
+   <test>
+   <![CDATA[
+   var a=Meta.events.bro(),d,b={},c=function(){d=true;};
+   a.addEvent('fireEvent',b,c); // added
+   a.addEvent('fireEvent',b,c); // added
+   a.addEvent('fireEvent',b,c,0); // ignores, since its already added
+   a.fireEvent('fireEvent',b);
+   a.rmEvent('fireEvent',b);
+   return d;
+   ]]>
+   </test>
+   </method>
    */
   this.fireEvent=function(a,b)
   {
-    var me=this,d=me.indexOfEvent(a,b),e=true,c,f;
-    if(d<0)return false;
+    var me=this,
+        d=me.indexOfEvent(a,b),
+        e=true,
+        c,
+        f;
+    
+    if(d<0)
+      return false;
 
     f=events[a][d];
 
@@ -2311,50 +2353,58 @@ function()
 
     // Call all the callbacks with the arguments
     Meta.each(f.fn,function(w)
-              {
-		if(w.apply(b,c)===false)
-		  e=false;
-	      });
+      {
+	if(w.apply(b,c)===false)
+	  e=false;
+      });
 
     me.onFireEvent(f,e,c);
     return e;
   };
 
   /**
-      <method name="rmEvent" type="this">
-      <desc>Remove the given callback or callbacks of the event type for the given object.</desc>
-      <param name="a" type="string">Event type</param>
-      <param name="b" type="object">Object</param>
-      <param name="[c]" type="function">Callback to be removed. If not defined, removes the whole event.</param>
-      <test>
-      <![CDATA[
-      var a=Meta.events.bro(),b={},c=function(){},d,e;
-      a.addEvent('rmEvent',b,c);
-      a.rmEvent('rmEvent',b);
-      d=a.indexOfEvent('rmEvent',b);
-      e=d==-1;
-      a.addEvent('rmEvent',b,c);
-      a.rmEvent('rmEvent',b,c);
-      d=a.indexOfEvent('rmEvent',b);
-      return e && d==-1;
-      ]]>
-      </test>
-      </method>
+   <method name="rmEvent" type="this">
+   <desc>Remove the given callback or callbacks of the event type for the given object.</desc>
+   <param name="a" type="string">Event type</param>
+   <param name="b" type="object">Object</param>
+   <param name="[c]" type="function">Callback to be removed. If not defined, removes the whole event.</param>
+   <test>
+   <![CDATA[
+   var a=Meta.events.bro(),b={},c=function(){},d,e;
+   a.addEvent('rmEvent',b,c);
+   a.rmEvent('rmEvent',b);
+   d=a.indexOfEvent('rmEvent',b);
+   e=d==-1;
+   a.addEvent('rmEvent',b,c);
+   a.rmEvent('rmEvent',b,c);
+   d=a.indexOfEvent('rmEvent',b);
+   return e && d==-1;
+   ]]>
+   </test>
+   </method>
    */
   this.rmEvent=function(a,b,c)
   {
-    var d,e=-1,f,g=this.indexOfEvent(a,b);
-    if(g<0)return this;
+    var d,
+        e=-1,
+        f,
+        g=this.indexOfEvent(a,b);
+    
+    if(g<0)
+      return this;
+    
     d=events[a][g];
 
     // Remove all the callbacks
-    if(!c)d.fn=[];
+    if(!c)
+      d.fn=[];
     else
     {
       // Remove only one callback
       f=arr.set(d.fn);
       e=f.indexOf(c);
-      if(e>-1)f.drop(e);
+      if(e>-1)
+        f.drop(e);
     }
 
     // Remove the whole event for the given object
@@ -2367,66 +2417,70 @@ function()
   };
 
   /**
-      <method name="rmObject" type="this">
-      <desc>Removes all the events for the given object.</desc>
-      <param name="a" type="object">Object</param>
-      <test>
-      <![CDATA[
-      var a=Meta.events.bro(),b={},c=function(){},d;
-      a.addEvent('rmObject',b,c);
-      a.rmObject(b);
-      d=a.indexOfEvent('rmObject',b);
-      return d==-1;
-      ]]>
-      </test>
-      </method>
+   <method name="rmObject" type="this">
+   <desc>Removes all the events for the given object.</desc>
+   <param name="a" type="object">Object</param>
+   <test>
+   <![CDATA[
+   var a=Meta.events.bro(),b={},c=function(){},d;
+   a.addEvent('rmObject',b,c);
+   a.rmObject(b);
+   d=a.indexOfEvent('rmObject',b);
+   return d==-1;
+   ]]>
+   </test>
+   </method>
    */
   this.rmObject=function(a)
   {
     var me=this;
     Meta.each(events,function(v,i)
-              {
-		me.rmEvent(i,a);
-	      },1);
+      {
+	me.rmEvent(i,a);
+      },1);
     return me;
   };
 
   /**
-      <method name="flush" type="this">
-      <desc>Removes all the events defined or the ones selected by a callback.</desc>
-      <param name="[a]" type="function">Callback function to select wich event remove. If return true remove, else dont remove</param>
-      <test>
-      <![CDATA[
-      var a=Meta.events.bro(),b={},c=function(){},d,e;
-      a.addEvent('event1',b,c);
-      a.addEvent('event2',b,c);
-      a.flush(function(a,b){return a=='event2';});
-      d=a.indexOfEvent('event1',b);
-      e=d==0;
-      d=a.indexOfEvent('event2',b);
-      e=e&&d==-1;
-      a.flush();
-      d=a.indexOfEvent('event1',b);
-      return e && d==-1;
-      ]]>
-      </test>
-      </method>
+   <method name="flush" type="this">
+   <desc>Removes all the events defined or the ones selected by a callback.</desc>
+   <param name="[a]" type="function">Callback function to select wich event remove. If return true remove, else dont remove</param>
+   <test>
+   <![CDATA[
+   var a=Meta.events.bro(),b={},c=function(){},d,e;
+   a.addEvent('event1',b,c);
+   a.addEvent('event2',b,c);
+   a.flush(function(a,b){return a=='event2';});
+   d=a.indexOfEvent('event1',b);
+   e=d==0;
+   d=a.indexOfEvent('event2',b);
+   e=e&&d==-1;
+   a.flush();
+   d=a.indexOfEvent('event1',b);
+   return e && d==-1;
+   ]]>
+   </test>
+   </method>
    */
   this.flush=function(a)
   {
     a=a||function(){return 1;};
-    var me=this,b=[],j;
+    var me=this,
+        b=[],
+        j;
+    
     Meta.each(events,function(v,i)
-              {
-		j=v.length;
-		while(j--)
-		{
-		  if(a(i,v[j].obj))
-		    me.rmEvent(i,v[j].obj);
-		}
+      {
+	j=v.length;
+	while(j--)
+	{
+	  if(a(i,v[j].obj))
+	    me.rmEvent(i,v[j].obj);
+	}
 
-		if(!v.length)b.push(i);
-	      },1);
+	if(!v.length)
+          b.push(i);
+      },1);
 
     j=b.length;
     while(j--)
@@ -2459,16 +2513,15 @@ function()
 */
 
 /**
-   <class name="Meta.domevent">
-   <desc>DOM events manager</desc>
-   <inherit>Meta.array</inherit>
-   <extend>Meta.events</extend>
-*/
+ <class name="Meta.domevent">
+ <desc>DOM events manager</desc>
+ <inherit>Meta.array</inherit>
+ <extend>Meta.events</extend>
+ */
 //Meta.domevent=Meta(Meta.events);
 Meta.domevent=Meta(Meta.array);
 Meta.domevent.extend(Meta.events,{exclude:['bro','sup','get','set']});
-Meta.domevent.extend(
-{
+Meta.domevent.extend({
   valid_type:' abort blur change click dblclick error focus keydown keypress keyup load mousedown mousemove mouseout mouseover mouseup reset resize select submit unload ',
 
   onNewEvent:function(a)
@@ -2510,49 +2563,50 @@ Meta.domevent.extend(
   },
 
   /**
-     <method name="on" type="mixed">
-     <desc>
-     Adds a new event.
-     Returns this.
-     </desc>
-     <param name="a" type="string">Event type</param>
-     <param name="b" type="function">Callback for the event</param>
-     </method>
-  */
+   <method name="on" type="mixed">
+   <desc>
+   Adds a new event.
+   Returns this.
+   </desc>
+   <param name="a" type="string">Event type</param>
+   <param name="b" type="function">Callback for the event</param>
+   </method>
+   */
   on:function(a,b)
   {
     var me=this;
-    if(b)return me.forEach(function(v){me.addEvent(a,v,b);});
+    if(b)
+      return me.forEach(function(v){me.addEvent(a,v,b);});
   },
 
   /**
-     <method name="fire" type="mixed">
-     <desc>
-     Fires the given event type.
-     Returns this.
-     </desc>
-     <param name="a" type="string">Event type</param>
-     </method>
-  */
+   <method name="fire" type="mixed">
+   <desc>
+   Fires the given event type.
+   Returns this.
+   </desc>
+   <param name="a" type="string">Event type</param>
+   </method>
+   */
   fire:function(a)
   {
     var me=this;
     return me.forEach(function(v)
-		      {
-			if(v['on'+a])
-			  v['on'+a]();
-
-			me.fireEvent(a,v);
-		      });
+      {
+	if(v['on'+a])
+	  v['on'+a]();
+        
+	me.fireEvent(a,v);
+      });
   },
 
   /**
-     <method name="rmOn" type="this">
-     <desc>Remove the given event callback</desc>
-     <param name="a" type="string">Event type</param>
-     <param name="[b]" type="function">Callback on current event</param>
-     </method>
-  */
+   <method name="rmOn" type="this">
+   <desc>Remove the given event callback</desc>
+   <param name="a" type="string">Event type</param>
+   <param name="[b]" type="function">Callback on current event</param>
+   </method>
+   */
   rmOn:function(a,b)
   {
     var me=this;
@@ -2560,9 +2614,9 @@ Meta.domevent.extend(
   },
 
   /**
-     <method name="cleanEvents" type="this">
-     <desc>Remove events that from elements without parentNode</desc>
-     </method>
+   <method name="cleanEvents" type="this">
+   <desc>Remove events that from elements without parentNode</desc>
+   </method>
   */
   cleanEvents:function()
   {
@@ -2571,14 +2625,12 @@ Meta.domevent.extend(
 });
 /** </class> */
 
-Meta.domevent.addEvent('unload',
-		       window,
-		       function()
-		       {
-			 Meta.events.flush();
-			 if(document && document.body)
-			   Meta.dom.purge(document.body);
-		       });
+Meta.domevent.addEvent('unload',window,function()
+  {
+    Meta.events.flush();
+    if(document && document.body)
+      Meta.dom.purge(document.body);
+  });
 
 /*
  Copyright (c) 2010 Rolando González Chévere <rolosworld@gmail.com>
@@ -2605,18 +2657,20 @@ Meta.animation=function()
 {
   var ev=Meta.events.bro(),
       fps=1000/30,
-      bakList=['width',
-               'height',
-               'left',
-               'top',
-               'display',
-               'visibility',
-               'overflow',
-               'filter',
-               'MozOpacity',
-               'zoom',
-               'opacity',
-               'KHTMLOpacity'];
+      bakList=[
+        'width',
+        'height',
+        'left',
+        'top',
+        'display',
+        'visibility',
+        'overflow',
+        'filter',
+        'MozOpacity',
+        'zoom',
+        'opacity',
+        'KHTMLOpacity'
+      ];
 
   ev.onFireEvent=function(a,b)
   {
@@ -2656,7 +2710,8 @@ Meta.animation=function()
           x=x0+(t-t0)*dx/dt; // Translacion lineal
 
       // Termino la animacion
-      if(t>=t1)return false;
+      if(t>=t1)
+        return false;
 
       fn.call(obj,x);
       return undefined;
@@ -2664,7 +2719,8 @@ Meta.animation=function()
 
     function frk2()
     {
-      if(cb)cb.call(me,obj);
+      if(cb)
+        cb.call(me,obj);
     };
 
     ev.addEvent('frameStep',ev,frk);
@@ -2675,107 +2731,109 @@ Meta.animation=function()
   return {
     data:'data-meta_',
 
-      /**
-         <method name="cssBackup" type="this">
-         <desc>Backup important element css</desc>
-         </method>
-      */
-      cssBackup:function()
-      {
-        var a=Meta.dom.bro(),
-	    b=bakList,c,
-	    me=this;
+    /**
+     <method name="cssBackup" type="this">
+     <desc>Backup important element css</desc>
+     </method>
+     */
+    cssBackup:function()
+    {
+      var a=Meta.dom.bro(),
+          b=bakList,c,
+	  me=this;
 
-        return me.forEach(function(v)
-                          {
-			    a.set(v);
+      return me.forEach(function(v)
+        {
+	  a.set(v);
+          
+	  var d=parseInt(a.attr(me.data+'bak'),10)||0;
+	  a.attr(me.data+'bak',d+1);
 
-			    var d=parseInt(a.attr(me.data+'bak'),10)||0;
-			    a.attr(me.data+'bak',d+1);
+	  if(d)
+	    return;
+          
+	  Meta.each(b,function(v)
+            {
+	      c=a.css(v);
+	      if(c!==null)
+                a.attr(me.data+v,c);
+	    });
+          
+	  if(!a.attr(me.data+'size_w'))
+	  {
+	    c=a.dims();
+	    a.attr(me.data+'size_w',c.width).
+              attr(me.data+'size_h',c.height);
+	  }
 
-			    if(d)
-			      return;
-
-			    Meta.each(b,function(v)
-				      {
-					c=a.css(v);
-					if(c!==null)a.attr(me.data+v,c);
-				      });
-
-			    if(!a.attr(me.data+'size_w'))
-			    {
-			      c=a.dims();
-			      a.attr(me.data+'size_w',c.width)
-				.attr(me.data+'size_h',c.height);
-			    }
-
-			    if(!a.attr(me.data+'pos_l'))
-			    {
-			      c=a.dims();
-			      a.attr(me.data+'pos_l',c.left)
-				.attr(me.data+'pos_t',c.top);
-			    }
-			  });
+	  if(!a.attr(me.data+'pos_l'))
+	  {
+	    c=a.dims();
+	    a.attr(me.data+'pos_l',c.left).
+              attr(me.data+'pos_t',c.top);
+	  }
+	});
       },
 
-      /**
-       <method name="cssRestore" type="this">
-       <param name="[d]" type="string">CSS to restore.</param>
-       <desc>Restore important element css</desc>
-       </method>
-      */
-      cssRestore:function(d)
+    /**
+     <method name="cssRestore" type="this">
+     <param name="[d]" type="string">CSS to restore.</param>
+     <desc>Restore important element css</desc>
+     </method>
+     */
+    cssRestore:function(d)
+    {
+      var a=Meta.dom.bro(),
+          b=bakList,c,
+	  me=this;
+
+      function restore(v)
       {
-        var a=Meta.dom.bro(),
-	    b=bakList,c,
-	    me=this;
+	c=a.attr(me.data+v);
+        a.css(v,'');
+        if(c!==null)
+          a.css(v,c);
+      };
 
-	function restore(v)
-	{
-	  c=a.attr(me.data+v);
-	  a.css(v,'');
-	  if(c!==null)a.css(v,c);
-	};
+      return me.forEach(function(v)
+        {
+	  if(!a.set(v).attr(me.data+'bak'))
+	    return;
+          
+	  if(d)
+	    restore(d);
+	  else
+	    Meta.each(b,restore);
+        });
+    },
 
-        return me.forEach(function(v)
-                          {
-			    if(!a.set(v).attr(me.data+'bak'))
-			      return;
+    /**
+     <method name="cssBackupClear" type="this">
+     <desc>Clears the css backup important element css</desc>
+     </method>
+     */
+    cssBackupClear:function()
+    {
+      var a=Meta.dom.bro(),
+          b=bakList,
+	  me=this;
 
-			    if(d)
-			      restore(d);
-			    else
-			      Meta.each(b,restore);
-                          });
-      },
+      return me.forEach(function(v)
+        {
+	  a.set(v);
+          
+	  Meta.each(b,function(v)
+	    {
+	      a.attr(me.data+v,null);
+	    });
 
-      /**
-       <method name="cssBackupClear" type="this">
-       <desc>Clears the css backup important element css</desc>
-       </method>
-      */
-      cssBackupClear:function()
-      {
-        var a=Meta.dom.bro(),
-            b=bakList,
-	    me=this;
-
-        return me.forEach(function(v)
-                          {
-			    a.set(v);
-
-			    Meta.each(b,function(v)
-				      {
-					a.attr(me.data+v,null);
-				      });
-
-			    a.attr(me.data+'bak',null).
-			      attr(me.data+'size_w',null).
-			      attr(me.data+'size_h',null).
-			      attr(me.data+'pos_l',null).
-			      attr(me.data+'pos_t',null);
-                          });
-      },
+	  a.attr(me.data+'bak',null).
+	    attr(me.data+'size_w',null).
+	    attr(me.data+'size_h',null).
+	    attr(me.data+'pos_l',null).
+	    attr(me.data+'pos_t',null);
+        });
+    },
 
     /**
      <method name="animate" type="this">
@@ -2796,20 +2854,20 @@ Meta.animation=function()
       me.cssRestore('display');
 
       if(!me.__)ev.addEvent('stopAnim',ev,function()
-			    {
-			      if(r)
-				{
-				  me.cssRestore();
-				  me.cssBackupClear();
-				}
-			      me.__=0;
-			    });
+	{
+	  if(r)
+	  {
+	    me.cssRestore();
+	    me.cssBackupClear();
+	  }
+	  me.__=0;
+	});
       me.__=1;
 
       return this.forEach(function(v)
-			  {
-			    anim.call(me,cb,x0.call(v),x1.call(v),speed,fn,v);
-			  });
+	{
+	  anim.call(me,cb,x0.call(v),x1.call(v),speed,fn,v);
+	});
     },
 
     /**
@@ -2870,59 +2928,61 @@ Meta.animation=function()
       // Devuelve el elemento a la normalidad
       cb0=function(o)
 	{
-          if(cb)cb.call(me,o);
+          if(cb)
+            cb.call(me,o);
         },
 
       // Esconde por completo el elemento y llamar el callback
       cb1=function(o)
 	{
           a.set(o).hide();
-          if(cb)cb.call(me,o);
+          if(cb)
+            cb.call(me,o);
         };
 
 
 
       // Tipos de animaciones
       switch(md)
-	{
-	  case 'up-left':
-            x0=s3;
-            x1=s0;
-            fn=wh;
-            cb0=cb1;
-            break;
-          case 'right':
-            x0=s0;
-            x1=s1;
-            fn=w;
-	    r=1;
-            break;
-          case 'left':
-            x0=s1;
-            x1=s0;
-            fn=w;
-            cb0=cb1;
-            break;
-          case 'up':
-            x0=s2;
-            x1=s0;
-            fn=h;
-            cb0=cb1;
-            break;
-          case 'down':
-            x0=s0;
-            x1=s2;
-            fn=h;
-	    r=1;
-            break;
-          default: //down-right
-            x0=s0;
-            x1=s3;
-            fn=wh;
-	    r=1;
-        }
+      {
+        case 'up-left':
+          x0=s3;
+          x1=s0;
+          fn=wh;
+          cb0=cb1;
+          break;
+        case 'right':
+          x0=s0;
+          x1=s1;
+          fn=w;
+	  r=1;
+          break;
+        case 'left':
+          x0=s1;
+          x1=s0;
+          fn=w;
+          cb0=cb1;
+          break;
+        case 'up':
+          x0=s2;
+          x1=s0;
+          fn=h;
+          cb0=cb1;
+          break;
+        case 'down':
+          x0=s0;
+          x1=s2;
+          fn=h;
+	  r=1;
+          break;
+        default: //down-right
+          x0=s0;
+          x1=s3;
+          fn=wh;
+	  r=1;
+      }
 
-	return me.animate(x0,x1,speed,fn,cb0,r);
+      return me.animate(x0,x1,speed,fn,cb0,r);
     },
 
     /**
@@ -2959,14 +3019,16 @@ Meta.animation=function()
       // Devuelve el elemento a la normalidad
       cb0=function(o)
 	{
-	  if(cb)cb.call(me,o);
+	  if(cb)
+            cb.call(me,o);
         },
 
       // Esconde por completo el elemento
       cb1=function(o)
         {
           a.set(o).hide();
-          if(cb)cb.call(me,o);
+          if(cb)
+            cb.call(me,o);
         };
 
       // Tipos de animaciones
@@ -3069,203 +3131,218 @@ Meta.dom.extend(function()
       :a.text;
   };
 
-  return (
-{
-  _doc:document,
+  return {
+    _doc:document,
 
-  /**
-   <method name="bro" type="Meta.dom">
-   <desc>Custom bro for Meta.dom</desc>
-   <param name="[...]" type="mixed">Mixed data</param>
-   <test>
-   <![CDATA[
-   var a=document.createElement('b');
-   return Meta.dom.bro(a).get(0)==a;
-   ]]>
-   </test>
-   </method>
-  */
-  bro:function()
-  {
-    var a=['bro'],
-	b=arguments;
+    /**
+     <method name="bro" type="Meta.dom">
+     <desc>Custom bro for Meta.dom</desc>
+     <param name="[...]" type="mixed">Mixed data</param>
+     <test>
+     <![CDATA[
+     var a=document.createElement('b');
+     return Meta.dom.bro(a).get(0)==a;
+     ]]>
+     </test>
+     </method>
+     */
+    bro:function()
+    {
+      var a=['bro'],
+          b=arguments;
 
-    if(!b.length)
-	a.push(this.doc());
-    else
-	a=a.concat(Meta.obj2array(b));
+      if(!b.length)
+        a.push(this.doc());
+      else
+        a=a.concat(Meta.obj2array(b));
+      
+      // Use bro from Meta.array
+      return this.under.apply(this,a);
+    },
 
-    // Use bro from Meta.array
-    return this.under.apply(this,a);
-  },
-
-  /**
-   <method name="set" type="Meta.dom">
-   <desc>Set the DOM or DOMS to be managed</desc>
-   <param name="a" type="mixed">Mixed data. Can be an array of elements or a single element</param>
-   <param name="[i]" type="integer">Index where to set the value</param>
-   <test>
-   <![CDATA[
-   var a=document.createElement('b');
-   return Meta.dom.bro().set(a).get(0)==a;
-   ]]>
-   </test>
-   </method>
-  */
-  set:function(a,i)
-  {
+    /**
+     <method name="set" type="Meta.dom">
+     <desc>Set the DOM or DOMS to be managed</desc>
+     <param name="a" type="mixed">Mixed data. Can be an array of elements or a single element</param>
+     <param name="[i]" type="integer">Index where to set the value</param>
+     <test>
+     <![CDATA[
+     var a=document.createElement('b');
+     return Meta.dom.bro().set(a).get(0)==a;
+     ]]>
+     </test>
+     </method>
+     */
+    set:function(a,i)
+    {
       a=a||this.doc();
-      if(!Meta.its(i,'number')&&!Meta.its(a,'array'))a=[a];
+      if(!Meta.its(i,'number')&&!Meta.its(a,'array'))
+        a=[a];
 
       // Use set from Meta.core
       return this.under.apply(this,['set',a,i]);
-  },
+    },
 
-  /**
-   <method name="doc" type="mixed">
-   <param name="[x]" type="mixed">XML data if an XML should be created or a document object</param>
-   <desc>Get|Set|Create the document of the current elements</desc>
-   <test>
-   <![CDATA[
-   return !!1;
-   ]]>
-   </test>
-   </method>
-  */
-  doc:function(x)
-  {
-    var a;
-
-    // Get document
-    if(!x)
-      return (this._doc=this._doc||document);
-
-    // If its not a string, it should be a document object
-    if(!Meta.its(x,'string'))
+    /**
+     <method name="doc" type="mixed">
+     <param name="[x]" type="mixed">XML data if an XML should be created or a document object</param>
+     <desc>Get|Set|Create the document of the current elements</desc>
+     <test>
+     <![CDATA[
+     return !!1;
+     ]]>
+     </test>
+     </method>
+     */
+    doc:function(x)
     {
-      this._doc=x.nodeType==9?x:x.ownerDocument?x.ownerDocument:document;
+      var a;
+
+      // Get document
+      if(!x)
+        return (this._doc=this._doc||document);
+
+      // If its not a string, it should be a document object
+      if(!Meta.its(x,'string'))
+      {
+        this._doc=x.nodeType==9?x:x.ownerDocument?x.ownerDocument:document;
+        return this;
+      }
+
+      // Create XML document
+      if(isIE)
+      {
+        //this._ieXML=new ActiveXObject("Microsoft.XMLDOM");
+        this._doc=new ActiveXObject("Msxml2.DOMDocument");
+        this._doc.async=false;
+        this._doc.loadXML(x);
+      }
+      else
+        this._doc=(new DOMParser()).parseFromString(x,"text/xml");
+
+      this.set(Meta.obj2array(this._doc.childNodes));
       return this;
-    }
+    },
 
-    // Create XML document
-    if(isIE)
+    /**
+     <method name="select" type="this">
+     <param name="a" type="string">CSS rules</param>
+     <param name="[c]" type="mixed">Use offset, Bool if currently defined elements should be used or Element for using it instead.</param>
+     <desc>Select elements from the given document, the offset element is the one defined in this.</desc>
+     <test>
+     <![CDATA[
+     return Meta.dom.bro().select('body').get(0)==document.body;
+     ]]>
+     </test>
+     </method>
+     */
+    select:function(a,c)
     {
-      //this._ieXML=new ActiveXObject("Microsoft.XMLDOM");
-      this._doc=new ActiveXObject("Msxml2.DOMDocument");
-      this._doc.async=false;
-      this._doc.loadXML(x);
-    }
-    else
-      this._doc=(new DOMParser()).parseFromString(x,"text/xml");
+      var me=this,
+          b=[],
+          s=Meta.select,
+          i,
+          j,
+          v,
+          w;
 
-    this.set(Meta.obj2array(this._doc.childNodes));
-    return this;
-  },
+      if(a.nodeType)
+      {
+        me._=[a];
+        return me;
+      }
 
-  /**
-   <method name="select" type="this">
-   <param name="a" type="string">CSS rules</param>
-   <param name="[c]" type="mixed">Use offset, Bool if currently defined elements should be used or Element for using it instead.</param>
-   <desc>Select elements from the given document, the offset element is the one defined in this.</desc>
-   <test>
-   <![CDATA[
-   return Meta.dom.bro().select('body').get(0)==document.body;
-   ]]>
-   </test>
-   </method>
-  */
-  select:function(a,c)
-  {
-    var me=this,b=[],i,j,v,w,s=Meta.select;
+      else if(c)
+      {
+        if(c.nodeType)
+          me._=[c];
 
-    if(a.nodeType)
-    {
-      me._=[a];
+        w=me._;
+        j=w.length;
+        for(i=0;i<j;i++)
+          b=b.concat(s(a,w[i]));
+      }
+
+      else
+        b=s(a,me.doc());
+
+      me._=b;
       return me;
-    }
+    },
 
-    else if(c)
+    /**
+     <method name="evalGlobal" type="this">
+     <param name="a" type="string">Script string</param>
+     <desc>Evaluates a given script string on the global context.</desc>
+     </method>
+     */
+    evalGlobal:function(a)
     {
-      if(c.nodeType)
-	me._=[c];
+      var doc=this.doc(),
+          script=doc.createElement('script'),
+          head=doc.getElementsByTagName('head')[0]||doc.documentElement;
 
-      w=me._;
-      j=w.length;
-      for(i=0;i<j;i++)
-	b=b.concat(s(a,w[i]));
-    }
+      script.type='text/javascript';
 
-    else
-      b=s(a,me.doc());
+      if(isIE)
+        script.text=a;
+      else
+        script.appendChild(doc.createTextNode(a));
 
-    me._=b;
-    return me;
-  },
+      head.insertBefore(script,head.firstChild);
+      head.removeChild(script);
+      return this;
+    },
 
-  /**
-   <method name="evalGlobal" type="this">
-   <param name="a" type="string">Script string</param>
-   <desc>Evaluates a given script string on the global context.</desc>
-   </method>
-  */
-  evalGlobal:function(a)
-  {
-    var doc=this.doc(),
-     script=doc.createElement('script'),
-       head=doc.getElementsByTagName('head')[0]||doc.documentElement;
-
-    script.type='text/javascript';
-
-    if(isIE)
-      script.text=a;
-    else
-      script.appendChild(doc.createTextNode(a));
-
-    head.insertBefore(script,head.firstChild);
-    head.removeChild(script);
-    return this;
-  },
-
-  /**
-   <method name="glue" type="this">
-   <param name="e" type="mixed">Element, Array of elements or HTML string to be used.</param>
-   <param name="[t]" type="string">
+    /**
+     <method name="glue" type="this">
+     <param name="e" type="mixed">Element, Array of elements or HTML string to be used.</param>
+     <param name="[t]" type="string">
        Type of insertion, default is append.
        Types:
        before
        after
        prepend
        append
-   </param>
-   <desc>Insert the given element on the elements</desc>
-   </method>
-  */
-  glue:function(e,t)
-  {
-    if(e=='')
-      return this;
+     </param>
+     <desc>Insert the given element on the elements</desc>
+     </method>
+     */
+    glue:function(e,t)
+    {
+      if(e==='')
+        return this;
 
-    var i,j,g,h,v,me=this,
-    z=glues[t||'append'],
-    y=me.son(),l,s=[],u=[],w;
+      var i,
+          j,
+          g,
+          h,
+          v,
+          me=this,
+          z=glues[t||'append'],
+          y=me.son(),
+          l,
+          s=[],
+          u=[],
+          w;
 
-    // Assume its an element
-    if(e.nodeType)
-      y._=[e];
+      // Assume its an element
+      if(e.nodeType)
+        y._=[e];
 
-    // Assume its a string
-    else if(typeof e == 'string')
-      y.create(e);
+      // Assume its a string
+      else if(typeof e == 'string')
+        y.create(e);
 
-    // Assume its an array of elements
-    else
-      y._=e;
+      // Assume its an array of elements
+      else
+        y._=e;
 
-    // Create document fragment
-    h=y._;
-    j=h.length;
-    g=me.doc().createDocumentFragment();
-    for(i=0;i<j;i++)
+      // Create document fragment
+      h=y._;
+      j=h.length;
+      g=me.doc().createDocumentFragment();
+      for(i=0;i<j;i++)
       {
 	w=h[i];
 
@@ -3278,156 +3355,162 @@ Meta.dom.extend(function()
 	g.appendChild(w);
       }
 
-    // Process scripts
-    j=s.length;
-    for(i=0;i<j;i++)
+      // Process scripts
+      j=s.length;
+      for(i=0;i<j;i++)
       {
 	w=s[i];
 	if(!w.src)
-	  {
-	    u.push(w.text||w.textContent||w.innerHTML||'');
-	    w.parentNode.removeChild(w);
-	  }
+	{
+	  u.push(w.text||w.textContent||w.innerHTML||'');
+	  w.parentNode.removeChild(w);
+        }
       }
-    u=u.join("\n");
+      u=u.join("\n");
 
-    // glue it
-    h=me._;
-    j=h.length;
-    for(i=0;i<j;i++)
-    {
-      v=h[i];
-      z(v,i?g.cloneNode(true):g,v.parentNode);
-      me.evalGlobal(u);
-    }
-
-    return me;
-  },
-
-  /**
-   <method name="remove" type="this">
-   <desc>Remove all elements from their parentNode.</desc>
-   <test>
-   <![CDATA[
-   var a=document.createElement('div');
-   a.id="test";
-   document.body.appendChild(a);
-   Meta.dom.bro(a).remove();
-   return !document.getElementById('test');
-   ]]>
-   </test>
-   </method>
-  */
-  remove:function()
-  {
-    var x=this._,
-    i=x.length,
-    v;
-
-    while(i--)
-    {
-      v=x[i];
-
-      if(v.parentNode)
-        v.parentNode.removeChild(v);
-    }
-
-    return this;
-  },
-
-  /**
-   <method name="create" type="this">
-   <param name="e" type="string">Element to be created</param>
-   <desc>Create the given HTML|XML into their respective DOM</desc>
-   <test>
-   <![CDATA[
-   return Meta.dom.bro().create('<div>ok</div>').get(0).innerHTML=='ok';
-   ]]>
-   </test>
-   </method>
-  */
-  create:function(e)
-  {
-    var d=this.doc().createElement('div'),
-    a=[],b;
-
-    // XML
-    if(this.isXML(d))
-    {
-      b=sbdiv;
-      if(!b)b=getSBDiv();
-
-      b.innerHTML=e;
-      Meta.dom.copyNodes(b.childNodes,d);
-    }
-
-    // HTML
-    else
+      // glue it
+      h=me._;
+      j=h.length;
+      for(i=0;i<j;i++)
       {
-	if(isIE)
-	  {
-	    // Fix for single script tags in IE
-	    d.innerHTML='<br>'+e;
-	    d.removeChild(d.firstChild);
-	  }
+        v=h[i];
+        z(v,i?g.cloneNode(true):g,v.parentNode);
+        me.evalGlobal(u);
+      }
+
+      return me;
+    },
+
+    /**
+     <method name="remove" type="this">
+     <desc>Remove all elements from their parentNode.</desc>
+     <test>
+     <![CDATA[
+     var a=document.createElement('div');
+     a.id="test";
+     document.body.appendChild(a);
+     Meta.dom.bro(a).remove();
+     return !document.getElementById('test');
+     ]]>
+     </test>
+     </method>
+     */
+    remove:function()
+    {
+      var x=this._,
+          i=x.length,
+          v;
+
+      while(i--)
+      {
+        v=x[i];
+
+        if(v.parentNode)
+          v.parentNode.removeChild(v);
+      }
+
+      return this;
+    },
+
+    /**
+     <method name="create" type="this">
+     <param name="e" type="string">Element to be created</param>
+     <desc>Create the given HTML|XML into their respective DOM</desc>
+     <test>
+     <![CDATA[
+     return Meta.dom.bro().create('<div>ok</div>').get(0).innerHTML=='ok';
+     ]]>
+     </test>
+     </method>
+     */
+    create:function(e)
+    {
+      var d=this.doc().createElement('div'),
+          a=[],
+          b;
+
+      // XML
+      if(this.isXML(d))
+      {
+        b=sbdiv;
+        if(!b)
+          b=getSBDiv();
+
+        b.innerHTML=e;
+        Meta.dom.copyNodes(b.childNodes,d);
+      }
+
+      // HTML
+      else
+      {
+        if(isIE)
+        {
+	  // Fix for single script tags in IE
+	  d.innerHTML='<br>'+e;
+	  d.removeChild(d.firstChild);
+	}
 	else
 	  d.innerHTML=e;
       }
 
-    while((b=d.firstChild))
-      a.push(d.removeChild(b));
+      while((b=d.firstChild))
+        a.push(d.removeChild(b));
 
-    return this.set(a);
-  },
+      return this.set(a);
+    },
 
-  /**
-   <method name="prop" type="mixed">
-   <param name="a" type="string">Property name</param>
-   <param name="[i]" type="integer">Index of the element.</param>
-   <desc>Get Element Property value, null if not found</desc>
-   </method>
-  */
-  prop:function(a,i)
-  {
-    i=this.get(i||0);
-    return i?(a in i?i[a]:null):i;
-  },
-  
-  /**
-   <method name="attr" type="mixed">
-   <param name="a" type="string">Attribute name</param>
-   <param name="[v]" type="mixed">Attribute value</param>
-   <desc>Get|Set Element Attributes, null if not found</desc>
-   <test>
-   <![CDATA[
-   var a=document.createElement('div'),t='',b=Meta.dom.bro(a);
-   a.id='perro';
-   t=b.attr('id')=='perro';
-   b.attr('id','gato');
-   return t && b.attr('id')=='gato';
-   ]]>
-   </test>
-   </method>
-  */
-  attr:function(a,v)
-  {
-    var i,
-    x=this._,
-    l=x.length,
-    b,
-    w,
-    c;
-
-    if(!l)return null;
-    b=x[0];
-    c=b.attributes;
-    if(!a)return c;
-
-    // Set attribute
-    if(v!==undefined)
+    /**
+     <method name="prop" type="mixed">
+     <param name="a" type="string">Property name</param>
+     <param name="[i]" type="integer">Index of the element.</param>
+     <desc>Get Element Property value, null if not found</desc>
+     </method>
+     */
+    prop:function(a,i)
     {
-      i=l;
-      while(i--)
+      i=this.get(i||0);
+      return i?(a in i?i[a]:null):i;
+    },
+  
+    /**
+     <method name="attr" type="mixed">
+     <param name="a" type="string">Attribute name</param>
+     <param name="[v]" type="mixed">Attribute value</param>
+     <desc>Get|Set Element Attributes, null if not found</desc>
+     <test>
+     <![CDATA[
+     var a=document.createElement('div'),t='',b=Meta.dom.bro(a);
+     a.id='perro';
+     t=b.attr('id')=='perro';
+     b.attr('id','gato');
+     return t && b.attr('id')=='gato';
+     ]]>
+     </test>
+     </method>
+     */
+    attr:function(a,v)
+    {
+      var i,
+          x=this._,
+          l=x.length,
+          b,
+          w,
+          c;
+      
+      if(!l)
+        return null;
+      
+      b=x[0];
+      c=b.attributes;
+      
+      if(!a)
+        return c;
+
+      // Set attribute
+      if(v!==undefined)
+      {
+        i=l;
+        while(i--)
 	{
 	  if(v===null&&x[i].removeAttribute)
 	    x[i].removeAttribute(a);
@@ -3435,194 +3518,199 @@ Meta.dom.extend(function()
 	    x[i].setAttribute(a,v);
 	}
 
-      return this;
-    }
+        return this;
+      }
 
-    if(!c)
-      return null;
+      if(!c)
+        return null;
 
-    // Get attribute
-    //return isIE?c[a].value:b.getAttribute(a);
-    return b.getAttribute(a);
-  },
+      // Get attribute
+      //return isIE?c[a].value:b.getAttribute(a);
+      return b.getAttribute(a);
+    },
 
-  /**
-   <method name="css" type="this">
-   <param name="a" type="string">Style name</param>
-   <param name="[v]" type="mixed">Style value</param>
-   <desc>Get|Set Element CSS style</desc>
-   <test>
-   <![CDATA[
-   var a=document.createElement('div'),t='',b=Meta.dom.bro(a);
-   a.style.zIndex='1';
-   t=b.css('zIndex')=='1';
-   b.css('zIndex','2');
-   return t && b.css('zIndex')=='2';
-   ]]>
-   </test>
-   </method>
-  */
-  css:function(a,v)
-  {
-    var x=this._,
-    w,
-    i=x.length;
-
-    a=css2js(a);
-    if(v===undefined)
-      return i?x[0].style[a]:null;
-
-    while(i--)
-      x[i].style[a]=v;
-
-    return this;
-  },
-
-  /**
-   <method name="style" type="string">
-   <param name="s" type="string">Style</param>
-   <param name="[i]" type="integer">Index, default 0</param>
-   <desc>Try to get the element computed style</desc>
-   </method>
-  */
-  style:function(s,i)
-  {
-    i=this.get(i||0);
-
-    if(i)
+    /**
+     <method name="css" type="this">
+     <param name="a" type="string">Style name</param>
+     <param name="[v]" type="mixed">Style value</param>
+     <desc>Get|Set Element CSS style</desc>
+     <test>
+     <![CDATA[
+     var a=document.createElement('div'),t='',b=Meta.dom.bro(a);
+     a.style.zIndex='1';
+     t=b.css('zIndex')=='1';
+     b.css('zIndex','2');
+     return t && b.css('zIndex')=='2';
+     ]]>
+     </test>
+     </method>
+     */
+    css:function(a,v)
     {
-      s=css2js(s);
-      
-      i=window.getComputedStyle
-      ? window.getComputedStyle(i,null).getPropertyValue(s)
-      : i.currentStyle[s];
-    }
-    
-    return i;
-  },
+      var x=this._,
+          w,
+          i=x.length;
 
-  /**
-   <method name="val" type="mixed">
-   <param name="[v]" type="string">Value to set</param>
-   <desc>
+      a=css2js(a);
+      if(v===undefined)
+        return i?x[0].style[a]:null;
+      
+      while(i--)
+        x[i].style[a]=v;
+      
+      return this;
+    },
+
+    /**
+     <method name="style" type="string">
+     <param name="s" type="string">Style</param>
+     <param name="[i]" type="integer">Index, default 0</param>
+     <desc>Try to get the element computed style</desc>
+     </method>
+     */
+    style:function(s,i)
+    {
+      i=this.get(i||0);
+
+      if(i)
+      {
+        s=css2js(s);
+      
+        i=window.getComputedStyle
+          ? window.getComputedStyle(i,null).getPropertyValue(s)
+          : i.currentStyle[s];
+      }
+    
+      return i;
+    },
+
+    /**
+     <method name="val" type="mixed">
+     <param name="[v]" type="string">Value to set</param>
+     <desc>
        Get|Set Element Value.
        If the element is a SELECT, return the selected OPTION value.
        If the SELECT has multiple attribute set, return an array with all the selected OPTION's values.
        If the OPTION has no value set, returns the text in the OPTION.
        Returns this or string
-   </desc>
-   <test>
-   <![CDATA[
-   var a=document.createElement('input'),t='',b=Meta.dom.bro(a);
-   a.type="text";
-   a.value='perro';
-   t=b.val()=='perro';
-   b.val('gato');
-   t=t&&b.val()=='gato';
-   b.create('<select><option>1</option><option selected="selected">2</option></select>');
-   t=t&&b.val()=='2';
-   b.val('1');
-   return t&&b.val()=='1';
-   ]]>
-   </test>
-   </method>
-  */
-  val:function(v)
-  {
-    var i,
-    a=[],
-    b,
-    x=this._,
-    w,
-    j=x.length,
-    o=Meta.indexOf;
-
-    if(v!==undefined)
+     </desc>
+     <test>
+     <![CDATA[
+     var a=document.createElement('input'),t='',b=Meta.dom.bro(a);
+     a.type="text";
+     a.value='perro';
+     t=b.val()=='perro';
+     b.val('gato');
+     t=t&&b.val()=='gato';
+     b.create('<select><option>1</option><option selected="selected">2</option></select>');
+     t=t&&b.val()=='2';
+     b.val('1');
+     return t&&b.val()=='1';
+     ]]>
+     </test>
+     </method>
+     */
+    val:function(v)
     {
-      while(j--)
+      var i,
+          a=[],
+          b,
+          x=this._,
+          w,
+          j=x.length,
+          o=Meta.indexOf;
+
+      if(v!==undefined)
       {
-	w=x[j];
-
-	if(w.nodeName=='SELECT')
+        while(j--)
         {
-          if(!v.push)
-	    v=[v];
+          w=x[j];
 
-	  b=w.options;
-	  i=b.length;
-          while(i--)
-	  {
-	    a=b[i];
-            a.selected=false;
-	    if(o(v,optVal(a),1)>-1)
-              a.selected=true;
-	  }
+	  if(w.nodeName=='SELECT')
+          {
+            if(!v.push)
+	      v=[v];
+
+	    b=w.options;
+	    i=b.length;
+            while(i--)
+	    {
+              a=b[i];
+              a.selected=false;
+	      if(o(v,optVal(a),1)>-1)
+                a.selected=true;
+	    }
+          }
+          else
+            w.value=v;
         }
-        else w.value=v;
+
+        return this;
       }
 
-      return this;
-    }
+      if(!j)
+        return null;
 
-    if(!j)
-      return null;
+      v=x[0];
+      
+      if(v.nodeName!='SELECT')
+        return v.value||null;
+      
+      if(!v.multiple)
+        return optVal(v.options[v.selectedIndex]);
 
-    v=x[0];
+      v=v.options;
+      for(i in v)
+        if(v[i].selected)a.push(optVal(v[i]));
+      return a;
+    },
 
-    if(v.nodeName!='SELECT')
-      return v.value||null;
-
-    if(!v.multiple)
-      return optVal(v.options[v.selectedIndex]);
-
-    v=v.options;
-    for(i in v)
-      if(v[i].selected)a.push(optVal(v[i]));
-    return a;
-  },
-
-  /**
-   <method name="outer" type="string">
-   <param name="[a]" type="mixed">Index or Element. Default index is 0</param>
-   <desc>Get the outerHTML of the given element</desc>
-   <test>
-   <![CDATA[
-   return Meta.string.bro(Meta.dom.bro().create('<div>1</div>').outer().toLowerCase()).trim().get()=='<div>1</div>';
-   ]]>
-   </test>
-   </method>
-  */
-  outer:function(a)
-  {
-    var x=this._,
-    l=x.length,b,c,d;
-
-    a=x[a||0];
-
-    if(!a||!a.nodeType)
-      return null;
-
-    if(a.nodeType==3)return a.nodeValue;
-
-    // not IE
-    if(!isIE)
+    /**
+     <method name="outer" type="string">
+     <param name="[a]" type="mixed">Index or Element. Default index is 0</param>
+     <desc>Get the outerHTML of the given element</desc>
+     <test>
+     <![CDATA[
+     return Meta.string.bro(Meta.dom.bro().create('<div>1</div>').outer().toLowerCase()).trim().get()=='<div>1</div>';
+     ]]>
+     </test>
+     </method>
+     */
+    outer:function(a)
     {
-      // XML
-      if(this.isXML(a))
-        return (new XMLSerializer()).serializeToString(a);
+      var x=this._,
+          l=x.length,
+          b,
+          c,
+          d;
 
-      // HTML
-      b=this.doc().createElement('b');
-      b.appendChild(a);
-      return b.innerHTML;
-    }
+      a=x[a||0];
 
-    // IE
-    b=this.isXML(a)?'xml':'outerHTML';
+      if(!a||!a.nodeType)
+        return null;
 
-    if(a.nodeType!=11)
-      c=a[b];
-    else
+      if(a.nodeType==3)
+        return a.nodeValue;
+
+      // not IE
+      if(!isIE)
+      {
+        // XML
+        if(this.isXML(a))
+          return (new XMLSerializer()).serializeToString(a);
+
+        // HTML
+        b=this.doc().createElement('b');
+        b.appendChild(a);
+        return b.innerHTML;
+      }
+
+      // IE
+      b=this.isXML(a)?'xml':'outerHTML';
+
+      if(a.nodeType!=11)
+        c=a[b];
+      else
       {
 	c=[];
 	d=a.childNodes;
@@ -3633,518 +3721,528 @@ Meta.dom.extend(function()
 	c=c.join('');
       }
 
-    return c;
-  },
+      return c;
+    },
 
-  /**
-   <method name="inner" type="mixed">
-   <param name="[a]" type="mixed">Html or Element to insert</param>
-   <param name="[w]" type="bool">Super cloned. Clones the elements in a unified way and tries to preserve the events.</param>
-   <desc>Get|Set the innerHTML of the elements</desc>
-   <test>
-   <![CDATA[
-   var a=Meta.dom.bro().create('<div>1</div>'),b;
-   b=a.inner()=='1';
-   a.inner('2');
-   return b && a.inner()=='2';
-   ]]>
-   </test>
-   </method>
-  */
-  inner:function(a,w)
-  {
-    var x=this._,
-    b,
-    s='',
-    c,
-    j,
-    k=this.son(),
-    l;
-
-    if(a===undefined)
+    /**
+     <method name="inner" type="mixed">
+     <param name="[a]" type="mixed">Html or Element to insert</param>
+     <param name="[w]" type="bool">Super cloned. Clones the elements in a unified way and tries to preserve the events.</param>
+     <desc>Get|Set the innerHTML of the elements</desc>
+     <test>
+     <![CDATA[
+     var a=Meta.dom.bro().create('<div>1</div>'),b;
+     b=a.inner()=='1';
+     a.inner('2');
+     return b && a.inner()=='2';
+     ]]>
+     </test>
+     </method>
+     */
+    inner:function(a,w)
     {
-      if(!x.length)
-	return null;
+      var x=this._,
+          b,
+          s='',
+          c,
+          j,
+          k=this.son(),
+          l;
 
-      b=x[0];
+      if(a===undefined)
+      {
+        if(!x.length)
+          return null;
 
-      // HTML
-      if(!this.isXML(b))
-	return b.innerHTML;
+        b=x[0];
+        
+        // HTML
+        if(!this.isXML(b))
+          return b.innerHTML;
 
-      // XML
-      c=b.childNodes;
-      for(j=0,l=c.length;j<l;j++)
-        s+=k.set(c[j]).outer();
+        // XML
+        c=b.childNodes;
+        for(j=0,l=c.length;j<l;j++)
+          s+=k.set(c[j]).outer();
+        
+        return s;
+      }
 
-      return s;
-    }
+      return this.empty().append(a,w);
+    },
 
-    return this.empty().append(a,w);
-  },
+    /**
+     <method name="text" type="mixed">
+     <param name="[a]" type="string">Text</param>
+     <desc>Get the text of the first element if no text is given else Set the text of the elements</desc>
+     <test>
+     <![CDATA[
+     var a=Meta.dom.bro().create('<div><b>1</b></div>'),b,s=Meta.string.bro();
+     b=a.text()=='1';
+     a.text('<br>');
+     return b && s.set(a.text()).unescapeHTML().get().toLowerCase()=='<br>';
+     ]]>
+     </test>
+     </method>
+     */
+    text:function(a)
+    {
+      if(a===undefined)
+      {
+        var x=this._;
+        if(!x.length)
+          return null;
 
-  /**
-   <method name="text" type="mixed">
-   <param name="[a]" type="string">Text</param>
-   <desc>Get the text of the first element if no text is given else Set the text of the elements</desc>
-   <test>
-   <![CDATA[
-   var a=Meta.dom.bro().create('<div><b>1</b></div>'),b,s=Meta.string.bro();
-   b=a.text()=='1';
-   a.text('<br>');
-   return b && s.set(a.text()).unescapeHTML().get().toLowerCase()=='<br>';
-   ]]>
-   </test>
-   </method>
-  */
-  text:function(a)
-  {
-    if(a===undefined)
+        a=x[0];
+        return a.innerHTML?a.innerHTML.replace(/<\/?[^>]+>/gi,''):a.text||a.textContent;
+      }
+
+      return this.empty().append(this.doc().createTextNode(a));
+    },
+
+    /**
+     <method name="elements" type="mixed">
+     <desc>Get the current form elements or element</desc>
+     <param name="[a]" type="string">Name of the element to return</param>
+     </method>
+     */
+    elements:function(a)
     {
       var x=this._;
       if(!x.length)
-	return null;
+        return null;
 
-      a=x[0];
-      return a.innerHTML?a.innerHTML.replace(/<\/?[^>]+>/gi,''):a.text||a.textContent;
-    }
+      var i,
+          f=[],
+          g=x[0];
 
-    return this.empty().append(this.doc().createTextNode(a));
-  },
+      if(g.nodeName.toUpperCase()!='FORM')
+        return null;
 
-  /**
-   <method name="elements" type="mixed">
-   <desc>Get the current form elements or element</desc>
-   <param name="[a]" type="string">Name of the element to return</param>
-   </method>
-  */
-  elements:function(a)
-  {
-    var x=this._;
-    if(!x.length)
-      return null;
+      g=g.elements;
+      i=g.length;
 
-    var i,
-        f=[],
-        g=x[0];
+      while(i--)
+      {
+        if(a===undefined)
+          f.push(f[g[i].name]=g[i]);
+        else if(g[i].name==a)
+	  return g[i];
+      }
+      
+      return a?null:f;
+    },
 
-    if(g.nodeName.toUpperCase()!='FORM')
-      return null;
-
-    g=g.elements;
-    i=g.length;
-
-    while(i--)
+    /**
+     <method name="submit" type="this">
+     <desc>Submit a form using ajax</desc>
+     <param name="[a]" type="function">Callback function</param>
+     </method>
+     */
+    submit:function(a)
     {
-      if(a===undefined)
-	f.push(f[g[i].name]=g[i]);
-      else if(g[i].name==a)
-	return g[i];
-    }
+      var x=this._;
+      
+      if(!x.length)
+        return this;
 
-    return a?null:f;
-  },
+      a=a||function(){};
+      
+      var b=this.elements(),
+          c=this.son(),
+          d=[],
+          i=0,
+          e,
+          f,
+          p;
 
-  /**
-   <method name="submit" type="this">
-   <desc>Submit a form using ajax</desc>
-   <param name="[a]" type="function">Callback function</param>
-   </method>
-  */
-  submit:function(a)
-  {
-    var x=this._;
+      for(;i<b.length;i++)
+      {
+        p=b[i];
+        if(p.nodeName.toUpperCase()=="FIELDSET")
+          continue;
+        if(p.nodeName.toUpperCase()=="INPUT" &&
+          (p.type.toLowerCase()=="checkbox" || p.type.toLowerCase()=="radio") &&
+	  !p['checked'])
+	    continue;
 
-    if(!x.length)
+        e=c.set(p).val();
+        f=encodeURIComponent(p.name,1)+'=';
+
+        if(Meta.its(e,'array'))
+          Meta.each(e,function(v)
+	    {
+	      d.push(f+encodeURIComponent((v===null||v===undefined)?'':v,1));
+	    });
+        else
+          d.push(f+encodeURIComponent((e===null||e===undefined)?'':e,1));
+      }
+
+      Meta.ajax(x[0].action,a,d.join('&'));
       return this;
-
-    a=a||function(){};
-
-    var b=this.elements(),
-        c=this.son(),
-        d=[],
-        i=0,
-        e,f,p;
-
-    for(;i<b.length;i++)
+    },
+      
+    /**
+     <method name="nodes" type="array">
+     <param name="[i]" type="integer">Index of the element. Default is 0</param>
+     <desc>Get the given element childNodes</desc>
+     </method>
+     */
+    nodes:function(i)
     {
-      p=b[i];
-      if(p.nodeName.toUpperCase()=="FIELDSET")continue;
-      if(p.nodeName.toUpperCase()=="INPUT" &&
-	(p.type.toLowerCase()=="checkbox" || p.type.toLowerCase()=="radio") &&
-	 !p['checked'])
-	continue;
+      var x=this._,
+          a=[],
+          j,
+          c=x.length,
+          l;
 
-      e=c.set(p).val();
-      f=encodeURIComponent(p.name,1)+'=';
+      i=i||0;
+      
+      if(c<=i)
+        return null;
 
-      if(Meta.its(e,'array'))
-	Meta.each(e,function(v)
-		  {
-		    d.push(f+encodeURIComponent((v===null||v===undefined)?'':v,1));
-		  });
-      else d.push(f+encodeURIComponent((e===null||e===undefined)?'':e,1));
-    }
+      c=x[i].childNodes;
+      
+      l=c.length;
+      
+      for(j=0;j<l;j++)
+        if(c[j].nodeType==1)
+          a.push(c[j]);
 
-    Meta.ajax(x[0].action,a,d.join('&'));
-    return this;
-  },
+      return a;
+    },
 
-  /**
-   <method name="nodes" type="array">
-   <param name="[i]" type="integer">Index of the element. Default is 0</param>
-   <desc>Get the given element childNodes</desc>
-   </method>
-  */
-  nodes:function(i)
-  {
-    var x=this._,
-    a=[],
-    j,
-    c=x.length,
-    l;
-
-    i=i||0;
-
-    if(c<=i)
-      return null;
-
-    c=x[i].childNodes;
-
-    l=c.length;
-
-    for(j=0;j<l;j++)
-      if(c[j].nodeType==1)a.push(c[j]);
-
-    return a;
-  },
-
-  /**
-   <method name="empty" type="this">
-   <desc>Empty all the elements</desc>
-   <test>
-   <![CDATA[
-   var a=Meta.dom.bro().create('<div><b>1</b></div>');
-   return a.empty().inner()=='';
-   ]]>
-   </test>
-   </method>
-  */
-  empty:function()
-  {
-    var me=this,
-    w,
-    x=this._,
-    i=x.length,
-    xml=me.isXML(); // Asume all the nodes are of the same type as the doc
-
-    while(i--)
+    /**
+     <method name="empty" type="this">
+     <desc>Empty all the elements</desc>
+     <test>
+     <![CDATA[
+     var a=Meta.dom.bro().create('<div><b>1</b></div>');
+     return a.empty().inner()=='';
+     ]]>
+     </test>
+     </method>
+     */
+    empty:function()
     {
-      w=x[i];
-      if(!xml)
-	w.innerHTML='';
-      else while(w.firstChild)
-	w.removeChild(w.firstChild);
-    }
+      var me=this,
+          w,
+          x=this._,
+          i=x.length,
+          xml=me.isXML(); // Asume all the nodes are of the same type as the doc
 
-    return this;
-  },
-
-  /**
-   <method name="hasClass" type="bool">
-   <desc>Verify if the element has the given class.</desc>
-   <param name="a" type="string">Class name</param>
-   <param name="[b]" type="integer">Index of the element. Default 0.</param>
-   <test>
-   <![CDATA[
-   var a=Meta.dom.bro().create('<div class="perro gato"></div>');
-   return a.hasClass('perro');
-   ]]>
-   </test>
-   </method>
-  */
-  hasClass:function(a,b)
-  {
-    var x=this._,
-    c=x.length;
-
-    b=b||0;
-
-    if(c<=b)
-      return false;
-
-    b=x[b];
-
-    if(!b.className)
-      return false;
-
-    return (' '+b.className+' ').indexOf(' '+a+' ')>-1;
-  },
-
-  /**
-   <method name="addClass" type="this">
-   <desc>Add the given class to the elements.</desc>
-   <param name="a" type="string">Class name</param>
-   <test>
-   <![CDATA[
-   var a=Meta.dom.bro().create('<div class="perro gato"></div>'),b;
-   b=!a.hasClass('yo');
-   a.addClass('yo');
-   return b&&a.hasClass('yo');
-   ]]>
-   </test>
-   </method>
-  */
-  addClass:function(a)
-  {
-    var x=this._,
-    i=x.length,
-    v,
-    z=str,//Meta.string.bro(),
-    y=arr;//Meta.array.bro();
-
-    while(i--)
-    {
-      v=x[i];
-      if(v.className)
+      while(i--)
       {
-	v.className=z.set(y.set(v.className.split(' '))
-			  .insert(a)
-			  .unique()
-			  .get()
-			  .join(' ')).trim().get();
-      }
-    }
-
-    return this;
-  },
-
-  /**
-   <method name="rmClass" type="this">
-   <desc>Removes the given class from the elements.</desc>
-   <param name="a" type="string">Class name</param>
-   <test>
-   <![CDATA[
-   var a=Meta.dom.bro().create('<div class="perro gato"></div>'),b;
-   b=a.hasClass('gato');
-   a.rmClass('gato');
-   return b&&!a.hasClass('gato');
-   ]]>
-   </test>
-   </method>
-  */
-  rmClass:function(a)
-  {
-    var x=this._,
-    i=x.length,v,
-    z=str,//Meta.string.bro(),
-    y=arr,//Meta.array.bro(),
-    d,c;
-
-    while(i--)
-    {
-      v=x[i];
-      if(v.className)
-      {
-	d=y.set(v.className.split(' ')).unique();
-	c=d.indexOf(a);
-	if(c>-1)
-	  v.className=z.set(d.splice(c,1).get().join(' ')).trim().get();
-      }
-    }
-
-    return this;
-  },
-
-  /**
-   <method name="dims" type="object">
-   <param name="[i]" type="integer">Index, default 0</param>
-   <desc>Try to get the element dimensions. {top,left,width,height}</desc>
-   </method>
-  */
-  dims:function(i)
-  {
-    i=this.get(i||0);
-    if(i)
-    {
-      var l=i.offsetLeft||0,
-      t=i.offsetTop||0,
-      w=i.offsetWidth||0,
-      h=i.offsetHeight||0;
-
-      while((i=i.offsetParent))
-      {
-        l+=i.offsetLeft-i.scrollLeft+(i.clientLeft?i.clientLeft:0);
-        t+=i.offsetTop-i.scrollTop+(i.clientTop?i.clientTop:0);
+        w=x[i];
+        if(!xml)
+          w.innerHTML='';
+        else while(w.firstChild)
+	  w.removeChild(w.firstChild);
       }
 
-      i={left:l,top:t,width:w,height:h};
-    }
+      return this;
+    },
+
+    /**
+     <method name="hasClass" type="bool">
+     <desc>Verify if the element has the given class.</desc>
+     <param name="a" type="string">Class name</param>
+     <param name="[b]" type="integer">Index of the element. Default 0.</param>
+     <test>
+     <![CDATA[
+     var a=Meta.dom.bro().create('<div class="perro gato"></div>');
+     return a.hasClass('perro');
+     ]]>
+     </test>
+     </method>
+     */
+    hasClass:function(a,b)
+    {
+      var x=this._,
+          c=x.length;
+
+      b=b||0;
+
+      if(c<=b)
+        return false;
+      
+      b=x[b];
+      
+      if(!b.className)
+        return false;
+      
+      return (' '+b.className+' ').indexOf(' '+a+' ')>-1;
+    },
+
+    /**
+     <method name="addClass" type="this">
+     <desc>Add the given class to the elements.</desc>
+     <param name="a" type="string">Class name</param>
+     <test>
+     <![CDATA[
+     var a=Meta.dom.bro().create('<div class="perro gato"></div>'),b;
+     b=!a.hasClass('yo');
+     a.addClass('yo');
+     return b&&a.hasClass('yo');
+     ]]>
+     </test>
+     </method>
+     */
+    addClass:function(a)
+    {
+      var x=this._,
+          i=x.length,
+          v,
+          z=str,//Meta.string.bro(),
+          y=arr;//Meta.array.bro();
+      
+      while(i--)
+      {
+        v=x[i];
+        if('className' in v)
+        {
+          v.className=z.set(y.set(v.className.split(' ')).
+            insert(a).
+            unique().
+            get().
+            join(' ')).
+            trim().
+            get();
+        }
+      }
+
+      return this;
+    },
+
+    /**
+     <method name="rmClass" type="this">
+     <desc>Removes the given class from the elements.</desc>
+     <param name="a" type="string">Class name</param>
+     <test>
+     <![CDATA[
+     var a=Meta.dom.bro().create('<div class="perro gato"></div>'),b;
+     b=a.hasClass('gato');
+     a.rmClass('gato');
+     return b&&!a.hasClass('gato');
+     ]]>
+     </test>
+     </method>
+     */
+    rmClass:function(a)
+    {
+      var x=this._,
+          i=x.length,
+          v,
+          z=str,
+          y=arr,
+          d,c;
+
+      while(i--)
+      {
+        v=x[i];
+        if(v.className)
+        {
+          d=y.set(v.className.split(' ')).unique();
+	  c=d.indexOf(a);
+	  if(c>-1)
+	    v.className=z.set(d.splice(c,1).get().join(' ')).trim().get();
+        }
+      }
+
+      return this;
+    },
+
+    /**
+     <method name="dims" type="object">
+     <param name="[i]" type="integer">Index, default 0</param>
+     <desc>Try to get the element dimensions. {top,left,width,height}</desc>
+     </method>
+     */
+    dims:function(i)
+    {
+      i=this.get(i||0);
+      if(i)
+      {
+        var l=i.offsetLeft||0,
+            t=i.offsetTop||0,
+            w=i.offsetWidth||0,
+            h=i.offsetHeight||0;
+        
+        while((i=i.offsetParent))
+        {
+          l+=i.offsetLeft-i.scrollLeft+(i.clientLeft?i.clientLeft:0);
+          t+=i.offsetTop-i.scrollTop+(i.clientTop?i.clientTop:0);
+        }
+
+        i={left:l,top:t,width:w,height:h};
+      }
     
-    return i;
-  },
+      return i;
+    },
 
-  /**
-   <method name="scrollDims" type="object">
-   <param name="[i]" type="integer">Index, default 0</param>
-   <desc>Try to get the element scroll dimensions. {top,left,width,height}</desc>
-   </method>
-  */
-  scrollDims:function(i)
-  {
-    return (i=this.get(i||0))
-      ?{left:i.scrollX||i.scrollLeft,top:i.scrollY||i.scrollTop,width:i.scrollWidth||0,height:i.scrollHeight||0}
-      :i;
-  },
+    /**
+     <method name="scrollDims" type="object">
+     <param name="[i]" type="integer">Index, default 0</param>
+     <desc>Try to get the element scroll dimensions. {top,left,width,height}</desc>
+     </method>
+     */
+    scrollDims:function(i)
+    {
+      return (i=this.get(i||0))
+        ?{left:i.scrollX||i.scrollLeft,top:i.scrollY||i.scrollTop,width:i.scrollWidth||0,height:i.scrollHeight||0}
+        :i;
+    },
   
-  /**
-   <method name="opacity" type="this">
-   <param name="o" type="float">Percentage of opacity</param>
-   <desc>Set the opacity of the objects</desc>
-   </method>
-  */
-  opacity:function(o)
-  {
-    var s,p=Math.round(o*100);
+    /**
+     <method name="opacity" type="this">
+     <param name="o" type="float">Percentage of opacity</param>
+     <desc>Set the opacity of the objects</desc>
+     </method>
+     */
+    opacity:function(o)
+    {
+      var s,
+          p=Math.round(o*100);
 
-    return this.css('MozOpacity',o)
-               .css('opacity',o)
-               .css('KHTMLOpacity',o)
-               .css('zoom',1)
-               .css('filter',"alpha(opacity="+p+")");
-  },
+      return this.
+        css('MozOpacity',o).
+        css('opacity',o).
+        css('KHTMLOpacity',o).
+        css('zoom',1).
+        css('filter',"alpha(opacity="+p+")");
+    },
 
-  /**
-   <method name="hide" type="this">
-   <desc>Hide the element</desc>
-   </method>
-  */
-  hide:function(){return this.css('display','none');},
+    /**
+     <method name="hide" type="this">
+     <desc>Hide the element</desc>
+     </method>
+     */
+    hide:function(){return this.css('display','none');},
 
-  /**
-   <method name="show" type="this">
-   <param name="[a]" type="string">Default display property.</param>
-   <desc>Shows the element with its default display</desc>
-   </method>
-  */
-  show:function(a){return this.css('display',a||'');},
+    /**
+     <method name="show" type="this">
+     <param name="[a]" type="string">Default display property.</param>
+     <desc>Shows the element with its default display</desc>
+     </method>
+     */
+    show:function(a){return this.css('display',a||'');},
 
-  /**
-  <method name="parent" type="element">
-  <param name="[i]" type="integer">Index of the element.</param>
-  <desc>Returns the parentNode of the element.</desc>
-  </method>
-  */
-  parent:function(i)
-  {
-    return this.prop('parentNode',i);
-  },
+    /**
+     <method name="parent" type="element">
+     <param name="[i]" type="integer">Index of the element.</param>
+     <desc>Returns the parentNode of the element.</desc>
+     </method>
+     */
+    parent:function(i)
+    {
+      return this.prop('parentNode',i);
+    },
+      
+    /**
+     <method name="next" type="element">
+     <param name="[i]" type="integer">Index of the element.</param>
+     <desc>Returns the nextSibling of the element.</desc>
+     </method>
+     */
+    next:function(i)
+    {
+      i=this.get(i||0);
+      while(i&&(i=i.nextSibling)&&i.nodeType!=1){}
+      return i;
+    },
 
-  /**
-  <method name="next" type="element">
-  <param name="[i]" type="integer">Index of the element.</param>
-  <desc>Returns the nextSibling of the element.</desc>
-  </method>
-  */
-  next:function(i)
-  {
-    i=this.get(i||0);
-    while(i&&(i=i.nextSibling)&&i.nodeType!=1){}
-    return i;
-  },
+    /**
+     <method name="prev" type="element">
+     <param name="[i]" type="integer">Index of the element.</param>
+     <desc>Returns the previousSibling of the element.</desc>
+     </method>
+     */
+    prev:function(i)
+    {
+      i=this.get(i||0);
+      while(i&&(i=i.previousSibling)&&i.nodeType!=1){}
+      return i;
+    },
+      
+    /**
+     <method name="first" type="element">
+     <param name="[i]" type="integer">Index of the element.</param>
+     <desc>Returns the firstChild of the element.</desc>
+     </method>
+     */
+    first:function(i)
+    {
+      i=this.prop('firstChild',i);
+      while(i&&i.nodeType!=1)
+        i=i.nextSibling;
+      return i;
+    },
 
-  /**
-  <method name="prev" type="element">
-  <param name="[i]" type="integer">Index of the element.</param>
-  <desc>Returns the previousSibling of the element.</desc>
-  </method>
-  */
-  prev:function(i)
-  {
-    i=this.get(i||0);
-    while(i&&(i=i.previousSibling)&&i.nodeType!=1){}
-    return i;
-  },
+    /**
+     <method name="last" type="element">
+     <param name="[i]" type="integer">Index of the element.</param>
+     <desc>Returns the lastChild of the element.</desc>
+     </method>
+     */
+    last:function(i)
+    {
+      i=this.prop('lastChild',i);
+      while(i&&i.nodeType!=1)
+        i=i.previousSibling;
+      return i;
+    },
 
-  /**
-  <method name="first" type="element">
-  <param name="[i]" type="integer">Index of the element.</param>
-  <desc>Returns the firstChild of the element.</desc>
-  </method>
-  */
-  first:function(i)
-  {
-    i=this.prop('firstChild',i);
-    while(i&&i.nodeType!=1)
-      i=i.nextSibling;
-    return i;
-  },
+    /**
+     <method name="value" type="element">
+     <param name="[i]" type="integer">Index of the element.</param>
+     <desc>Returns the nodeValue of the element.</desc>
+     </method>
+     */
+    value:function(i)
+    {
+      return this.prop('nodeValue',i);
+    },
+      
+    /**
+     <method name="type" type="element">
+     <param name="[i]" type="integer">Index of the element.</param>
+     <desc>Returns the nodeType of the element.</desc>
+     </method>
+     */
+    type:function(i)
+    {
+      return this.prop('nodeType',i);
+    },
 
-  /**
-  <method name="last" type="element">
-  <param name="[i]" type="integer">Index of the element.</param>
-  <desc>Returns the lastChild of the element.</desc>
-  </method>
-  */
-  last:function(i)
-  {
-    i=this.prop('lastChild',i);
-    while(i&&i.nodeType!=1)
-      i=i.previousSibling;
-    return i;
-  },
+    /**
+     <method name="name" type="element">
+     <param name="[i]" type="integer">Index of the element.</param>
+     <desc>Returns the nodeName of the element.</desc>
+     </method>
+     */
+    name:function(i)
+    {
+      return this.prop('nodeName',i);
+    },
 
+    /**
+     <method name="isXML" type="bool">
+     <param name="[a]" type="element">Element to be check if it belongs to an XML.</param>
+     <desc>Checks if the given element or the current document is an XML.</desc>
+     </method>
+     */
+    isXML:function(a)
+    {
+      if(!a)
+        a=this.doc();
 
-  /**
-  <method name="value" type="element">
-  <param name="[i]" type="integer">Index of the element.</param>
-  <desc>Returns the nodeValue of the element.</desc>
-  </method>
-  */
-  value:function(i)
-  {
-    return this.prop('nodeValue',i);
-  },
+      a=a.nodeType==9?a:a.ownerDocument;
 
-  /**
-  <method name="type" type="element">
-  <param name="[i]" type="integer">Index of the element.</param>
-  <desc>Returns the nodeType of the element.</desc>
-  </method>
-  */
-  type:function(i)
-  {
-    return this.prop('nodeType',i);
-  },
+      return a.documentElement.nodeName!=='HTML';
+    }
 
-  /**
-  <method name="name" type="element">
-  <param name="[i]" type="integer">Index of the element.</param>
-  <desc>Returns the nodeName of the element.</desc>
-  </method>
-  */
-  name:function(i)
-  {
-    return this.prop('nodeName',i);
-  },
-
-  /**
-  <method name="isXML" type="bool">
-  <param name="[a]" type="element">Element to be check if it belongs to an XML.</param>
-  <desc>Checks if the given element or the current document is an XML.</desc>
-  </method>
-  */
-  isXML:function(a)
-  {
-    if(!a)
-      a=this.doc();
-
-    a=a.nodeType==9?a:a.ownerDocument;
-
-    return a.documentElement.nodeName!=='HTML';
-  }
-
-});}());
+  };
+}());
 
 /**
  <method name="prepend" type="this">
@@ -4176,8 +4274,8 @@ Meta.dom.extend(function()
 {
   // Generate shortcuts for child method
   Meta.genProperties('prepend,append,before,after,replace',
-		     function c(d){return function(e){return this.glue(e,d);};},
-		     this);
+    function c(d){return function(e){return this.glue(e,d);};},
+    this);
 });
 
 /**
@@ -4209,23 +4307,27 @@ Meta.dom.extend(function()
 Meta.dom.extend(function()
 {
   var map={
-    prependTo:'prepend',
-    appendTo:'append',
-    insertBefore:'before',
-    insertAfter:'after',
-    replaceIn:'replace'
-  };
+        prependTo:'prepend',
+        appendTo:'append',
+        insertBefore:'before',
+        insertAfter:'after',
+        replaceIn:'replace'
+      };
 
   // Generate shortcuts for child method
   Meta.genProperties('prependTo,appendTo,insertBefore,insertAfter,replaceIn',
-		     function c(d){return function(e){
-				     var a=this._;
-				     return this.
-				       set(e).
-				       glue(a,map[d]).
-				       set(a);
-				   };},
-		     this);
+    function c(d)
+    {
+      return function(e)
+        {
+          var a=this._;
+          return this.
+            set(e).
+	    glue(a,map[d]).
+	    set(a);
+        };
+    },
+    this);
 });
 
 /** </class> */
@@ -4233,21 +4335,25 @@ Meta.dom.extend(function()
 Meta.extensions.element=Meta.dom;
 
 /**
-   <function name="Meta.dom.copyNodes" type="element">
-   <param name="src" type="array">Array of nodes to copy</param>
-   <param name="dest" type="element">Destination node</param>
-   <param name="[wid]" type="bool">Set ids for all elements</param>
-   <param name="[n]" type="element">Element to return mapped version</param>
-   <desc>Try to copy childNodes to another document</desc>
-   </function>
-*/
+ <function name="Meta.dom.copyNodes" type="element">
+ <param name="src" type="array">Array of nodes to copy</param>
+ <param name="dest" type="element">Destination node</param>
+ <param name="[wid]" type="bool">Set ids for all elements</param>
+ <param name="[n]" type="element">Element to return mapped version</param>
+ <desc>Try to copy childNodes to another document</desc>
+ </function>
+ */
 Meta.dom.copyNodes=function(src,dest,wid,n)
 {
-  var _doc=dest.ownerDocument?dest.ownerDocument:dest.nodeType==9?dest:document,
+  var _doc=dest.ownerDocument?dest.ownerDocument:(dest.nodeType==9?dest:document),
 
   l=function(a,c)
   {
-    var b,i=0,j=c.length,m;
+    var b,
+        i=0,
+        j=c.length,
+        m;
+    
     for(;i<j;i++)
     {
       if(c[i].nodeType==1)
@@ -4262,7 +4368,8 @@ Meta.dom.copyNodes=function(src,dest,wid,n)
   k=function(a)
   {
     // Set the uniqueID here, if needed, so it gets cloned
-    if(wid && a && !a.id && Meta.has(a,'uniqueID'))a.id=a.uniqueID;
+    if(wid && a && !a.id && Meta.has(a,'uniqueID'))
+      a.id=a.uniqueID;
 
     var e=Meta.dom.cloneTag(a);
 
@@ -4285,7 +4392,9 @@ Meta.dom.cloneTag=function(a,doc)
 {
   doc=doc||(a.ownerDocument?a.ownerDocument:document);
 
-  var b=doc.createElement(a.nodeName.toLowerCase()),attr,i;
+  var b=doc.createElement(a.nodeName.toLowerCase()),
+      attr,
+      i;
 
   // copy attributes
   attr=a.attributes;
@@ -4323,16 +4432,26 @@ Meta.dom.cloneNode=function(a,doc)
  */
 Meta.dom.ready=function()
 {
-  var ready=0,a,t,ev=Meta.events.bro(),cb;
+  var ready=0,
+      a,
+      t,
+      ev=Meta.events.bro(),
+      cb;
 
   // Sets the custom event ready, for the window object
-  ev.extend({fireReady:function()
-	      {
-		  if(ready)return; // if ready!=0 this function already was executed!
-		  ready=1;
-		  this.fireEvent('ready',window);
-		  if(t)clearInterval(t);
-	      }});
+  ev.extend({
+    fireReady:function()
+    {
+      if(ready)
+        return; // if ready!=0 this function already was executed!
+      
+      ready=1;
+      this.fireEvent('ready',window);
+      
+      if(t)
+        clearInterval(t);
+    }
+  });
 
 
   // Create callback
@@ -4347,10 +4466,10 @@ Meta.dom.ready=function()
     a.onreadystatechange=function()
     {
       if((/loaded|complete/).test(a.readyState))
-	  {
-	      cb();
-	      a.onreadystatechange=null;
-	  }
+      {
+	cb();
+	a.onreadystatechange=null;
+      }
     };
     a.defer=true;
     a.src="javascript:void(0);";
@@ -4360,7 +4479,8 @@ Meta.dom.ready=function()
   {
     t=setInterval(function()
       {
-	  if((/loaded|complete/).test(document.readyState))cb();
+	if((/loaded|complete/).test(document.readyState))
+          cb();
       },10);
   }
 
@@ -4370,34 +4490,39 @@ Meta.dom.ready=function()
   // Actual function
   return function(b)
   {
-      if(ready)b();
-      else ev.addEvent('ready',window,b);
+      if(ready)
+        b();
+      else
+        ev.addEvent('ready',window,b);
   };
 }();
 
 
 /**
-<function name="Meta.dom.purge" type="void">
-<param name="d" type="element">Element to be purged</param>
-<desc>
-From: http://javascript.crockford.com/memory/leak.html
-
-Takes a reference to a DOM element as an argument.
-It loops through the element's (and childs) attributes.
-If it finds any functions, it nulls them out.
-This breaks the cycle, allowing memory to be reclaimed.
-The purge function is harmless on Mozilla and Opera.
-It is essential on IE.
-The purge function should be called before removing any element,
-either by the removeChild method, or by setting the innerHTML property.
-</desc>
-</function>
-*/
+ <function name="Meta.dom.purge" type="void">
+ <param name="d" type="element">Element to be purged</param>
+ <desc>
+ From: http://javascript.crockford.com/memory/leak.html
+ 
+ Takes a reference to a DOM element as an argument.
+ It loops through the element's (and childs) attributes.
+ If it finds any functions, it nulls them out.
+ This breaks the cycle, allowing memory to be reclaimed.
+ The purge function is harmless on Mozilla and Opera.
+ It is essential on IE.
+ The purge function should be called before removing any element,
+ either by the removeChild method, or by setting the innerHTML property.
+ </desc>
+ </function>
+ */
 Meta.dom.purge=function(d)
 {
-  if(!isIE&&!d.attributes)return;
+  if(!isIE&&!d.attributes)
+    return;
 
-  var a=d.attributes,i,n;
+  var a=d.attributes,
+      i,
+      n;
 
   if(a)
     for(i=a.length;i--;)
@@ -4431,9 +4556,9 @@ Meta.dom.purge=function(d)
  along with Meta.  If not, see <http://www.gnu.org/licenses/>.
 */
 /**
-   <class name="Meta.guiEngine">
-   <inherit>Meta</inherit>
-   <desc>
+ <class name="Meta.guiEngine">
+ <inherit>Meta</inherit>
+ <desc>
    Engine for guis
    -gui="drag"   Drags the element or the given dad
    -gui="resize" Resize the element or the given dad
@@ -4447,100 +4572,110 @@ Meta.dom.purge=function(d)
    -Meta
    -Meta.dom
    -Meta.domevent
-   </desc>
+ </desc>
 */
 Meta.guiEngine=Meta(function()
 {
   var cur=Meta.dom.bro(),
-    cur_limit=Meta.dom.bro(),
-    win=Meta.domevent.bro(document),
-    bod,bod_bak={},
-    limit=[0,0,0,0],
-    cur_pos=[0,0],
-    cur_size=[0,0],
-    screen_pos=[0,0],
-    gui='',
-    started=0,
-    acts={
+      cur_limit=Meta.dom.bro(),
+      win=Meta.domevent.bro(document),
+      bod,bod_bak={},
+      limit=[0,0,0,0],
+      cur_pos=[0,0],
+      cur_size=[0,0],
+      screen_pos=[0,0],
+      gui='',
+      started=0,
+      acts={
 
-    // Drag actions
-    'drag':{
-      'md':function(e) // doc.mousedown
-      {
-        cur_pos=cur.pos();
-        cur_size=cur.size();
-        disableSelection();
-        cur.css('position','absolute').css('zIndex','1');
-      },
-      'mu':function(e) // doc.mouseup
-      {
-        selRestore();
-        cur.css('zIndex','0');
-      },
-      'mmv':function(e,dt)  // doc.mousemove
-      {
-        var p=cur_pos,
-        s=cur_size,
-        m=[limit[2]-s[0],
-           limit[3]-s[1]];
-        dt=[p[0]+dt[0],
-            p[1]+dt[1]];
-
-        if(dt[0]>=limit[0]&&dt[0]<m[0])
+        // Drag actions
+        'drag':{
+          'md':function(e) // doc.mousedown
           {
-            cur_pos[0]=dt[0];
-            screen_pos[0]=e.screenX;
-          }
-        else if(dt[0]<limit[0])dt[0]=limit[0];
-        else if(dt[0]>m[0])dt[0]=m[0];
-
-        if(dt[1]>=limit[1]&&dt[1]<m[1])
+            cur_pos=cur.pos();
+            cur_size=cur.size();
+            disableSelection();
+            cur.css('position','absolute').css('zIndex','1');
+          },
+          'mu':function(e) // doc.mouseup
           {
-            cur_pos[1]=dt[1];
-            screen_pos[1]=e.screenY;
-          }
-        else if(dt[1]<limit[1])dt[1]=limit[1];
-        else if(dt[1]>m[1])dt[1]=m[1];
-
-        cur.css('left',dt[0]+'px');
-        cur.css('top',dt[1]+'px');
-      }},
-
-    // Resize actions
-    'resize':{
-      'md':function(e) // doc.mousedown
-      {
-        disableSelection();
-      },
-      'mu':function(e) // doc.mouseup
-      {
-        selRestore();
-      },
-      'mmv':function(e,dt)
-      {
-        var s=cur.size();
-        dt=[s[0]+dt[0],
-            s[1]+dt[1]];
-        if(dt[0]>=10)
+            selRestore();
+            cur.css('zIndex','0');
+          },
+          'mmv':function(e,dt)  // doc.mousemove
           {
-            cur.css('width',dt[0]+'px');
-            screen_pos[0]=e.screenX;
-          }
+            var p=cur_pos,
+                s=cur_size,
+                m=[
+                  limit[2]-s[0],
+                  limit[3]-s[1]
+                ];
+            
+            dt=[
+              p[0]+dt[0],
+              p[1]+dt[1]
+            ];
 
-        if(dt[1]>=10)
-          {
-            cur.css('height',dt[1]+'px');
-            screen_pos[1]=e.screenY;
+            if(dt[0]>=limit[0]&&dt[0]<m[0])
+            {
+              cur_pos[0]=dt[0];
+              screen_pos[0]=e.screenX;
+            }
+            else if(dt[0]<limit[0])dt[0]=limit[0];
+            else if(dt[0]>m[0])dt[0]=m[0];
+
+            if(dt[1]>=limit[1]&&dt[1]<m[1])
+            {
+              cur_pos[1]=dt[1];
+              screen_pos[1]=e.screenY;
+            }
+            else if(dt[1]<limit[1])dt[1]=limit[1];
+            else if(dt[1]>m[1])dt[1]=m[1];
+            
+            cur.css('left',dt[0]+'px');
+            cur.css('top',dt[1]+'px');
           }
-      }}
-  };
+        },
+
+        // Resize actions
+        'resize':{
+          'md':function(e) // doc.mousedown
+          {
+            disableSelection();
+          },
+          'mu':function(e) // doc.mouseup
+          {
+            selRestore();
+          },
+          'mmv':function(e,dt)
+          {
+            var s=cur.size();
+            dt=[
+              s[0]+dt[0],
+              s[1]+dt[1]
+            ];
+            if(dt[0]>=10)
+            {
+              cur.css('width',dt[0]+'px');
+              screen_pos[0]=e.screenX;
+            }
+
+            if(dt[1]>=10)
+            {
+              cur.css('height',dt[1]+'px');
+              screen_pos[1]=e.screenY;
+            }
+          }
+        }
+      };
 
   /**
    * Backup important element selection settings
    */
   function selBackup()
   {
-    if('meta_sel' in bod_bak)return;
+    if('meta_sel' in bod_bak)
+      return;
 
     bod_bak.meta_sel=1;
     bod_bak.meta_onselectstart=bod.get().onselectstart;
@@ -4554,7 +4689,9 @@ Meta.guiEngine=Meta(function()
    */
   function selRestore()
   {
-    if(!('meta_sel' in bod_bak))return;
+    if(!('meta_sel' in bod_bak))
+      return;
+    
     bod.css('MozUserSelect',bod_bak.meta_MozUserSelect);
     bod.css('KhtmlUserSelect',bod_bak.meta_KhtmlUserSelect);
     bod.get().onselectstart=bod_bak.meta_onselectstart;
@@ -4569,8 +4706,8 @@ Meta.guiEngine=Meta(function()
     selBackup();
     bod.get().onselectstart=function(){return false;};
     bod.get().unselectable="on";
-    bod.css('MozUserSelect',"none")
-      .css('KhtmlUserSelect',"none");
+    bod.css('MozUserSelect',"none").
+      css('KhtmlUserSelect',"none");
   };
 
   function getE(e){return e?e:window.event;};
@@ -4578,10 +4715,14 @@ Meta.guiEngine=Meta(function()
   // document.mousemove
   function mmv(e)
   {
-    if(!gui||!cur.len())return false;
+    if(!gui||!cur.len())
+      return false;
+    
     e=getE(e);
-    var dt=[e.screenX-screen_pos[0],
-            e.screenY-screen_pos[1]];
+    var dt=[
+      e.screenX-screen_pos[0],
+      e.screenY-screen_pos[1]
+    ];
 
     if('mmv' in acts[gui])
       acts[gui].mmv(e,dt);
@@ -4596,13 +4737,21 @@ Meta.guiEngine=Meta(function()
     e=getE(e);
     cur.set(e.target||e.srcElement);
     gui=cur.attr('gui');
-    if(!(gui in acts))return false;
+    
+    if(!(gui in acts))
+      return false;
+    
     var dad=cur.attr('dad'),
-      l=cur.attr('limit');
-    if(dad)cur.select('#'+dad);
+        l=cur.attr('limit');
+    
+    if(dad)
+      cur.select('#'+dad);
 
-    if(l)cur_limit.select('#'+l);
-    else cur_limit.set(bod.get());
+    if(l)
+      cur_limit.select('#'+l);
+    else
+      cur_limit.set(bod.get());
+    
     setLimit();
 
     if('md' in acts[gui])
@@ -4616,7 +4765,9 @@ Meta.guiEngine=Meta(function()
   // document.mouseup
   function mu(e)
   {
-    if(!gui)return false;
+    if(!gui)
+      return false;
+    
     e=getE(e);
 
     if('mu' in acts[gui])
@@ -4633,16 +4784,28 @@ Meta.guiEngine=Meta(function()
    */
   function setLimit()
   {
-    var o=cur_limit,t=o.size(),p=o.pos();
-    limit=[p[0],p[1],t[0]+p[0],t[1]+p[1]];
+    var o=cur_limit,
+        t=o.size(),
+        p=o.pos();
+    
+    limit=[
+      p[0],
+      p[1],
+      t[0]+p[0],
+      t[1]+p[1]
+    ];
   };
 
   function start()
   {
-    if(started)return;
-    win.on('mousemove',mmv)
-      .on('mousedown',md)
-      .on('mouseup',mu);
+    if(started)
+      return;
+    
+    win.
+      on('mousemove',mmv).
+      on('mousedown',md).
+      on('mouseup',mu);
+    
     started=1;
     bod=Meta.dom.bro().set(document.body);
     cur_limit.set(bod.get());
@@ -4651,10 +4814,14 @@ Meta.guiEngine=Meta(function()
 
   function stop()
   {
-    if(!started)return;
-    win.rmOn('mousemove',mmv)
-      .rmOn('mousedown',md)
-      .rmOn('mouseup',mu);
+    if(!started)
+      return;
+    
+    win.
+      rmOn('mousemove',mmv).
+      rmOn('mousedown',md).
+      rmOn('mouseup',mu);
+    
     started=0;
   };
 
@@ -4682,135 +4849,149 @@ Meta.guiEngine=Meta(function()
   };
 }());
 /** </class> */
+
 Meta.select=(function()
 {
   // Regexp taken from jQuery.
   var re={
-  CHUNKER:/((?:\((?:\([^()]+\)|[^()]+)+\)|\[(?:\[[^[\]]*\]|['"][^'"]+['"]|[^[\]'"]+)+\]|\\.|[^ >+~,(\[]+)+|[>+~])(\s*,\s*)?/g,
-       ID:/#((?:[\w\u00c0-\uFFFF_-]|\\.)+)/g,
+    CHUNKER:/((?:\((?:\([^()]+\)|[^()]+)+\)|\[(?:\[[^[\]]*\]|['"][^'"]+['"]|[^[\]'"]+)+\]|\\.|[^ >+~,(\[]+)+|[>+~])(\s*,\s*)?/g,
+    ID:/#((?:[\w\u00c0-\uFFFF_-]|\\.)+)/g,
     CLASS:/\.((?:[\w\u00c0-\uFFFF_-]|\\.)+)/g,
-     NAME:/\[name=['"]*((?:[\w\u00c0-\uFFFF_-]|\\.)+)['"]*\]/g,
-     ATTR:/\[\s*((?:[\w\u00c0-\uFFFF_-]|\\.)+)\s*(?:(\S?=)\s*(['"]*)(.*?)\3|)\s*\]/g,
-      TAG:/^((?:[\w\u00c0-\uFFFF\*_-]|\\.)+)/g,
+    NAME:/\[name=['"]*((?:[\w\u00c0-\uFFFF_-]|\\.)+)['"]*\]/g,
+    ATTR:/\[\s*((?:[\w\u00c0-\uFFFF_-]|\\.)+)\s*(?:(\S?=)\s*(['"]*)(.*?)\3|)\s*\]/g,
+    TAG:/^((?:[\w\u00c0-\uFFFF\*_-]|\\.)+)/g,
     CHILD:/:(only|nth|last|first)-child(?:\((even|odd|[\dn+-]*)\))?/g,
-      POS:/:(nth|eq|gt|lt|first|last|even|odd)(?:\((\d*)\))?(?=[^-]|$)/g,
-   PSEUDO:/:((?:[\w\u00c0-\uFFFF_-]|\\.)+)(?:\((['"]*)((?:\([^\)]+\)|[^\2\(\)]*)+)\2\))?/g
+    POS:/:(nth|eq|gt|lt|first|last|even|odd)(?:\((\d*)\))?(?=[^-]|$)/g,
+    PSEUDO:/:((?:[\w\u00c0-\uFFFF_-]|\\.)+)(?:\((['"]*)((?:\([^\)]+\)|[^\2\(\)]*)+)\2\))?/g
   },//"
 
   // Filter the attributes
   attrFilter={
-   '=':function(a,b){return a==b;},
-  '!=':function(a,b){return a!=b;},
-  '~=':function(a,b){return a!==null&&(' '+a+' ').indexOf(b)>-1;},
-  '^=':function(a,b){return a!==null&&a.indexOf(b)==0;},
-  '*=':function(a,b){return a!==null&&a.indexOf(b)>-1;},
-  '$=':function(a,b){return a!==null&&(a.lastIndexOf(b)+b.length)==a.length;},
-  '|=':function(a,b){return a==b||a.indexOf(b+'-')==0;},
+    '=':function(a,b){return a==b;},
+    '!=':function(a,b){return a!=b;},
+    '~=':function(a,b){return a!==null&&(' '+a+' ').indexOf(b)>-1;},
+    '^=':function(a,b){return a!==null&&a.indexOf(b)==0;},
+    '*=':function(a,b){return a!==null&&a.indexOf(b)>-1;},
+    '$=':function(a,b){return a!==null&&(a.lastIndexOf(b)+b.length)==a.length;},
+    '|=':function(a,b){return a==b||a.indexOf(b+'-')==0;},
     '':function(a,b){return a!==null;}
   },
 
   filters={
-  'tag':function(node,a)
+    'tag':function(node,a)
     {
       return node.nodeName==a||a=='*';
     },
-  'className':function(node,a)
+    'className':function(node,a)
     {
       var b=node.className;
       return b&&(' '+b+' ').indexOf(' '+a+' ')>-1;
     },
-  'attr':function(node,a)
+    'attr':function(node,a)
     {
       // a=[[,name,type,,val]]
-      var aname,b,i=a.length,attr;
+      var aname,
+          b,
+          i=a.length,
+          attr;
+      
       while(i--)
+      {
+	b=a[i];
+        aname=b[1];
+        if(node.nodeType==1)
 	{
-	  b=a[i];
-	  aname=b[1];
-	  if(node.nodeType==1)
-	    {
-	      attr=node.getAttribute(aname);
-	      if(attr!==null&&b[2](attr,b[4]))
-		continue;
-	    }
-	  return 0;
+	  attr=node.getAttribute(aname);
+	  if(attr!==null&&b[2](attr,b[4]))
+	    continue;
 	}
+        return 0;
+      }
       return 1;
     },
-  'pseudo':function()
+    'pseudo':function()
     {
       return 0;
     },
-  'nest':function(node,a)
+    'nest':function(node,a)
     {
-      var n=a[0],b=a[1],c;
+      var n=a[0],
+          b=a[1],
+          c;
+      
       if(!node)
 	return 0;
 
       //if(n[parseInt(node[b],10)]!=node)
       if(n[parseInt(node.getAttribute(b),10)]!=node)
-	{
-	  c=n.length;
-	  //node[b]=c;
-	  node.setAttribute(b,c);
-	  n[c]=node;
-	  return 1;
-	}
+      {
+	c=n.length;
+        //node[b]=c;
+        node.setAttribute(b,c);
+        n[c]=node;
+        return 1;
+      }
       return 0;
     }
   },
 
   selectors={
     '>':function(node,name,nn,nest,fdata,vnode,f)
-      {
-	var _nodes=node.childNodes,k,l,nodes=[];
+    {
+      var _nodes=node.childNodes,
+          k,
+          l,
+          nodes=[];
 
-	for(k=0,l=_nodes.length;k<l;k++)
-	  {
-	    node=_nodes[k];
-	    if(node.nodeType!=1)
-	      continue;
+      for(k=0,l=_nodes.length;k<l;k++)
+      {
+	node=_nodes[k];
+	if(node.nodeType!=1)
+	  continue;
 
-	    if(vnode(node,fdata,f))
-	      nodes.push(node);
-	  }
-	return nodes;
-      },
-    '~':function(node,name,nn,nest,fdata,vnode,f)
-      {
-	var nodes=[],idx;
-	while((node=node.nextSibling))
-	  {
-	    if(node.nodeType==1&&
-	       vnode(node,fdata,f))
-	      nodes.push(node);
-	  }
-	return nodes;
-      },
-    '+':function(node,name,nn,nest,fdata,vnode,f)
-      {
-	while((node=node.nextSibling)&&node.nodeType!=1){}
-	return vnode(node,fdata,f)?[node]:[];
+	if(vnode(node,fdata,f))
+	  nodes.push(node);
       }
+      return nodes;
+    },
+    '~':function(node,name,nn,nest,fdata,vnode,f)
+    {
+      var nodes=[],
+          idx;
+      
+      while((node=node.nextSibling))
+      {
+	if(node.nodeType==1&&vnode(node,fdata,f))
+	  nodes.push(node);
+      }
+      return nodes;
+    },
+    '+':function(node,name,nn,nest,fdata,vnode,f)
+    {
+      while((node=node.nextSibling)&&node.nodeType!=1){}
+      return vnode(node,fdata,f)?[node]:[];
+    }
   };
 
   function validNode(node,fdata,f)
+  {
+    var i,
+        j=0;
+    
+    if(node)
     {
-      var i,j=0;
-      if(node)
+      j=1;
+      for(i in fdata)
+      {
+	if(fdata[i]&&!f[i](node,fdata[i]))
 	{
-	  j=1;
-	  for(i in fdata)
-	    {
-	      if(fdata[i]&&!f[i](node,fdata[i]))
-		{
-		  j=0;
-		  break;
-		}
-	    }
+	  j=0;
+	  break;
 	}
-      return j;
-    };
+      }
+    }
+    return j;
+  };
 
   // ID = m[1]
   // CLASS = m[1]
@@ -4832,37 +5013,37 @@ Meta.select=(function()
       return Meta.obj2array(b.querySelectorAll(a));
 
     var chunk=re.CHUNKER,
-    m,
-    n,
-    o,
-    rule,
-    sel,
-    nodes=[b],
-    _id=re.ID,
-    _class=re.CLASS,
-    _name=re.NAME,
-    _attr=re.ATTR,
-    _tag=re.TAG,
-    _child=re.CHILD,
-    _POS=re.POS,
-    _PSEUDO=re.PSEUDO,
-    doc=(b.nodeType==9?b:b.ownerDocument),
-    i,
-    j,
-    k,
-    l,
-    node,
-    _nodes2,
-    _nodes,
-    isxml=doc.documentElement.nodeName!=='HTML',
-    nest,
-    nn='data-metaNest',
-    pos=0,
-    fnodes=[],
-    fdata={},
-    _filters=filters,
-    afilters=attrFilter,
-    vnode=validNode;
+        m,
+        n,
+        o,
+        rule,
+        sel,
+        nodes=[b],
+        _id=re.ID,
+        _class=re.CLASS,
+        _name=re.NAME,
+        _attr=re.ATTR,
+        _tag=re.TAG,
+        _child=re.CHILD,
+        _POS=re.POS,
+        _PSEUDO=re.PSEUDO,
+        doc=(b.nodeType==9?b:b.ownerDocument),
+        i,
+        j,
+        k,
+        l,
+        node,
+        _nodes2,
+        _nodes,
+        isxml=doc.documentElement.nodeName!=='HTML',
+        nest,
+        nn='data-metaNest',
+        pos=0,
+        fnodes=[],
+        fdata={},
+        _filters=filters,
+        afilters=attrFilter,
+        vnode=validNode;
 
     chunk.lastIndex=0;
     while((m=chunk.exec(a)))
@@ -4872,10 +5053,10 @@ Meta.select=(function()
       if(rule=='>'||
 	 rule=='~'||
 	 rule=='+')
-	{
-	  sel=selectors[rule];
-	  continue;
-	}
+      {
+	sel=selectors[rule];
+        continue;
+      }
 
       nest=[];
 
@@ -4883,85 +5064,87 @@ Meta.select=(function()
       _id.lastIndex=0;
       n=_id.exec(rule);
       if(n)
-	{
-	  node=doc.getElementById(n[1]);
-	  if(_filters.nest(node,[nest,nn]))
-	    nodes=[node];
-	  else
-	    nodes=[];
-	}
+      {
+	node=doc.getElementById(n[1]);
+        if(_filters.nest(node,[nest,nn]))
+	  nodes=[node];
+	else
+	  nodes=[];
+      }
       else
+      {
+	// NEST
+	fdata.nest=[nest,nn];
+
+        // ATTR
+        fdata.attr=[];
+        _attr.lastIndex=0;
+        while((n=_attr.exec(rule))!==null)
+        {
+	  n[2]=afilters[n[2]||''];
+	  fdata.attr.push(n);
+        }
+        
+        if(!fdata.attr.length)
+	  fdata.attr=0;
+
+	// CLASS
+	if(!fdata.attr)
 	{
-	  // NEST
-	  fdata.nest=[nest,nn];
-
-	  // ATTR
-	  fdata.attr=[];
-	  _attr.lastIndex=0;
-	  while((n=_attr.exec(rule))!==null)
-	  {
-	    n[2]=afilters[n[2]||''];
-	    fdata.attr.push(n);
-	  }
-	  if(!fdata.attr.length)
-	    fdata.attr=0;
-
-	  // CLASS
-	  if(!fdata.attr)
-	    {
-	      _class.lastIndex=0;
-	      n=_class.exec(rule);
-	      fdata.className=n?n[1]:n;
-	    }
-
-	  // TAG
-	  _tag.lastIndex=0;
-	  n=_tag.exec(rule);
-	  n=n?n[1]:'*';
-	  n=isxml?n:n.toUpperCase();
-	  fdata.tag=n;
-
-	  /////////////////////////////////
-	  _nodes2=[];
-	  for(i=0,j=nodes.length;i<j;i++)
-	    {
-	      node=nodes[i];
-	      if(sel)
-		_nodes2=_nodes2.concat(sel(node,n,nn,nest,fdata,vnode,_filters));
-	      else
-		{
-		  _class.lastIndex=0;
-		  o=_class.exec(rule);
-		  if(o&&node.getElementsByClassName)
-		    {
-		      _nodes=node.getElementsByClassName(o[1]);
-		      o=0;
-		    }
-		  else
-		    _nodes=node.getElementsByTagName(n);
-
-		  if(!o)
-		    fdata.className=0;
-
-		  for(k=0,l=_nodes.length;k<l;k++)
-		    {
-		      node=_nodes[k];
-		      if(vnode(node,fdata,_filters))
-			_nodes2.push(node);
-		    }
-		  o=0;
-		}
-	    }
-	  nodes=_nodes2;
+	  _class.lastIndex=0;
+	  n=_class.exec(rule);
+	  fdata.className=n?n[1]:n;
 	}
+
+        // TAG
+        _tag.lastIndex=0;
+        n=_tag.exec(rule);
+	n=n?n[1]:'*';
+	n=isxml?n:n.toUpperCase();
+	fdata.tag=n;
+
+        /////////////////////////////////
+        _nodes2=[];
+        for(i=0,j=nodes.length;i<j;i++)
+	{
+	  node=nodes[i];
+	  if(sel)
+	    _nodes2=_nodes2.concat(sel(node,n,nn,nest,fdata,vnode,_filters));
+	  else
+	  {
+	    _class.lastIndex=0;
+	    o=_class.exec(rule);
+	    
+            if(o&&node.getElementsByClassName)
+	    {
+	      _nodes=node.getElementsByClassName(o[1]);
+	      o=0;
+	    }
+	    else
+	      _nodes=node.getElementsByTagName(n);
+
+	    if(!o)
+	      fdata.className=0;
+
+	    for(k=0,l=_nodes.length;k<l;k++)
+	    {
+	      node=_nodes[k];
+	      if(vnode(node,fdata,_filters))
+		_nodes2.push(node);
+	    }
+	    o=0;
+	  }
+        }
+        nodes=_nodes2;
+      }
       sel=null;
 
       if(m[2]&&m[2].replace(/^\s+|\s+$/g,"")==',')
-	{
-	  fnodes[pos++]=nodes;
-	  nodes=[b];
-	  continue;
-	}
+      {
+	fnodes[pos++]=nodes;
+        nodes=[b];
+	continue;
+      }
     }
 
     fnodes[pos]=nodes;
@@ -4969,15 +5152,15 @@ Meta.select=(function()
     nest=[];
     nodes=[];
     for(i=0,j=fnodes.length;i<j;i++)
+    {
+      _nodes=fnodes[i];
+      for(k=0,l=_nodes.length;k<l;k++)
       {
-	_nodes=fnodes[i];
-	for(k=0,l=_nodes.length;k<l;k++)
-	  {
-	    node=_nodes[k];
-	    if(_filters.nest(node,[nest,nn]))
-	      nodes.push(node);
-	  }
+	node=_nodes[k];
+	if(_filters.nest(node,[nest,nn]))
+	  nodes.push(node);
       }
+    }
 
     return nodes;
   };
