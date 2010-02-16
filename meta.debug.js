@@ -2564,12 +2564,14 @@ Meta.domevent.extend({
 
   /**
    <method name="on" type="mixed">
-   <desc>
-   Adds a new event.
-   Returns this.
-   </desc>
    <param name="a" type="string">Event type</param>
    <param name="b" type="function">Callback for the event</param>
+   <desc>
+   Adds a new event. If the callback returns false it stops the
+   event from propagation. The callback is called the same way
+   it would be called by the browser event, "this" is the element
+   and received the event as an argument.
+   </desc>
    </method>
    */
   on:function(a,b)
@@ -4581,8 +4583,12 @@ Meta.guiEngine=Meta(function()
       win=Meta.domevent.bro(document),
       bod,bod_bak={},
       limit=[0,0,0,0],
-      cur_pos=[0,0],
-      cur_size=[0,0],
+      cur_dims={
+        left:0,
+        top:0,
+        width:0,
+        height:0
+      },
       screen_pos=[0,0],
       gui='',
       started=0,
@@ -4592,10 +4598,11 @@ Meta.guiEngine=Meta(function()
         'drag':{
           'md':function(e) // doc.mousedown
           {
-            cur_pos=cur.pos();
-            cur_size=cur.size();
+            cur_dims=cur.dims();
             disableSelection();
-            cur.css('position','absolute').css('zIndex','1');
+            cur.
+              css('position','absolute').
+              css('zIndex','1');
           },
           'mu':function(e) // doc.mouseup
           {
@@ -4604,33 +4611,36 @@ Meta.guiEngine=Meta(function()
           },
           'mmv':function(e,dt)  // doc.mousemove
           {
-            var p=cur_pos,
-                s=cur_size,
+            var p=cur_dims,
                 m=[
                   limit[2]-s[0],
                   limit[3]-s[1]
                 ];
             
             dt=[
-              p[0]+dt[0],
-              p[1]+dt[1]
+              p.left+dt[0],
+              p.top+dt[1]
             ];
 
             if(dt[0]>=limit[0]&&dt[0]<m[0])
             {
-              cur_pos[0]=dt[0];
+              p.left=dt[0];
               screen_pos[0]=e.screenX;
             }
-            else if(dt[0]<limit[0])dt[0]=limit[0];
-            else if(dt[0]>m[0])dt[0]=m[0];
+            else if(dt[0]<limit[0])
+              dt[0]=limit[0];
+            else if(dt[0]>m[0])
+              dt[0]=m[0];
 
             if(dt[1]>=limit[1]&&dt[1]<m[1])
             {
-              cur_pos[1]=dt[1];
+              p.top=dt[1];
               screen_pos[1]=e.screenY;
             }
-            else if(dt[1]<limit[1])dt[1]=limit[1];
-            else if(dt[1]>m[1])dt[1]=m[1];
+            else if(dt[1]<limit[1])
+              dt[1]=limit[1];
+            else if(dt[1]>m[1])
+              dt[1]=m[1];
             
             cur.css('left',dt[0]+'px');
             cur.css('top',dt[1]+'px');
@@ -4649,10 +4659,10 @@ Meta.guiEngine=Meta(function()
           },
           'mmv':function(e,dt)
           {
-            var s=cur.size();
+            var s=cur.dims();
             dt=[
-              s[0]+dt[0],
-              s[1]+dt[1]
+              s.width+dt[0],
+              s.height+dt[1]
             ];
             if(dt[0]>=10)
             {
@@ -4785,14 +4795,13 @@ Meta.guiEngine=Meta(function()
   function setLimit()
   {
     var o=cur_limit,
-        t=o.size(),
-        p=o.pos();
+        p=o.dims();
     
     limit=[
-      p[0],
-      p[1],
-      t[0]+p[0],
-      t[1]+p[1]
+      p.left,
+      p.top,
+      t.width+p.left,
+      t.height+p.top
     ];
   };
 

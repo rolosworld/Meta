@@ -68,12 +68,14 @@ Meta.domevent.extend({
 
   /**
    <method name="on" type="mixed">
-   <desc>
-   Adds a new event.
-   Returns this.
-   </desc>
    <param name="a" type="string">Event type</param>
    <param name="b" type="function">Callback for the event</param>
+   <desc>
+   Adds a new event. If the callback returns false it stops the
+   event from propagation. The callback is called the same way
+   it would be called by the browser event, "this" is the element
+   and received the event as an argument.
+   </desc>
    </method>
    */
   on:function(a,b)
