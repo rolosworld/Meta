@@ -24,6 +24,8 @@ Meta.animation=function()
   var ev=Meta.events.bro(),
       fps=1000/30,
       bakList=[
+        'clip',
+        'position',
         'width',
         'height',
         'left',
@@ -219,7 +221,8 @@ Meta.animation=function()
       me.cssBackup();
       me.cssRestore('display');
 
-      if(!me.__)ev.addEvent('stopAnim',ev,function()
+      if(!me.__)
+        ev.addEvent('stopAnim',ev,function()
 	{
 	  if(r)
 	  {
@@ -228,6 +231,7 @@ Meta.animation=function()
 	  }
 	  me.__=0;
 	});
+      
       me.__=1;
 
       return this.forEach(function(v)
@@ -309,44 +313,44 @@ Meta.animation=function()
 
 
       // Tipos de animaciones
-      switch(md)
-      {
-        case 'up-left':
+      ({
+        'up-left':function(){
           x0=s3;
           x1=s0;
           fn=wh;
           cb0=cb1;
-          break;
-        case 'right':
+        },
+        right:function(){
           x0=s0;
           x1=s1;
           fn=w;
 	  r=1;
-          break;
-        case 'left':
+        },
+        left:function(){
           x0=s1;
           x1=s0;
           fn=w;
           cb0=cb1;
-          break;
-        case 'up':
+        },
+        up:function(){
           x0=s2;
           x1=s0;
           fn=h;
           cb0=cb1;
-          break;
-        case 'down':
+        },
+        down:function(){
           x0=s0;
           x1=s2;
           fn=h;
 	  r=1;
-          break;
-        default: //down-right
+        },
+        'down-right':function(){
           x0=s0;
           x1=s3;
           fn=wh;
 	  r=1;
-      }
+        }
+      })[md]();
 
       return me.animate(x0,x1,speed,fn,cb0,r);
     },
