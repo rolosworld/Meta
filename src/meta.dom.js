@@ -19,12 +19,10 @@
 /**
  <class name="Meta.dom">
  <inherit>Meta.domevent</inherit>
- <extend>Meta.animation</extend>
  <desc>DOM extensions, elements</desc>
 */
 Meta.dom=Meta(Meta.domevent);
 Meta.dom.info.name="Meta.dom";
-Meta.dom.extend(Meta.animation);
 Meta.dom.extend(function()
 {
   // Methods for glue method

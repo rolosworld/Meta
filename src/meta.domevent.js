@@ -24,7 +24,7 @@
  */
 //Meta.domevent=Meta(Meta.events);
 Meta.domevent=Meta(Meta.array);
-Meta.domevent.extend(Meta.events,{exclude:['bro','sup','get','set']});
+Meta.domevent.extend(Meta.events,{exclude:['bro','under','get','set']});
 Meta.domevent.extend({
   valid_type:' abort blur change click dblclick error focus keydown keypress keyup load mousedown mousemove mouseout mouseover mouseup reset resize select submit unload ',
 

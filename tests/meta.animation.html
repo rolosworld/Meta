@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Meta.animation Tests</title>
+  </head>
+<body>
+
+<div id="test" style="width:200px;height:200px;border:1px solid #000;color:#fff;background-color:#000;">Foo Bar!</div>
+
+<button onclick="a.cssRestore();">Restore</button>
+<button onclick="a.slide('up-left');">slide up-left</button>
+<button onclick="a.slide('up');">slide up</button>
+<button onclick="a.slide('left');">slide left</button>
+<button onclick="a.slide('down');">slide down</button>
+<button onclick="a.slide('right');">slide right</button>
+<button onclick="a.slide('down-right');">slide down-right</button>
+<button onclick="a.fade('in');">fade in</button>
+<button onclick="a.fade('out');">fade out</button>
+<select id="anim">
+<option value="0">0</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+<option value="13">13</option>
+<option value="14">14</option>
+</select>
+<button onclick="a.clip(Meta.dom.bro().select('#anim').val());">clip</button>
+
+<script src="../meta.debug.js"></script>
+<script>
+  var a=Meta.dom.bro().select('#test');
+</script>
+
+</body></html>

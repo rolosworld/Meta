@@ -15,8 +15,24 @@
  You should have received a copy of the GNU General Public License
  along with Meta.  If not, see <http://www.gnu.org/licenses/>.
 */
+/**
+   <class name="Meta.animation.clip">
+   <desc>Animation extensions for Meta.animation</desc>
+ */
 Meta.inherit(Meta.animation,{
-clip:function(anim,speed,cb)
+  /**
+   <method name="clip" type="this">
+   <desc>
+   Clip the elements.
+   Clip types: 0-14
+   4-8,10-14
+   </desc>
+   <param name="anim" type="string">Type of clip to do</param>
+   <param name="[speed]" type="integer">Milliseconds the animation will last</param>
+   <param name="[cb]" type="function">Callback function to be called after the animation finishes</param>
+   </method>
+   */
+  clip:function(anim,speed,cb)
   {
     // position:absolute;
     var a=Meta.dom.bro(),
@@ -36,6 +52,10 @@ clip:function(anim,speed,cb)
             cb.call(me,o);
         },
         
+        // _1 - top
+        // _2 - right
+        // _3 - bottom
+        // _4 - left
         m=function(_1,_2,_3,_4){
           a.
 	    css('overflow','hidden').
@@ -45,7 +65,7 @@ clip:function(anim,speed,cb)
     
     // 0-14 anims
     ([
-       function(){
+       function(){ // 0
          x0=s0;
          x1=s2;
          fn=function(b){
@@ -54,7 +74,7 @@ clip:function(anim,speed,cb)
            m(b,d.width,d.height,0);
          };
        },
-       function(){
+       function(){ // 1
          x0=s1;
          x1=s0;
          fn=function(b){
@@ -63,7 +83,7 @@ clip:function(anim,speed,cb)
            m(0,b,d.height,0);
          };
        },
-       function(){
+       function(){ // 2
          x0=s2;
          x1=s0;
          fn=function(b){
@@ -72,7 +92,7 @@ clip:function(anim,speed,cb)
            m(0,d.width,b,0);
          };
        },
-       function(){
+       function(){ // 3
          x0=s0;
          x1=s1;
          fn=function(b){
@@ -81,25 +101,25 @@ clip:function(anim,speed,cb)
            m(0,d.width,d.height,b);
          };
        },
-       function(){
+       function(){ // 4
          x0=s0;
          x1=s2;
          fn=function(b){
            a.set(this);
            var d=a.dims();
-           m(b,d.width,b,0);
+           m(b,d.width,d.height-b,0);
          };
        },
-       function(){
+       function(){ // 5
          x0=s0;
          x1=s1;
          fn=function(b){
            a.set(this);
            var d=a.dims();
-           m(0,b,d.height,b);
+           m(0,d.width-b,d.height,b);
          };
        },
-       function(){
+       function(){ // 6
          x0=s0;
          x1=s3;
          fn=function(b){
@@ -107,10 +127,10 @@ clip:function(anim,speed,cb)
            var d=a.dims(),
                w=b*d.width,
                h=d.height*b;
-           m(h,w,h,w);
+           m(h,d.width-w,d.height-h,w);
          };
        },
-       function(){
+       function(){ // 7
          x0=s0;
          x1=s3;
          fn=function(b){
@@ -118,10 +138,10 @@ clip:function(anim,speed,cb)
            var d=a.dims(),
                w=b*d.width,
                h=d.height*b;
-           m(h,w,d.height,0);
+           m(h,d.width-w,d.height,0);
          };
        },
-       function(){
+       function(){ // 8
          x0=s0;
          x1=s3;
          fn=function(b){
@@ -129,10 +149,10 @@ clip:function(anim,speed,cb)
            var d=a.dims(),
                w=b*d.width,
                h=d.height*b;
-           m(0,d.width,h,w);
+           m(0,d.width,d.height-h,w);
          };
        },
-       function(){
+       function(){ // 9
          x0=s0;
          x1=s3;
          fn=function(b){
@@ -143,7 +163,7 @@ clip:function(anim,speed,cb)
            m(h,d.width,d.height,w);
          };
        },
-       function(){
+       function(){ // 10
          x0=s0;
          x1=s3;
          fn=function(b){
@@ -151,10 +171,10 @@ clip:function(anim,speed,cb)
            var d=a.dims(),
                w=b*d.width,
                h=d.height*b;
-           m(0,w,h,0);
+           m(0,d.width-w,d.height-h,0);
          };
        },
-       function(){
+       function(){ // 11
          x0=s0;
          x1=s3;
          fn=function(b){
@@ -162,10 +182,10 @@ clip:function(anim,speed,cb)
            var d=a.dims(),
                w=b*d.width,
                h=d.height*b;
-           m(h,w,h,0);
+           m(h,d.width-w,d.height-h,0);
          };
        },
-       function(){
+       function(){ // 12
          x0=s0;
          x1=s3;
          fn=function(b){
@@ -173,10 +193,10 @@ clip:function(anim,speed,cb)
            var d=a.dims(),
                w=b*d.width,
                h=d.height*b;
-           m(h,w,d.height,w);
+           m(h,d.width-w,d.height,w);
          };
        },
-       function(){
+       function(){ // 13
          x0=s0;
          x1=s3;
          fn=function(b){
@@ -184,10 +204,10 @@ clip:function(anim,speed,cb)
            var d=a.dims(),
                w=b*d.width,
                h=d.height*b;
-           m(h,d.width,h,w);
+           m(h,d.width,d.height-h,w);
          };
        },
-       function(){
+       function(){ // 14
          x0=s0;
          x1=s3;
          fn=function(b){
@@ -195,10 +215,11 @@ clip:function(anim,speed,cb)
            var d=a.dims(),
                w=b*d.width,
                h=d.height*b;
-           m(0,w,h,w);
+           m(0,d.width-w,d.height-h,w);
          };
        }])[anim]();
     
     return this.animate(x0,x1,speed,fn,cb0);
   }
 });
+/** </class> */
