@@ -41,9 +41,10 @@ Meta.son=function(a)
 
 /**
  <function name="Meta.extend" type="object">
- <param name="a" type="object">Object to be expanded</param>
- <param name="b" type="object">Object that will be used to expand</param>
- <desc>Extend a given object with another object</desc>
+ <param name="a" type="object">Object to be expanded.</param>
+ <param name="b" type="object">Object that will be used to expand.</param>
+ <param name="[c]" type="array">String array of properties to excluce.</param>
+ <desc>Extend a given object with another object.</desc>
  <test>
  <![CDATA[
  var a={a:1};
@@ -53,14 +54,54 @@ Meta.son=function(a)
  </test>
  </function>
  */
-Meta.extend=function(a,b)
+Meta.extend=function(a,b,c)
 {
+  c=c||[];
   // import the methods
   for(var i in b)
     // copy pointers of methods to local variables
-    if(a!=b[i])
+    if(i!='constructor'&&a!=b[i]&&Meta.indexOf(c,i)<0)
       a[i]=b[i];
   return a;
+};
+
+/**
+ <function name="Meta.inherit" type="object">
+ <param name="a" type="object">Object that will inherit</param>
+ <param name="b" type="object">Object that will be used inherit</param>
+ <param name="[c]" type="object">Custom configuration for the extension {exclude:[string,...],params:[]}</param>
+ <desc>Inherits a given object into another object</desc>
+ <test>
+ <![CDATA[
+ var a=Meta();
+ Meta.inherit(a,{o:function(q){return q;}});
+ return 'o' in a && a.o(1)==1;
+ ]]>
+ </test>
+ </function>
+ */
+Meta.inherit=function(a,b,c)
+{
+  var p=[],
+      e=[],
+      o={};
+
+  if(c)
+  {
+    e=c.exclude||e;
+    p=c.params||p;
+  }
+
+  // if its a function, initialize it to get the object
+  // we need the object to set pointers to the functions instead of copy them
+  if(typeof b == 'function')
+  {
+    b.apply(o,p);
+    b=o;
+  }
+
+  a=a.constructor?a.constructor.prototype:a;
+  return Meta.extend(a,b,e);
 };
 
 

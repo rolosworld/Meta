@@ -31,6 +31,9 @@
 */
 var Meta=window.Meta=function()
 {
+  // Get outside Meta
+  function ateM(){return Meta;};
+  
   /**
    * Try to guess pre-existent extensions or
    * If the Object is Meta, it creates a new Meta
@@ -38,7 +41,6 @@ var Meta=window.Meta=function()
    * 
    * o - Object to expand
    */
-
   function getHim(o)
   {
     var a=Meta.its(o),
@@ -63,13 +65,6 @@ var Meta=window.Meta=function()
   function getMe(o)
   {
     var father;
-
-    function hasVal(a,b)
-    {
-      var i=a.length;
-      while(i--)if(a[i] === b)break;
-      return i;
-    };
 
     /**
        <class name="Meta">
@@ -149,34 +144,7 @@ var Meta=window.Meta=function()
      */
     Meta.prototype.extend=function(o,conf)
     {
-      var p=[],
-          e=[],
-          w=this.constructor.prototype,
-          b={};
-
-      if(conf)
-        {
-          e=conf.exclude||e;
-          p=conf.params||p;
-        }
-
-      // if its a function, initialize it to get the object
-      // we need the object to set pointers to the functions instead of copy them
-      if(typeof o == 'function')
-        {
-	  o.apply(b,p);
-	  o=b;
-        }
-
-      // import the object
-      for(p in o)
-        {
-          if(p!='constructor'&&
-             w!=o[p]&&
-             hasVal(e,p)<0)w[p]=o[p];
-        }
-
-      return this;
+      return ateM().inherit(this,o,conf);
     };
 
     return Meta;
