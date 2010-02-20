@@ -234,7 +234,9 @@ Meta.son=function(a)
 {
   function b(){};
   b.prototype=a;
-  return new b();
+  a=new b();
+  a.constructor=b;
+  return a;
 };
 
 
@@ -2741,7 +2743,7 @@ Meta.animation=function()
     ev.fireEvent('frameStep',ev);
   };
 
-  return {
+  return Meta.son({
     data:'data-meta_',
 
     /**
@@ -3062,7 +3064,7 @@ Meta.animation=function()
 
       return this.animate(x0,x1,speed,fn,cb0,r);
     }
-  };
+  });
 }();
 /** </class> */
 

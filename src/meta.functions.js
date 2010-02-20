@@ -35,7 +35,9 @@ Meta.son=function(a)
 {
   function b(){};
   b.prototype=a;
-  return new b();
+  a=new b();
+  a.constructor=b;
+  return a;
 };
 
 

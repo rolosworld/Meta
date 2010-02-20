@@ -96,7 +96,7 @@ Meta.animation=function()
     ev.fireEvent('frameStep',ev);
   };
 
-  return {
+  return Meta.son({
     data:'data-meta_',
 
     /**
@@ -417,6 +417,6 @@ Meta.animation=function()
 
       return this.animate(x0,x1,speed,fn,cb0,r);
     }
-  };
+  });
 }();
 /** </class> */

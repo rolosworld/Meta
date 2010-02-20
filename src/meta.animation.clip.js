@@ -15,7 +15,7 @@
  You should have received a copy of the GNU General Public License
  along with Meta.  If not, see <http://www.gnu.org/licenses/>.
 */
-Meta.dom.extend({
+Meta.inherit(Meta.animation,{
 clip:function(anim,speed,cb)
   {
     // position:absolute;
