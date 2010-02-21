@@ -80,7 +80,7 @@ Meta.inherit(Meta.animation,{
       r=1;
     }
 
-    return this.animate(x0,x1,speed,fn,cb0,r);
+    return this.animate(x0,x1,speed,null,fn,cb0,r);
   }
 });
 /** </class> */
