@@ -24,18 +24,18 @@ Meta.array=Meta(Meta.core);
 Meta.array.extend(
 {
   /**
-     <method name="bro" type="Meta.array">
-     <desc>Custom son, let it set a value</desc>
-     <param name="[...]" type="mixed">Mixed data</param>
-     <test>
-     <![CDATA[
-     var a=Meta.array.bro(1,2),t;
-     t=a.get().length==2;
-     a=Meta.array.bro([1,2]);
-     return t && a.get().length==2;
-     ]]>
-     </test>
-     </method>
+   <method name="bro" type="Meta.array">
+   <desc>Custom bro, let it set a value</desc>
+   <param name="[...]" type="mixed">Mixed data</param>
+   <test>
+   <![CDATA[
+   var a=Meta.array.bro(1,2),t;
+   t=a.get().length==2;
+   a=Meta.array.bro([1,2]);
+   return t && a.get().length==2;
+   ]]>
+   </test>
+   </method>
    */
   bro:function()
   {
@@ -66,7 +66,7 @@ Meta.array.extend(
   */
   get:function(i)
   {
-    var a=this.under.call(this,'get');
+    var a=this.under('get');
     return Meta.its(i,'number')?a[i]:a;
   },
 
@@ -86,8 +86,14 @@ Meta.array.extend(
   */
   set:function(a,i)
   {
-    if(Meta.its(i,'number'))this.get()[i]=a;
-    else this.under.call(this,'set',a);
+    if(Meta.its(i,'number'))
+      this.get()[i]=a;
+    else
+    {
+      if(!Meta.its(a,'array'))
+        a=[a];
+      this.under('set',a);
+    }
     return this;
   },
 

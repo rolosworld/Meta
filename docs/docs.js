@@ -81,7 +81,7 @@
 */
 function toggler(a,b)
 {
-  var c=Meta.dom.bro().select(a,b);
+  var c=Meta.dom.bro(b).select(a);
   function d(){c.slide('down');};
   function e(){c.slide('up');};
   c.slide('up');
@@ -145,7 +145,7 @@ documenter.extend(
         d=Meta.dom.bro(),
         e=Meta.dom.bro(),
 	  f=Meta.string.bro();
-      d.select('param',v)
+      d.set(v).select('param')
         .forEach(function(v)
                  {
                    e.set(v);
@@ -166,7 +166,7 @@ documenter.extend(
       var test='',
       d=Meta.dom.bro(),
       s=Meta.string.bro();
-      d.select('test',v);
+      d.set(v).select('test');
       if(d.len())
 	  {
 	    s.set(d.text()).escapeHTML();
@@ -187,7 +187,7 @@ documenter.extend(
         d=Meta.dom.bro(),
         e=Meta.dom.bro(),
         f=Meta.string.bro();
-      d.select('param',v)
+      d.set(v).select('param')
         .forEach(function(v)
                  {
                    e.set(v);
@@ -226,7 +226,7 @@ documenter.extend(
       return '<div class="functionBox"><div class="functionLine"><span class="type">'+type+'</span>'+
 	  ' <span class="function">'+c.attr('name')+'</span>( '+this.getParamStr(v)+' )</div>'+
 	  '<div class="desc">'+this.getParamDesc(v)+'<br/>'+
-	  f.set(c.select('desc',v).inner()).trim().nl2br().get()+'<br/><br/>'+
+	  f.set(c.set(v).select('desc').inner()).trim().nl2br().get()+'<br/><br/>'+
 	  this.getTestSrc(v)+'</div></div>';
     },
 
@@ -239,22 +239,22 @@ documenter.extend(
     setClassInfo:function(v)
     {
       if(Meta.its(v)=='string')
-        v=this.xmlMeta.select('doc>class[name="'+v+'"]').get(0);
+        v=this.xmlMeta.set([]).select('doc>class[name="'+v+'"]').get(0);
       if(!this.xmlMeta.len())return;
 
       var s='',
         me=this,
         c=Meta.dom.bro(v),
         d=Meta.dom.bro(),
-        f='<div class="desc">'+Meta.string.bro(Meta.dom.bro()
-                                               .select('desc',v)
+        f='<div class="desc">'+Meta.string.bro(Meta.dom.bro().set(v)
+                                               .select('desc')
                                                .inner()).nl2br().get()+'</div>';
 
       s+='<h1>'+c.attr('name')+'</h1>'+f;
 
       // inherits
       s+='<h1>Inherits</h1>';
-      c.select('inherit',v).forEach(function(e)
+      c.set(v).select('inherit').forEach(function(e)
                                     {
                                       var t=d.set(e).inner();
                                       s+='<div class="inherit" onclick="documenter.setClassInfo(\''+t+'\');" style="cursor:pointer;">'+t+'</div>';
@@ -262,7 +262,7 @@ documenter.extend(
 
       // extends
       s+='<h1>Extenders</h1>';
-      c.select('extend',v).forEach(function(e)
+      c.set(v).select('extend').forEach(function(e)
                                    {
                                       var t=d.set(e).inner();
                                       s+='<div class="extend" onclick="documenter.setClassInfo(\''+t+'\');" style="cursor:pointer;">'+t+'</div>';
@@ -270,14 +270,14 @@ documenter.extend(
 
       // publics
       s+='<h1>Public</h1>';
-      c.select('public',v).forEach(function(e)
+      c.set(v).select('public').forEach(function(e)
                                    {
                                      s+='<div>'+me.getVarStr(e)+'</div>';
                                    });
 
       // methods
       s+='<h1>Methods</h1>';
-      c.select('method',v).forEach(function(e)
+      c.set(v).select('method').forEach(function(e)
                                    {
                                      s+='<div>'+me.getFunctionStr(e)+'</div>';
                                    });
@@ -293,10 +293,10 @@ documenter.extend(
 	      tester(a,b);
 	    });
 
-      c.select('div.functionBox',this.domOut.get(0))
+      c.set(this.domOut.get(0)).select('div.functionBox')
 	  .forEach(function(e)
 		   {
-		       d.select('div.functionLine',e)
+		       d.set(e).select('div.functionLine')
 			   .css('cursor','pointer')
 			   .on('click',toggler('div.desc',e));
 		   })
@@ -320,7 +320,7 @@ documenter.extend(
       switch(tag)
         {
         case 'Globals':
-          this.xmlMeta.select('doc>global')
+          this.xmlMeta.set([]).select('doc>global')
             .forEach(function(v)
                      {
 			 s+='<div>'+me.getVarStr(v)+'</div>';
@@ -328,7 +328,7 @@ documenter.extend(
           me.domOut.inner(s);
           break;
         case 'Functions':
-          this.xmlMeta.select('doc>function')
+          this.xmlMeta.set([]).select('doc>function')
             .forEach(function(v)
                      {
                        s+='<div>'+me.getFunctionStr(v)+'</div>';
@@ -336,10 +336,10 @@ documenter.extend(
           me.domOut.inner(s);
 	  var d=Meta.dom.bro();
 
-	  c.select('div.functionBox',this.domOut.get(0))
+	  c.set(this.domOut.get(0)).select('div.functionBox')
 	      .forEach(function(e)
 		       {
-			   d.select('div.functionLine',e)
+			   d.set(e).select('div.functionLine')
 			       .css('cursor','pointer')
 			       .on('click',toggler('div.desc',e));
 		       })
@@ -358,7 +358,7 @@ documenter.extend(
           break;
         case 'Classes':
           me.domOut.empty();
-          this.xmlMeta.select('doc>class')
+          this.xmlMeta.set([]).select('doc>class')
             .forEach(function(v)
                      {
                        c.set(v);
@@ -375,12 +375,12 @@ documenter.extend(
           break;
 	case 'Tests':
           me.domOut.inner('<input type="checkbox" name="log" id="assert_log"/><label for="assert_log">Log</label> <button onclick="return false;">Start</button><button onclick="return false;">Fail</button><button onclick="return false;">Pass</button><div style="height:20px;background-color:#000;margin:10px;padding:2px;"><div id="prog" style="color:#000;background-color:#bdffc0;width:0%;height:20px;text-align:center;font-weight:900;">0%</div></div><div id="fail" style="background-color:#ffcbcb;display:none;"></div><div id="pass" style="background-color:#bdffc0;display:none;"></div>');
-	  var pass=Meta.dom.bro().select('div#pass',me.domOut.get(0));
-	  var fail=Meta.dom.bro().select('div#fail',me.domOut.get(0));
-	  var prog=Meta.dom.bro().select('div#prog',me.domOut.get(0));
-	  var but=Meta.dom.bro().select('button',me.domOut.get(0));
-	  var test=me.xmlMeta.son();
-	  var test2=test.son();
+	  var pass=Meta.dom.bro(me.domOut.get(0)).select('div#pass');
+	  var fail=Meta.dom.bro(me.domOut.get(0)).select('div#fail');
+	  var prog=Meta.dom.bro(me.domOut.get(0)).select('div#prog');
+	  var but=Meta.dom.bro(me.domOut.get(0)).select('button');
+	  var test=me.xmlMeta.bro();
+	  var test2=test.bro();
 	  var p=0;
 	  var t=0;
 	  var q;
@@ -429,7 +429,7 @@ documenter.extend(
 		     failed=0;
 		     passed=0;
 
-		     me.xmlMeta.select('test');
+		     me.xmlMeta.set([]).select('test');
 		     t=me.xmlMeta.len();
 		     me.xmlMeta.forEach(function(v)
 				{
@@ -464,13 +464,13 @@ documenter.extend(
       this.xmlMeta=Meta.dom.bro().doc(txt);
       if(this.xmlMeta._doc.firstChild.nodeName!='doc')
         {
-          var s=[],p=this.xmlMeta.select('parsererror').nodes();
+          var s=[],p=this.xmlMeta.set([]).select('parsererror').nodes();
           s.push(p[0].nodeValue);
           s.push(p[1].firstChild.nodeValue);
           alert(s.join("\n"));
         }
       this.domList.inner('<ul><li>Globals</li><li>Functions</li><li>Classes</li><li>Tests</li></ul>');
-      this.domTmp.select('li',this.domList.get(0))
+      this.domTmp.set(this.domList.get(0)).select('li')
 	  .css('cursor','pointer')
 	  .on('click',function()
                   {

@@ -120,12 +120,7 @@ Meta.dom.extend(function()
      */
     set:function(a,i)
     {
-      a=a||this.doc();
-      if(!Meta.its(i,'number')&&!Meta.its(a,'array'))
-        a=[a];
-
-      // Use set from Meta.core
-      return this.under.apply(this,['set',a,i]);
+      return this.under('set',a||this.doc(),i);
     },
 
     /**
@@ -172,8 +167,7 @@ Meta.dom.extend(function()
     /**
      <method name="select" type="this">
      <param name="a" type="string">CSS rules</param>
-     <param name="[c]" type="mixed">Use offset, Bool if currently defined elements should be used or Element for using it instead.</param>
-     <desc>Select elements from the given document, the offset element is the one defined in this.</desc>
+     <desc>Select elements from the given document.</desc>
      <test>
      <![CDATA[
      return Meta.dom.bro().select('body').get(0)==document.body;
@@ -181,37 +175,23 @@ Meta.dom.extend(function()
      </test>
      </method>
      */
-    select:function(a,c)
+    select:function(a)
     {
       var me=this,
           b=[],
-          s=Meta.select,
-          i,
-          j,
-          v,
-          w;
+          s=Meta.select;
 
-      if(a.nodeType)
+      if(me.len())
       {
-        me._=[a];
-        return me;
-      }
-
-      else if(c)
-      {
-        if(c.nodeType)
-          me._=[c];
-
-        w=me._;
-        j=w.length;
-        for(i=0;i<j;i++)
-          b=b.concat(s(a,w[i]));
+        me.forEach(function(c){
+          b=b.concat(s(a,c));
+        });
       }
 
       else
         b=s(a,me.doc());
 
-      me._=b;
+      me.set(b);
       return me;
     },
 
@@ -258,22 +238,16 @@ Meta.dom.extend(function()
       if(e==='')
         return this;
 
-      var i,
-          j,
-          g,
-          h,
-          v,
+      var g,
           me=this,
           z=glues[t||'append'],
-          y=me.son(),
-          l,
-          s=[],
-          u=[],
-          w;
+          y=me.bro(),
+          s=arr.bro(),
+          u=arr.bro();
 
       // Assume its an element
       if(e.nodeType)
-        y._=[e];
+        y.set(e);
 
       // Assume its a string
       else if(typeof e == 'string')
@@ -281,47 +255,36 @@ Meta.dom.extend(function()
 
       // Assume its an array of elements
       else
-        y._=e;
+        y.set(e);
 
       // Create document fragment
-      h=y._;
-      j=h.length;
       g=me.doc().createDocumentFragment();
-      for(i=0;i<j;i++)
-      {
-	w=h[i];
-
+      y.forEach(function(w){
 	// Get scripts
 	if(w.nodeName.toLowerCase()=='script')
 	  s.push(w);
 	else if(w.nodeType==1)
-	  s=s.concat(Meta.obj2array(w.getElementsByTagName('script')));
+	  s.concat(Meta.obj2array(w.getElementsByTagName('script')));
 
 	g.appendChild(w);
-      }
-
+      });
+      
       // Process scripts
-      j=s.length;
-      for(i=0;i<j;i++)
-      {
-	w=s[i];
+      s.forEach(function(w){
 	if(!w.src)
 	{
 	  u.push(w.text||w.textContent||w.innerHTML||'');
 	  w.parentNode.removeChild(w);
         }
-      }
+      });
       u=u.join("\n");
 
       // glue it
-      h=me._;
-      j=h.length;
-      for(i=0;i<j;i++)
-      {
-        v=h[i];
+      me.forEach(function(v,i){
         z(v,i?g.cloneNode(true):g,v.parentNode);
-        me.evalGlobal(u);
-      }
+        if(u)
+          me.evalGlobal(u);
+      });
 
       return me;
     },
@@ -691,7 +654,7 @@ Meta.dom.extend(function()
           s='',
           c,
           j,
-          k=this.son(),
+          k,
           l;
 
       if(a===undefined)
@@ -706,6 +669,7 @@ Meta.dom.extend(function()
           return b.innerHTML;
 
         // XML
+        k=this.bro();
         c=b.childNodes;
         for(j=0,l=c.length;j<l;j++)
           s+=k.set(c[j]).outer();
@@ -794,7 +758,7 @@ Meta.dom.extend(function()
       a=a||function(){};
       
       var b=this.elements(),
-          c=this.son(),
+          c=this.bro(),
           d=[],
           i=0,
           e,

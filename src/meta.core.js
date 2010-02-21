@@ -28,23 +28,6 @@ Meta.core.extend({
   _:null,
 
   /**
-   <method name="son" type="Meta.core">
-   <desc>Returns a new child of the object. Adds the passed arguments to the object if any is given.</desc>
-   <param name="[...]" type="mixed">List values to add</param>
-   <test>
-   <![CDATA[
-   var a=Meta.core.son();
-   return 'son' in a;
-   ]]>
-   </test>
-   </method>
-   */
-  son:function()
-  {
-    return Meta.son(this);
-  },
-
-  /**
    <method name="bro" type="Meta.core">
    <desc>Returns a new clone of the object. Set the passed value to the object if any is given.</desc>
    <param name="a" type="mixed">Values to set</param>

@@ -65,8 +65,10 @@ position:absolute;
 <script type="text/javascript" src="docs.js"></script>
 
 <script type="text/javascript">
+var sandbox;
 
-var sandbox=Meta.sandbox();
+function start() {
+sandbox=Meta.sandbox();
 sandbox.include('../meta.debug.js');
 //sandbox.include('../meta.popup.js');
 //sandbox.include('../meta.log.js');
@@ -75,10 +77,11 @@ sandbox.include('../meta.debug.js');
 
 documenter.files=['../meta.debug.js'];
 
-documenter.domList=Meta.dom.son().select('#list');
-documenter.domOut=Meta.dom.son().select('#box');
+documenter.domList=Meta.dom.bro().select('#list');
+documenter.domOut=Meta.dom.bro().select('#box');
 documenter.start();
-
+};
+start();
 </script>
 
 </body>
