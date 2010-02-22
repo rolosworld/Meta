@@ -53,16 +53,14 @@ Meta.inherit(Meta.animation,{
     w=function(b)
     {
       a.set(this).
-	css('width',b+'px').
-	css('overflow','hidden');
+	css('width',b+'px');
     },
 
     // Setea el alto del elemento
     h=function(b)
     {
       a.set(this).
-	css('height',b+'px').
-	css('overflow','hidden');
+	css('height',b+'px');
     },
 
     // Setea el ancho y alto del elemento
@@ -71,7 +69,12 @@ Meta.inherit(Meta.animation,{
       a.set(this);
       var c=[a.attr(me.data+'size_w'),a.attr(me.data+'size_h')];
       a.css('width',(b*c[0])+'px').
-	css('height',(b*c[1])+'px').
+	css('height',(b*c[1])+'px');
+    },
+    
+    ini=function(v)
+    {
+      a.set(v).
 	css('overflow','hidden');
     },
 
@@ -132,7 +135,7 @@ Meta.inherit(Meta.animation,{
       }
     })[md]();
 
-    return me.animate(x0,x1,speed,fn,cb0,r);
+    return me.animate(x0,x1,speed,ini,fn,cb0,r);
   }
 });
 /** </class> */

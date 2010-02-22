@@ -57,10 +57,13 @@ Meta.inherit(Meta.animation,{
         // _3 - bottom
         // _4 - left
         m=function(_1,_2,_3,_4){
-          a.
+          a.css('clip','rect('+_1+'px '+_2+'px '+_3+'px '+_4+'px)');
+        },
+    
+        ini=function(v){
+          a.set(v).
 	    css('overflow','hidden').
-	    css('position','absolute').
-            css('clip','rect('+_1+'px '+_2+'px '+_3+'px '+_4+'px)');
+	    css('position','absolute');
         };
     
     // 0-14 anims
@@ -219,7 +222,7 @@ Meta.inherit(Meta.animation,{
          };
        }])[anim]();
     
-    return this.animate(x0,x1,speed,fn,cb0);
+    return this.animate(x0,x1,speed,ini,fn,cb0);
   }
 });
 /** </class> */

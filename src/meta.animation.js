@@ -209,12 +209,13 @@ Meta.animation=function()
      <param name="x0"    type="function">Returns the starting point, its called with the element as this</param>
      <param name="x1"    type="function">Returns the ending point, its called  with the element as this</param>
      <param name="speed" type="integer">Time it takes to complete the animation, in milliseconds</param>
+     <param name="ini"   type="function">Callback function that initiates the element for the animation</param>
      <param name="fn"    type="function">Callback function that creates the new frames</param>
      <param name="[cb]"  type="function">Callback function to call when the animation finishes succesfully</param>
      <param name="[r]"   type="bool">Flag to Restore after the animation stops.</param>
      </method>
      */
-    animate:function(x0,x1,speed,fn,cb,r)
+    animate:function(x0,x1,speed,ini,fn,cb,r)
     {
       var me=this;
 
@@ -236,6 +237,8 @@ Meta.animation=function()
 
       return this.forEach(function(v)
 	{
+          if(ini)
+            ini(v);
 	  anim.call(me,cb,x0.call(v),x1.call(v),speed,fn,v);
 	});
     }
