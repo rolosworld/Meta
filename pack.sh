@@ -67,5 +67,5 @@ do
     cat src/${i} >> meta.debug.js
 done
 
-echo "Compilling"
+echo "Compiling"
 java -jar compiler/compiler.jar --js=meta.debug.js --js_output_file=meta.min.js
