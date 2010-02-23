@@ -35,7 +35,7 @@ Meta.inherit(Meta.animation,{
   clip:function(anim,speed,cb)
   {
     // position:absolute;
-    var a=Meta.dom.bro(),me=this,
+    var a=Meta.dom.$(),me=this,
         x0,x1,fn,
         
         // Manejan los maximos y minimos

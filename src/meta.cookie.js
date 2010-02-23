@@ -38,7 +38,7 @@ Meta.cookie.extend({
    <param name="a" type="object">Contains the parameters to include on the cookie.</param>
    <test>
    <![CDATA[
-   var a=Meta.cookie.bro('meta');
+   var a=Meta.cookie.$('meta');
    a.create({value:'cookie'});
    return a.read()=='cookie';
    ]]>
@@ -62,7 +62,7 @@ Meta.cookie.extend({
    <desc>Returns the value of the given variable</desc>
    <test>
    <![CDATA[
-   var a=Meta.cookie.bro('meta');
+   var a=Meta.cookie.$('meta');
    a.create({value:'cookie'});
    return a.read()=='cookie';
    ]]>
@@ -89,7 +89,7 @@ Meta.cookie.extend({
    <desc>Erase the variable given by this.obj</desc>
    <test>
    <![CDATA[
-   var a=Meta.cookie.bro('meta'),t;
+   var a=Meta.cookie.$('meta'),t;
    a.create({value:'cookie'});
    t=a.read()=='cookie';
    a.erase();

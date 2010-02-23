@@ -28,18 +28,18 @@ Meta.core.extend({
   _:null,
 
   /**
-   <method name="bro" type="Meta.core">
+   <method name="$" type="Meta.core">
    <desc>Returns a new clone of the object. Set the passed value to the object if any is given.</desc>
    <param name="a" type="mixed">Values to set</param>
    <test>
    <![CDATA[
-   var a=Meta.core.bro();
-   return 'bro' in a;
+   var a=Meta.core.$();
+   return '$' in a;
    ]]>
    </test>
    </method>
    */
-  bro:function(a)
+  $:function(a)
   {
     return (new this.constructor()).set(a);
   },
@@ -50,7 +50,7 @@ Meta.core.extend({
    <desc>Returns the data type of the object or bool</desc>
    <test>
    <![CDATA[
-   var a=Meta.core.bro();
+   var a=Meta.core.$();
    a.set("abc");
    return a.its()=='string' && a.its('string');
    ]]>
@@ -67,7 +67,7 @@ Meta.core.extend({
    <desc>Get the value</desc>
    <test>
    <![CDATA[
-   var a=Meta.core.bro();
+   var a=Meta.core.$();
    return a.get()==null;
    ]]>
    </test>
@@ -84,7 +84,7 @@ Meta.core.extend({
    <desc>Set the value</desc>
    <test>
    <![CDATA[
-   var a=Meta.core.bro();
+   var a=Meta.core.$();
    a.set(1);
    return a.get()==1;
    ]]>
@@ -106,7 +106,7 @@ Meta.core.extend({
    </desc>
    <test>
    <![CDATA[
-   var a=Meta.core.bro();
+   var a=Meta.core.$();
    a.set("abc");
    return a.wrap('charAt',[1])=='b';
    ]]>
@@ -123,7 +123,7 @@ Meta.core.extend({
    <desc>Get a copy of the current Meta</desc>
    <test>
    <![CDATA[
-   var a=Meta.core.bro(),b;
+   var a=Meta.core.$(),b;
    a.set("abc");
    b=a.copy();
    return b.get()=='abc';
@@ -133,7 +133,7 @@ Meta.core.extend({
    */
   copy:function()
   {
-    return this.bro().set(this.get());
+    return this.$().set(this.get());
   },
 
   /**
@@ -143,7 +143,7 @@ Meta.core.extend({
    <param name="[...]" type="mixed">Arguments to be sent when the callback is called</param>
    <test>
    <![CDATA[
-   var a=Meta.core.bro(),b,t;
+   var a=Meta.core.$(),b,t;
    b=a.callback("set","abc");
    t=a.get()==null;
    b();
@@ -164,7 +164,7 @@ Meta.core.extend({
    <desc>Returna this. This method purpose is to be used with the callback function to pass this object.</desc>
    <test>
    <![CDATA[
-   var a=Meta.core.bro(),b=a.getMe();
+   var a=Meta.core.$(),b=a.getMe();
    b.set('abc');
    return a.get()=='abc';
    ]]>

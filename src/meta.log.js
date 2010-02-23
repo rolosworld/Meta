@@ -31,9 +31,9 @@
 Meta.log=function()
 {
   var logw=null,
-      b=Meta.dom.bro(),
-      c=Meta.string.bro(),
-      d=Meta.dom.bro(),
+      b=Meta.dom.$(),
+      c=Meta.string.$(),
+      d=Meta.dom.$(),
       size=0,
       t;
 

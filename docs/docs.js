@@ -81,7 +81,7 @@
 */
 function toggler(a,b)
 {
-  var c=Meta.dom.bro(b).select(a);
+  var c=Meta.dom.$(b).select(a);
   function d(){c.slide('down');};
   function e(){c.slide('up');};
   c.slide('up');
@@ -131,7 +131,7 @@ documenter.extend(
     domOut:null,
 
     /** <public name="domTmp" type="Meta.dom">Temporary element hadler</public> */
-    domTmp:Meta.dom.bro(),
+    domTmp:Meta.dom.$(),
 
     /**
        <method name="getParamDesc" type="string">
@@ -142,9 +142,9 @@ documenter.extend(
     getParamDesc:function(v)
     {
       var params=[],
-        d=Meta.dom.bro(),
-        e=Meta.dom.bro(),
-	  f=Meta.string.bro();
+        d=Meta.dom.$(),
+        e=Meta.dom.$(),
+	  f=Meta.string.$();
       d.set(v).select('param')
         .forEach(function(v)
                  {
@@ -164,8 +164,8 @@ documenter.extend(
     getTestSrc:function(v)
     {
       var test='',
-      d=Meta.dom.bro(),
-      s=Meta.string.bro();
+      d=Meta.dom.$(),
+      s=Meta.string.$();
       d.set(v).select('test');
       if(d.len())
 	  {
@@ -184,9 +184,9 @@ documenter.extend(
     getParamStr:function(v)
     {
       var params=[],
-        d=Meta.dom.bro(),
-        e=Meta.dom.bro(),
-        f=Meta.string.bro();
+        d=Meta.dom.$(),
+        e=Meta.dom.$(),
+        f=Meta.string.$();
       d.set(v).select('param')
         .forEach(function(v)
                  {
@@ -205,8 +205,8 @@ documenter.extend(
     */
     getVarStr:function(v)
     {
-	var c=Meta.dom.bro(v),
-	    f='<div class="desc">'+Meta.string.bro(c.inner()).nl2br().get()+'</div>';
+	var c=Meta.dom.$(v),
+	    f='<div class="desc">'+Meta.string.$(c.inner()).nl2br().get()+'</div>';
 	return '<span class="type">'+c.attr('type')+'</span> '+'<span class="function">'+c.attr('name')+'</span> '+f;
     },
 
@@ -218,9 +218,9 @@ documenter.extend(
     */
     getFunctionStr:function(v)
     {
-      var c=Meta.dom.bro(v),
+      var c=Meta.dom.$(v),
         type=c.attr('type')?c.attr('type'):'void',
-	  f=Meta.string.bro(),pdesc;
+	  f=Meta.string.$(),pdesc;
 
 
       return '<div class="functionBox"><div class="functionLine"><span class="type">'+type+'</span>'+
@@ -244,9 +244,9 @@ documenter.extend(
 
       var s='',
         me=this,
-        c=Meta.dom.bro(v),
-        d=Meta.dom.bro(),
-        f='<div class="desc">'+Meta.string.bro(Meta.dom.bro().set(v)
+        c=Meta.dom.$(v),
+        d=Meta.dom.$(),
+        f='<div class="desc">'+Meta.string.$(Meta.dom.$().set(v)
                                                .select('desc')
                                                .inner()).nl2br().get()+'</div>';
 
@@ -284,12 +284,12 @@ documenter.extend(
 
       this.domOut.inner(s);
 
-      Meta.dom.bro().select('button[name="tester"]')
+      Meta.dom.$().select('button[name="tester"]')
 	.on('click',function(v)
 	    {
 	      var a=d.set(this).attr('father'),
 	      b=d.attr('code');
-	      //b=Meta.string.bro(d.set(this.previousSibling).inner()).unescapeHTML().get();
+	      //b=Meta.string.$(d.set(this.previousSibling).inner()).unescapeHTML().get();
 	      tester(a,b);
 	    });
 
@@ -314,7 +314,7 @@ documenter.extend(
     {
       var me=documenter,
         s='',
-        c=Meta.dom.bro(),
+        c=Meta.dom.$(),
         type='';
 
       switch(tag)
@@ -334,7 +334,7 @@ documenter.extend(
                        s+='<div>'+me.getFunctionStr(v)+'</div>';
                      });
           me.domOut.inner(s);
-	  var d=Meta.dom.bro();
+	  var d=Meta.dom.$();
 
 	  c.set(this.domOut.get(0)).select('div.functionBox')
 	      .forEach(function(e)
@@ -345,12 +345,12 @@ documenter.extend(
 		       })
 	      .cleanEvents();
 
-	  Meta.dom.bro().select('button[name="tester"]')
+	  Meta.dom.$().select('button[name="tester"]')
 	    .on('click',function(v)
 		{
 		  var a=d.set(this).attr('father'),
 		  b=d.attr('code');
-		  //b=Meta.string.bro(d.set(this.previousSibling).inner()).unescapeHTML().get();
+		  //b=Meta.string.$(d.set(this.previousSibling).inner()).unescapeHTML().get();
 		  tester(a,b);
 		});
 
@@ -375,12 +375,12 @@ documenter.extend(
           break;
 	case 'Tests':
           me.domOut.inner('<input type="checkbox" name="log" id="assert_log"/><label for="assert_log">Log</label> <button onclick="return false;">Start</button><button onclick="return false;">Fail</button><button onclick="return false;">Pass</button><div style="height:20px;background-color:#000;margin:10px;padding:2px;"><div id="prog" style="color:#000;background-color:#bdffc0;width:0%;height:20px;text-align:center;font-weight:900;">0%</div></div><div id="fail" style="background-color:#ffcbcb;display:none;"></div><div id="pass" style="background-color:#bdffc0;display:none;"></div>');
-	  var pass=Meta.dom.bro(me.domOut.get(0)).select('div#pass');
-	  var fail=Meta.dom.bro(me.domOut.get(0)).select('div#fail');
-	  var prog=Meta.dom.bro(me.domOut.get(0)).select('div#prog');
-	  var but=Meta.dom.bro(me.domOut.get(0)).select('button');
-	  var test=me.xmlMeta.bro();
-	  var test2=test.bro();
+	  var pass=Meta.dom.$(me.domOut.get(0)).select('div#pass');
+	  var fail=Meta.dom.$(me.domOut.get(0)).select('div#fail');
+	  var prog=Meta.dom.$(me.domOut.get(0)).select('div#prog');
+	  var but=Meta.dom.$(me.domOut.get(0)).select('button');
+	  var test=me.xmlMeta.$();
+	  var test2=test.$();
 	  var p=0;
 	  var t=0;
 	  var q;
@@ -388,7 +388,7 @@ documenter.extend(
 	  var passed=0,name='';
 
 	  Meta.assert.log=false;
-	  Meta.dom.bro().select('#assert_log')
+	  Meta.dom.$().select('#assert_log')
 	    .on('click',function()
 		{
 		  Meta.assert.log=this.checked;
@@ -461,7 +461,7 @@ documenter.extend(
     */
     parse:function(txt)
     {
-      this.xmlMeta=Meta.dom.bro().doc(txt);
+      this.xmlMeta=Meta.dom.$().doc(txt);
       if(this.xmlMeta._doc.firstChild.nodeName!='doc')
         {
           var s=[],p=this.xmlMeta.set([]).select('parsererror').nodes();
@@ -490,7 +490,7 @@ documenter.extend(
       var cnt=0,
         me=this,
         max=me.files.length,
-        str='',s,b=Meta.string.bro(),z=Meta.array.bro();
+        str='',s,b=Meta.string.$(),z=Meta.array.$();
 
       me.files.sort();
 

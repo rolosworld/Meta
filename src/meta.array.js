@@ -24,29 +24,32 @@ Meta.array=Meta(Meta.core);
 Meta.array.extend(
 {
   /**
-   <method name="bro" type="Meta.array">
-   <desc>Custom bro, let it set a value</desc>
+   <method name="$" type="Meta.array">
+   <desc>Custom $, let it set a value</desc>
    <param name="[...]" type="mixed">Mixed data</param>
    <test>
    <![CDATA[
-   var a=Meta.array.bro(1,2),t;
+   var a=Meta.array.$(1,2),t;
    t=a.get().length==2;
-   a=Meta.array.bro([1,2]);
+   a=Meta.array.$([1,2]);
    return t && a.get().length==2;
    ]]>
    </test>
    </method>
    */
-  bro:function()
+  $:function()
   {
-    var b=new this.constructor(),c;
+    var b=new this.constructor(),
+        c;
     b.set([]);
 
     Meta.each(arguments,function(v)
 	      {
 		c=Meta.its(v);
-		if(c=='array')b.set(v);
-		else if(c!='undefined')b.push(v);
+		if(c=='array')
+                  b.set(v);
+		else if(c!='undefined')
+                  b.push(v);
 	      });
 
     return b;
@@ -58,7 +61,7 @@ Meta.array.extend(
      <desc>Get the values</desc>
      <test>
      <![CDATA[
-     var a=Meta.array.bro([1,2]);
+     var a=Meta.array.$([1,2]);
      return a.get(1)==2;
      ]]>
      </test>
@@ -77,7 +80,7 @@ Meta.array.extend(
      <desc>Set the value</desc>
      <test>
      <![CDATA[
-     var a=Meta.array.bro();
+     var a=Meta.array.$();
      a.set([1,2]);
      return a.get(1)==2;
      ]]>
@@ -105,7 +108,7 @@ Meta.array.extend(
      <param name="[b]" type="integer">Starting index</param>
      <test>
      <![CDATA[
-     var a=Meta.array.bro([1,2]);
+     var a=Meta.array.$([1,2]);
      return a.indexOf(2)==1;
      ]]>
      </test>
@@ -113,8 +116,13 @@ Meta.array.extend(
   */
   indexOf:function(a,b)
   {
-    var d=this.get(),e=d.length;
-    for(b=b||0;b<e;b++)if(d[b]===a)return b;
+    var d=this.get(),
+        e=d.length;
+
+    for(b=b||0;b<e;b++)
+      if(d[b]===a)
+        return b;
+    
     return -1;
   },
 
@@ -125,7 +133,7 @@ Meta.array.extend(
      <param name="[b]" type="integer">Starting index</param>
      <test>
      <![CDATA[
-     var a=Meta.array.bro([1,2]);
+     var a=Meta.array.$([1,2]);
      return a.lastIndexOf(2)==1;
      ]]>
      </test>
@@ -135,7 +143,11 @@ Meta.array.extend(
   {
     var d=this.get(),
         c=b+1||d.length;
-    while(c--)if(d[c]===a)break;
+
+    while(c--)
+      if(d[c]===a)
+        break;
+    
     return c;
   },
 
@@ -150,7 +162,7 @@ Meta.array.extend(
      <param name="[b]" type="object">Object</param>
      <test>
      <![CDATA[
-     var a=Meta.array.bro([1,2]);
+     var a=Meta.array.$([1,2]);
      return a.some(function(a){return a==2;});
      ]]>
      </test>
@@ -162,7 +174,8 @@ Meta.array.extend(
     var d=this.get();
     return !Meta.each(d,function(v,i)
 		      {
-			if(a.call(b, v, i, d))return false;
+			if(a.call(b, v, i, d))
+                          return false;
 		      });
   },
 
@@ -177,7 +190,7 @@ Meta.array.extend(
      <param name="[b]" type="object">Object</param>
      <test>
      <![CDATA[
-     var a=Meta.array.bro([1,2]);
+     var a=Meta.array.$([1,2]);
      return a.some(function(a){return a==1||a==2;});
      ]]>
      </test>
@@ -189,7 +202,8 @@ Meta.array.extend(
     var d=this.get();
     return Meta.each(d,function(v,i)
                      {
-                       if(!a.call(b, v, i, d))return false;
+                       if(!a.call(b, v, i, d))
+                         return false;
                      });
   },
 
@@ -203,7 +217,7 @@ Meta.array.extend(
      <param name="[b]" type="object">Object</param>
      <test>
      <![CDATA[
-     var a=Meta.array.bro([1,2,3]);
+     var a=Meta.array.$([1,2,3]);
      return a.filter(function(a){return a>1;}).toString()=='2,3';
      ]]>
      </test>
@@ -212,10 +226,13 @@ Meta.array.extend(
   filter:function(a,b)
   {
     b=b||this;
-    var d=[],e=this.get();
+    var d=[],
+        e=this.get();
+    
     Meta.each(e,function(v,i)
               {
-                if(a.call(b, v, i, e))d.push(v);
+                if(a.call(b, v, i, e))
+                  d.push(v);
               });
     return d;
   },
@@ -227,7 +244,7 @@ Meta.array.extend(
      <param name="[b]" type="object">Object</param>
      <test>
      <![CDATA[
-     var a=Meta.array.bro([1,2,3]),b=0;
+     var a=Meta.array.$([1,2,3]),b=0;
      a.forEach(function(v){b+=v;});
      return b==6;
      ]]>
@@ -236,8 +253,11 @@ Meta.array.extend(
   */
   forEach:function(a,b)
   {
-    var i,j,c=this.get();
     b=b||this;
+    var i,
+        j,
+        c=this.get();
+
     Meta.each(c,function(v,i)
 	      {
 		// object, value, index, array
@@ -256,7 +276,7 @@ Meta.array.extend(
      <param name="[b]" type="object">Object</param>
      <test>
      <![CDATA[
-     var a=Meta.array.bro([1,2,3]),b;
+     var a=Meta.array.$([1,2,3]),b;
      b=a.map(function(v){return v+1;});
      return b.toString()=='2,3,4';
      ]]>
@@ -266,7 +286,9 @@ Meta.array.extend(
   map:function(a,b)
   {
     b=b||this;
-    var d=[],e=this.get();
+    var d=[],
+        e=this.get();
+
     Meta.each(e,function(v,i)
               {
                 d.push(a.call(b, v, i, e));
@@ -279,7 +301,7 @@ Meta.array.extend(
      <desc>Sort array by numbers</desc>
      <test>
      <![CDATA[
-     var a=Meta.array.bro([3,2,1]);
+     var a=Meta.array.$([3,2,1]);
      a.numSort();
      return a.get().toString()=='1,2,3';
      ]]>
@@ -288,7 +310,10 @@ Meta.array.extend(
   */
   numSort:function()
   {
-    return this.sort(function(a,b){return a-b;});
+    return this.sort(function(a,b)
+      {
+        return a-b;
+      });
   },
 
   /**
@@ -298,7 +323,7 @@ Meta.array.extend(
      <param name="[i]" type="integer">Index</param>
      <test>
      <![CDATA[
-     var a=Meta.array.bro([1,3]);
+     var a=Meta.array.$([1,3]);
      a.insert(2,1);
      return a.get().toString()=='1,2,3';
      ]]>
@@ -321,7 +346,7 @@ Meta.array.extend(
      <param name="[b]" type="integer">Length to be removed</param>
      <test>
      <![CDATA[
-     var a=Meta.array.bro([1,2,3]);
+     var a=Meta.array.$([1,2,3]);
      a.drop(1);
      return a.get().toString()=='1,3';
      ]]>
@@ -338,7 +363,7 @@ Meta.array.extend(
      <desc>Remove duplicates</desc>
      <test>
      <![CDATA[
-     var a=Meta.array.bro([1,1,2]);
+     var a=Meta.array.$([1,1,2]);
      a.unique();
      return a.get().toString()=='1,2';
      ]]>
@@ -355,7 +380,7 @@ Meta.array.extend(
      <desc>Get the given array length</desc>
      <test>
      <![CDATA[
-     var a=Meta.array.bro([1,1,2]);
+     var a=Meta.array.$([1,1,2]);
      return a.len()==3;
      ]]>
      </test>
@@ -373,7 +398,7 @@ Meta.array.extend(
      <desc>Apply a function simultaneously against two values of the array (from left-to-right) as to reduce it to a single value.</desc>
      <test>
      <![CDATA[
-     var a=Meta.array.bro([1,4,5,2,3]);
+     var a=Meta.array.$([1,4,5,2,3]);
      return a.reduce(function(a,b){return a-b;})==-13 && a.reduce(function(a,b){return a>b?a:b;},7)==7;
      ]]>
      </test>
@@ -382,8 +407,8 @@ Meta.array.extend(
   reduce:function(a,b)
   {
     var c=this.len(),
-    i=0,
-    _=this.get();
+        i=0,
+        _=this.get();
 
     for(b=b||_[i++];i<c;i++)
       b=a.call(this,b,_[i],i,_);
@@ -398,7 +423,7 @@ Meta.array.extend(
      <desc>Apply a function simultaneously against two values of the array (from right-to-left) as to reduce it to a single value.</desc>
      <test>
      <![CDATA[
-     var a=Meta.array.bro([1,4,5,2,3]);
+     var a=Meta.array.$([1,4,5,2,3]);
      return a.reduceRight(function(a,b){return a-b;})==-9 &&
             a.reduceRight(function(a,b){return a>b?a:b;},7)==7;
      ]]>
@@ -408,8 +433,8 @@ Meta.array.extend(
   reduceRight:function(a,b)
   {
     var c=this.len(),
-    i=c-1,
-    _=this.get();
+        i=c-1,
+        _=this.get();
 
     if(c<1&&!b)
       return undefined;
@@ -429,7 +454,12 @@ Meta.array.extend(
   */
   shuffle:function()
   {
-    var a=this.get(),b=a.length,c=b-1,d,e;
+    var a=this.get(),
+        b=a.length,
+        c=b-1,
+        d,
+        e;
+    
     while(b--)
       {
 	d=Math.round(Math.random()*c);
@@ -449,7 +479,7 @@ Meta.array.extend(
  <param name="..." type="mixed">Values to push</param>
  <test>
  <![CDATA[
- var a=Meta.array.bro();
+ var a=Meta.array.$();
  a.push(1);
  return a.get(0)==1;
  ]]>
@@ -461,7 +491,7 @@ Meta.array.extend(
  <param name="[a]" type="function">Sort function</param>
  <test>
  <![CDATA[
- var a=Meta.array.bro(['c','a','b']);
+ var a=Meta.array.$(['c','a','b']);
  a.sort();
  return a.get(0)=='a' && a.get(1)=='b' && a.get(2)=='c';
  ]]>
@@ -475,7 +505,7 @@ Meta.array.extend(
  <param name="[...]" type="mixed">Optional elements</param>
  <test>
  <![CDATA[
- var a=Meta.array.bro(['a','b','c']);
+ var a=Meta.array.$(['a','b','c']);
  a.splice(1,1,'z');
  return a.get(0)=='a' && a.get(1)=='z' && a.get(2)=='c';
  ]]>
@@ -487,7 +517,7 @@ Meta.array.extend(
  <param name="[...]" type="mixed">Optional elements</param>
  <test>
  <![CDATA[
- var a=Meta.array.bro(['a','b','c']);
+ var a=Meta.array.$(['a','b','c']);
  a.unshift('z');
  return a.get(0)=='z' && a.get(1)=='a' && a.get(2)=='b' && a.get(3)=='c';
  ]]>
@@ -498,7 +528,7 @@ Meta.array.extend(
  <desc>Shift a value from the given array or all the arrays</desc>
  <test>
  <![CDATA[
- var a=Meta.array.bro(['a','b','c']);
+ var a=Meta.array.$(['a','b','c']);
  a.reverse();
  return a.get(0)=='c' && a.get(1)=='b' && a.get(2)=='a';
  ]]>
@@ -509,7 +539,7 @@ Meta.array.extend(
  <desc>Pop a value from the given array</desc>
  <test>
  <![CDATA[
- var a=Meta.array.bro(['a','b','c']),b;
+ var a=Meta.array.$(['a','b','c']),b;
  b=a.pop();
  return b=='c' && a.get(0)=='a' && a.get(1)=='b';
  ]]>
@@ -520,7 +550,7 @@ Meta.array.extend(
  <desc>Shift a value from the given array</desc>
  <test>
  <![CDATA[
- var a=Meta.array.bro(['a','b','c']),b;
+ var a=Meta.array.$(['a','b','c']),b;
  b=a.shift();
  return b=='a' && a.get(0)=='b' && a.get(1)=='c';
  ]]>
@@ -532,7 +562,7 @@ Meta.array.extend(
  <param name="..." type="array">arrays to be concat</param>
  <test>
  <![CDATA[
- var a=Meta.array.bro(['a','b']);
+ var a=Meta.array.$(['a','b']);
  a.concat(['c']);
  return a.get(0)=='a' && a.get(1)=='b' && a.get(2)=='c';
  ]]>
@@ -545,7 +575,7 @@ Meta.array.extend(
  <param name="[b]" type="integer">End</param>
  <test>
  <![CDATA[
- var a=Meta.array.bro(['a','b','c']);
+ var a=Meta.array.$(['a','b','c']);
  a.slice(1,2);
  return a.get(0)=='b';
  ]]>
@@ -557,7 +587,7 @@ Meta.array.extend(
  <param name="a" type="string">Separator</param>
  <test>
  <![CDATA[
- var a=Meta.array.bro(['a','b','c']),b;
+ var a=Meta.array.$(['a','b','c']),b;
  b=a.join('');
  return b=='abc';
  ]]>

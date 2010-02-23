@@ -77,8 +77,8 @@ sandbox.include('../meta.debug.js');
 
 documenter.files=['../meta.debug.js'];
 
-documenter.domList=Meta.dom.bro().select('#list');
-documenter.domOut=Meta.dom.bro().select('#box');
+documenter.domList=Meta.dom.$().select('#list');
+documenter.domOut=Meta.dom.$().select('#box');
 documenter.start();
 };
 start();

@@ -38,7 +38,7 @@ Meta.events.extend(function()
    Private and static variable where the events are stored.
    */
   var events={},
-      arr=Meta.array.bro();
+      arr=Meta.array.$();
 
   /**
    <method name="onNewEvent" type="void">
@@ -75,7 +75,7 @@ Meta.events.extend(function()
    <param name="[e]" type="bool">Repeat flag. Only works for single functions. Default 1, it repeats.</param>
    <test>
    <![CDATA[
-   var a=Meta.events.bro(),d,b={},c=function(){d=true;};
+   var a=Meta.events.$(),d,b={},c=function(){d=true;};
    a.addEvent('addEvent',b,c); // added
    a.addEvent('addEvent',b,c); // added
    a.addEvent('addEvent',b,c,0); // ignored, since its already added
@@ -146,7 +146,7 @@ Meta.events.extend(function()
    <param name="b" type="integer">EDS id</param>
    <test>
    <![CDATA[
-   var a=Meta.events.bro(),b={},c=function(){},d,e;
+   var a=Meta.events.$(),b={},c=function(){},d,e;
    a.addEvent('getEvent',b,c);
    d=a.getEvent('getEvent',a.indexOfEvent('getEvent',{}));
    e=d===null;
@@ -172,7 +172,7 @@ Meta.events.extend(function()
    <param name="a" type="object">Object</param>
    <test>
    <![CDATA[
-   var a=Meta.events.bro(),b={},c=function(){},d,e;
+   var a=Meta.events.$(),b={},c=function(){},d,e;
    a.addEvent('event1',b,c);
    a.addEvent('event1',b,c);
    a.addEvent('event2',b,c);
@@ -209,7 +209,7 @@ Meta.events.extend(function()
    <param name="b" type="object">Object</param>
    <test>
    <![CDATA[
-   var a=Meta.events.bro(),b={},c=function(){},d;
+   var a=Meta.events.$(),b={},c=function(){},d;
    a.addEvent('indexOfEvent',b,c);
    d=a.indexOfEvent('indexOfEvent',b);
    a.rmEvent('indexOfEvent',b);
@@ -243,7 +243,7 @@ Meta.events.extend(function()
    <param name="[...]" type="mixed">Custom arguments to pass to the callbacks</param>
    <test>
    <![CDATA[
-   var a=Meta.events.bro(),d,b={},c=function(){d=true;};
+   var a=Meta.events.$(),d,b={},c=function(){d=true;};
    a.addEvent('fireEvent',b,c); // added
    a.addEvent('fireEvent',b,c); // added
    a.addEvent('fireEvent',b,c,0); // ignores, since its already added
@@ -290,7 +290,7 @@ Meta.events.extend(function()
    <param name="[c]" type="function">Callback to be removed. If not defined, removes the whole event.</param>
    <test>
    <![CDATA[
-   var a=Meta.events.bro(),b={},c=function(){},d,e;
+   var a=Meta.events.$(),b={},c=function(){},d,e;
    a.addEvent('rmEvent',b,c);
    a.rmEvent('rmEvent',b);
    d=a.indexOfEvent('rmEvent',b);
@@ -342,7 +342,7 @@ Meta.events.extend(function()
    <param name="a" type="object">Object</param>
    <test>
    <![CDATA[
-   var a=Meta.events.bro(),b={},c=function(){},d;
+   var a=Meta.events.$(),b={},c=function(){},d;
    a.addEvent('rmObject',b,c);
    a.rmObject(b);
    d=a.indexOfEvent('rmObject',b);
@@ -367,7 +367,7 @@ Meta.events.extend(function()
    <param name="[a]" type="function">Callback function to select wich event remove. If return true remove, else dont remove</param>
    <test>
    <![CDATA[
-   var a=Meta.events.bro(),b={},c=function(){},d,e;
+   var a=Meta.events.$(),b={},c=function(){},d,e;
    a.addEvent('event1',b,c);
    a.addEvent('event2',b,c);
    a.flush(function(a,b){return a=='event2';});

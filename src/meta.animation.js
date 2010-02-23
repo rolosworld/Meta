@@ -21,7 +21,7 @@
  */
 Meta.animation=function()
 {
-  var ev=Meta.events.bro(),
+  var ev=Meta.events.$(),
       fps=1000/30,
       bakList=[
         'clip',
@@ -106,7 +106,7 @@ Meta.animation=function()
      */
     cssBackup:function()
     {
-      var a=Meta.dom.bro(),
+      var a=Meta.dom.$(),
           b=bakList,c,
 	  me=this;
 
@@ -151,7 +151,7 @@ Meta.animation=function()
      */
     cssRestore:function(d)
     {
-      var a=Meta.dom.bro(),
+      var a=Meta.dom.$(),
           b=bakList,c,
 	  me=this;
 
@@ -182,7 +182,7 @@ Meta.animation=function()
      */
     cssBackupClear:function()
     {
-      var a=Meta.dom.bro(),
+      var a=Meta.dom.$(),
           b=bakList,
 	  me=this;
 

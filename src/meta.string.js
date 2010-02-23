@@ -23,20 +23,20 @@
 Meta.string=Meta(Meta.core);
 Meta.string.extend({
   /**
-   <method name="bro" type="Meta.string">
-   <desc>Custom bro, let it set a value.</desc>
+   <method name="$" type="Meta.string">
+   <desc>Custom $, let it set a value.</desc>
    <param name="a" type="string">String to be managed</param>
    <test>
    <![CDATA[
-     var a=Meta.string.bro('foo'),t;
+     var a=Meta.string.$('foo'),t;
      t=a.get().length==3;
-     a=Meta.string.bro('');
-     return t && a.get().length==0 && Meta.string.bro().get().length==0;
+     a=Meta.string.$('');
+     return t && a.get().length==0 && Meta.string.$().get().length==0;
    ]]>
    </test>
    </method>
    */
-  bro:function(a)
+  $:function(a)
   {
     return (new this.constructor()).set(a||'');
   },
@@ -47,7 +47,7 @@ Meta.string.extend({
    <desc>Set the string</desc>
    <test>
    <![CDATA[
-     return Meta.string.bro().set('foo').get().length==3;
+     return Meta.string.$().set('foo').get().length==3;
    ]]>
    </test>
    </method>
@@ -62,7 +62,7 @@ Meta.string.extend({
    <desc>Get the length of a string</desc>
    <test>
    <![CDATA[
-     return Meta.string.bro().set('foo').len()==3;
+     return Meta.string.$().set('foo').len()==3;
    ]]>
    </test>
    </method>
@@ -77,7 +77,7 @@ Meta.string.extend({
    <desc>Convert DOS format to Unix txt format</desc>
    <test>
    <![CDATA[
-     return Meta.string.bro("foo\r\n").dos2unix().get()=="foo\n";
+     return Meta.string.$("foo\r\n").dos2unix().get()=="foo\n";
    ]]>
    </test>
    </method>
@@ -92,7 +92,7 @@ Meta.string.extend({
    <desc>Convert Unix format to DOS txt format</desc>
    <test>
    <![CDATA[
-     return Meta.string.bro("foo\n").unix2dos().get()=="foo\r\n";
+     return Meta.string.$("foo\n").unix2dos().get()=="foo\r\n";
    ]]>
    </test>
    </method>
@@ -107,7 +107,7 @@ Meta.string.extend({
    <desc>Strip tags from string object</desc>
    <test>
    <![CDATA[
-     return Meta.string.bro("<b>foo</b>").stripTags().get()=="foo";
+     return Meta.string.$("<b>foo</b>").stripTags().get()=="foo";
    ]]>
    </test>
    </method>
@@ -122,7 +122,7 @@ Meta.string.extend({
    <desc>Tries to return an html friendly version of the string. Converts some special characters to their respective entities.</desc>
    <test>
    <![CDATA[
-     return Meta.string.bro("<b>&nbsp;foo</b>").escapeHTML().get()=="&lt;b&gt;&amp;nbsp;foo&lt;/b&gt;";
+     return Meta.string.$("<b>&nbsp;foo</b>").escapeHTML().get()=="&lt;b&gt;&amp;nbsp;foo&lt;/b&gt;";
    ]]>
    </test>
    </method>
@@ -145,7 +145,7 @@ Meta.string.extend({
    </desc>
    <test>
    <![CDATA[
-    return Meta.string.bro("&lt;b&gt;foo&lt;/b&gt;").unescapeHTML().get()=="<b>foo</b>";
+    return Meta.string.$("&lt;b&gt;foo&lt;/b&gt;").unescapeHTML().get()=="<b>foo</b>";
    ]]>
    </test>
    </method>
@@ -162,7 +162,7 @@ Meta.string.extend({
    <desc>trim a string</desc>
    <test>
    <![CDATA[
-   return Meta.string.bro(" foo ").trim().get()=="foo";
+   return Meta.string.$(" foo ").trim().get()=="foo";
    ]]>
    </test>
    </method>
@@ -177,7 +177,7 @@ Meta.string.extend({
    <desc>right trim a string</desc>
    <test>
    <![CDATA[
-   return Meta.string.bro(" foo ").rtrim().get()==" foo";
+   return Meta.string.$(" foo ").rtrim().get()==" foo";
    ]]>
    </test>
    </method>
@@ -192,7 +192,7 @@ Meta.string.extend({
    <desc>left trim a string</desc>
    <test>
    <![CDATA[
-   return Meta.string.bro(" foo ").ltrim().get()=="foo ";
+   return Meta.string.$(" foo ").ltrim().get()=="foo ";
    ]]>
    </test>
    </method>
@@ -209,7 +209,7 @@ Meta.string.extend({
    <param name="c" type="string">String to be inserted</param>
    <test>
    <![CDATA[
-   return Meta.string.bro("foo").insertAt(3,'s').get()=="foos";
+   return Meta.string.$("foo").insertAt(3,'s').get()=="foos";
    ]]>
    </test>
    </method>
@@ -225,7 +225,7 @@ Meta.string.extend({
    <desc>Add Slashes for single quote strings.</desc>
    <test>
    <![CDATA[
-   return Meta.string.bro("f'oo").addSlashes().get()=='f\\\'oo';
+   return Meta.string.$("f'oo").addSlashes().get()=='f\\\'oo';
    ]]>
    </test>
    </method>
@@ -243,7 +243,7 @@ Meta.string.extend({
    <desc>Strip Slashes. For single quote strings.</desc>
    <test>
    <![CDATA[
-   return Meta.string.bro('f\\\\oo').stripSlashes().get()=='f\\oo';
+   return Meta.string.$('f\\\\oo').stripSlashes().get()=='f\\oo';
    ]]>
    </test>
    </method>
@@ -261,7 +261,7 @@ Meta.string.extend({
    <desc>Convert new line character to <br/> string</desc>
    <test>
    <![CDATA[
-     return Meta.string.bro("foo\n").nl2br().get()=='foo<br/>';
+     return Meta.string.$("foo\n").nl2br().get()=='foo<br/>';
    ]]>
    </test>
    </method>
@@ -276,7 +276,7 @@ Meta.string.extend({
    <desc>Convert <br/> string to new line character</desc>
    <test>
    <![CDATA[
-     return Meta.string.bro("foo<br>").br2nl().get()=="foo\n";
+     return Meta.string.$("foo<br>").br2nl().get()=="foo\n";
    ]]>
    </test>
    </method>
@@ -292,7 +292,7 @@ Meta.string.extend({
    <desc>Strip all non numeric characters from the string and returns it as an integer.</desc>
    <test>
    <![CDATA[
-     return Meta.string.bro("1a2b3").toInt()=="123";
+     return Meta.string.$("1a2b3").toInt()=="123";
    ]]>
    </test>
    </method>

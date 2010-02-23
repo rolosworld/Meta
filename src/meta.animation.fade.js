@@ -36,7 +36,7 @@ Meta.inherit(Meta.animation,{
   fade:function(mode,speed,cb)
   {
     var me=this,
-        a=Meta.dom.bro(),
+        a=Meta.dom.$(),
 	x0,x1,r,
         
     // Minimo

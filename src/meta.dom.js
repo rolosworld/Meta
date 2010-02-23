@@ -37,8 +37,8 @@ Meta.dom.extend(function()
     append:function(a,b){a.appendChild(b);}
   },
 
-  str=Meta.string.bro(),
-  arr=Meta.array.bro(),
+  str=Meta.string.$(),
+  arr=Meta.array.$(),
   sandbox,sbdiv;
 
   // Get div from sandbox, in case of XML
@@ -80,20 +80,20 @@ Meta.dom.extend(function()
     _doc:document,
 
     /**
-     <method name="bro" type="Meta.dom">
-     <desc>Custom bro for Meta.dom</desc>
+     <method name="$" type="Meta.dom">
+     <desc>Custom $ for Meta.dom</desc>
      <param name="[...]" type="mixed">Mixed data</param>
      <test>
      <![CDATA[
      var a=document.createElement('b');
-     return Meta.dom.bro(a).get(0)==a;
+     return Meta.dom.$(a).get(0)==a;
      ]]>
      </test>
      </method>
      */
-    bro:function()
+    $:function()
     {
-      var a=['bro'],
+      var a=['$'],
           b=arguments;
 
       if(!b.length)
@@ -101,7 +101,7 @@ Meta.dom.extend(function()
       else
         a=a.concat(Meta.obj2array(b));
       
-      // Use bro from Meta.array
+      // Use $ from Meta.array
       return this.under.apply(this,a);
     },
 
@@ -113,7 +113,7 @@ Meta.dom.extend(function()
      <test>
      <![CDATA[
      var a=document.createElement('b');
-     return Meta.dom.bro().set(a).get(0)==a;
+     return Meta.dom.$().set(a).get(0)==a;
      ]]>
      </test>
      </method>
@@ -170,7 +170,7 @@ Meta.dom.extend(function()
      <desc>Select elements from the given document.</desc>
      <test>
      <![CDATA[
-     return Meta.dom.bro().select('body').get(0)==document.body;
+     return Meta.dom.$().select('body').get(0)==document.body;
      ]]>
      </test>
      </method>
@@ -241,9 +241,9 @@ Meta.dom.extend(function()
       var g,
           me=this,
           z=glues[t||'append'],
-          y=me.bro(),
-          s=arr.bro(),
-          u=arr.bro();
+          y=me.$(),
+          s=arr.$(),
+          u=arr.$();
 
       // Assume its an element
       if(e.nodeType)
@@ -297,7 +297,7 @@ Meta.dom.extend(function()
      var a=document.createElement('div');
      a.id="test";
      document.body.appendChild(a);
-     Meta.dom.bro(a).remove();
+     Meta.dom.$(a).remove();
      return !document.getElementById('test');
      ]]>
      </test>
@@ -326,7 +326,7 @@ Meta.dom.extend(function()
      <desc>Create the given HTML|XML into their respective DOM</desc>
      <test>
      <![CDATA[
-     return Meta.dom.bro().create('<div>ok</div>').get(0).innerHTML=='ok';
+     return Meta.dom.$().create('<div>ok</div>').get(0).innerHTML=='ok';
      ]]>
      </test>
      </method>
@@ -387,7 +387,7 @@ Meta.dom.extend(function()
      <desc>Get|Set Element Attributes, null if not found</desc>
      <test>
      <![CDATA[
-     var a=document.createElement('div'),t='',b=Meta.dom.bro(a);
+     var a=document.createElement('div'),t='',b=Meta.dom.$(a);
      a.id='perro';
      t=b.attr('id')=='perro';
      b.attr('id','gato');
@@ -444,7 +444,7 @@ Meta.dom.extend(function()
      <desc>Get|Set Element CSS style</desc>
      <test>
      <![CDATA[
-     var a=document.createElement('div'),t='',b=Meta.dom.bro(a);
+     var a=document.createElement('div'),t='',b=Meta.dom.$(a);
      a.style.zIndex='1';
      t=b.css('zIndex')=='1';
      b.css('zIndex','2');
@@ -504,7 +504,7 @@ Meta.dom.extend(function()
      </desc>
      <test>
      <![CDATA[
-     var a=document.createElement('input'),t='',b=Meta.dom.bro(a);
+     var a=document.createElement('input'),t='',b=Meta.dom.$(a);
      a.type="text";
      a.value='perro';
      t=b.val()=='perro';
@@ -579,7 +579,7 @@ Meta.dom.extend(function()
      <desc>Get the outerHTML of the given element</desc>
      <test>
      <![CDATA[
-     return Meta.string.bro(Meta.dom.bro().create('<div>1</div>').outer().toLowerCase()).trim().get()=='<div>1</div>';
+     return Meta.string.$(Meta.dom.$().create('<div>1</div>').outer().toLowerCase()).trim().get()=='<div>1</div>';
      ]]>
      </test>
      </method>
@@ -639,7 +639,7 @@ Meta.dom.extend(function()
      <desc>Get|Set the innerHTML of the elements</desc>
      <test>
      <![CDATA[
-     var a=Meta.dom.bro().create('<div>1</div>'),b;
+     var a=Meta.dom.$().create('<div>1</div>'),b;
      b=a.inner()=='1';
      a.inner('2');
      return b && a.inner()=='2';
@@ -669,7 +669,7 @@ Meta.dom.extend(function()
           return b.innerHTML;
 
         // XML
-        k=this.bro();
+        k=this.$();
         c=b.childNodes;
         for(j=0,l=c.length;j<l;j++)
           s+=k.set(c[j]).outer();
@@ -686,7 +686,7 @@ Meta.dom.extend(function()
      <desc>Get the text of the first element if no text is given else Set the text of the elements</desc>
      <test>
      <![CDATA[
-     var a=Meta.dom.bro().create('<div><b>1</b></div>'),b,s=Meta.string.bro();
+     var a=Meta.dom.$().create('<div><b>1</b></div>'),b,s=Meta.string.$();
      b=a.text()=='1';
      a.text('<br>');
      return b && s.set(a.text()).unescapeHTML().get().toLowerCase()=='<br>';
@@ -758,7 +758,7 @@ Meta.dom.extend(function()
       a=a||function(){};
       
       var b=this.elements(),
-          c=this.bro(),
+          c=this.$(),
           d=[],
           i=0,
           e,
@@ -826,7 +826,7 @@ Meta.dom.extend(function()
      <desc>Empty all the elements</desc>
      <test>
      <![CDATA[
-     var a=Meta.dom.bro().create('<div><b>1</b></div>');
+     var a=Meta.dom.$().create('<div><b>1</b></div>');
      return a.empty().inner()=='';
      ]]>
      </test>
@@ -859,7 +859,7 @@ Meta.dom.extend(function()
      <param name="[b]" type="integer">Index of the element. Default 0.</param>
      <test>
      <![CDATA[
-     var a=Meta.dom.bro().create('<div class="perro gato"></div>');
+     var a=Meta.dom.$().create('<div class="perro gato"></div>');
      return a.hasClass('perro');
      ]]>
      </test>
@@ -889,7 +889,7 @@ Meta.dom.extend(function()
      <param name="a" type="string">Class name</param>
      <test>
      <![CDATA[
-     var a=Meta.dom.bro().create('<div class="perro gato"></div>'),b;
+     var a=Meta.dom.$().create('<div class="perro gato"></div>'),b;
      b=!a.hasClass('yo');
      a.addClass('yo');
      return b&&a.hasClass('yo');
@@ -902,8 +902,8 @@ Meta.dom.extend(function()
       var x=this._,
           i=x.length,
           v,
-          z=str,//Meta.string.bro(),
-          y=arr;//Meta.array.bro();
+          z=str,//Meta.string.$(),
+          y=arr;//Meta.array.$();
       
       while(i--)
       {
@@ -929,7 +929,7 @@ Meta.dom.extend(function()
      <param name="a" type="string">Class name</param>
      <test>
      <![CDATA[
-     var a=Meta.dom.bro().create('<div class="perro gato"></div>'),b;
+     var a=Meta.dom.$().create('<div class="perro gato"></div>'),b;
      b=a.hasClass('gato');
      a.rmClass('gato');
      return b&&!a.hasClass('gato');
@@ -1344,7 +1344,7 @@ Meta.dom.ready=function()
   var ready=0,
       a,
       t,
-      ev=Meta.events.bro(),
+      ev=Meta.events.$(),
       cb;
 
   // Sets the custom event ready, for the window object

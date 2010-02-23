@@ -40,7 +40,7 @@ Meta.inherit(Meta.animation,{
   slide:function(md,speed,cb)
   {
     var me=this,
-        a=Meta.dom.bro(),
+        a=Meta.dom.$(),
 	x0,x1,fn,r,
 
     // Manejan los maximos y minimos

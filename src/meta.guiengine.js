@@ -36,9 +36,9 @@
 */
 Meta.guiEngine=Meta(function()
 {
-  var cur=Meta.dom.bro(),
-      cur_limit=Meta.dom.bro(),
-      win=Meta.domevent.bro(document),
+  var cur=Meta.dom.$(),
+      cur_limit=Meta.dom.$(),
+      win=Meta.domevent.$(document),
       bod,bod_bak={},
       limit=[0,0,0,0],
       cur_dims={
@@ -274,7 +274,7 @@ Meta.guiEngine=Meta(function()
       on('mouseup',mu);
     
     started=1;
-    bod=Meta.dom.bro().set(document.body);
+    bod=Meta.dom.$().set(document.body);
     cur_limit.set(bod.get());
     setLimit();
   };
