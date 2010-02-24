@@ -52,12 +52,12 @@ Meta.inherit(Meta.animation,{
             cb.call(me,o);
         },
         
-        // _1 - top
-        // _2 - right
-        // _3 - bottom
-        // _4 - left
-        m=function(_1,_2,_3,_4){
-          a.css('clip','rect('+_1+'px '+_2+'px '+_3+'px '+_4+'px)');
+        // b - top
+        // c - right
+        // d - bottom
+        // e - left
+        m=function(b,c,d,e){
+          a.css('clip','rect('+b+'px '+c+'px '+d+'px '+e+'px)');
         },
     
         ini=function(v){

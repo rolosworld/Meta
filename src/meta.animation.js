@@ -66,6 +66,7 @@ Meta.animation=function()
    */
   function anim(cb,x0,x1,speed,fn,obj)
   {
+    speed=parseInt(speed,10);
     var t0=(new Date()).getTime(),
         t1=t0+(speed||200),
         dx=x1-x0,
