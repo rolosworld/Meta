@@ -41,22 +41,18 @@ var Meta=window.Meta=function()
    * 
    * o - Object to expand
    */
-  function getHim(o)
+  function getParent(o)
   {
-    var a=Meta.its(o),
-        b=Meta.extensions[a],
-        c;
+    if(Meta.its(o,'function'))
+      return o;
 
-    if(b)o=Meta(b).extend({_:o});
-    else if(a!='meta')
-      {
-        c=Meta();
-        if(a=='function'||Meta.its(o,'object'))c.extend(o);
-        else c.extend({_:o});
-        o=c;
-      }
-
-    return o.constructor;
+    var c=Meta().extend(
+      Meta.its(o,'object')
+        ? o
+        : {_:o}
+    );
+    
+    return c.constructor;
   };
 
   /**
@@ -64,71 +60,25 @@ var Meta=window.Meta=function()
    */
   function getMe(o)
   {
-    var father;
+    var parent;
 
+    if(o!==undefined)
+      parent=getParent(o);
+    
     /**
        <class name="Meta">
        <desc>Meta object</desc>
      */
-    function Meta(){};
+    function Meta(){
+      // Constructor fix
+      this.constructor=Meta;
 
-    if(o!==undefined)father=getHim(o);
-    if(father)
-      {
-        Meta.prototype=new father();
-        Meta.prototype.constructor=Meta;
-      }
-
-    /**
+      /**
        <public name="info" type="object">Stores information of the library</public>
-     */
-    Meta.prototype.info=info; // info is defined on meta.head.js
+       */
+      this.info=info; // info is defined on meta.head.js
 
-    /**
-       <method name="under" type="mixed">
-       <param name="a" type="string">Name of the under method</param>
-       <desc>Use the asked under method</desc>
-       <test>
-       <![CDATA[
-       var a=Meta({o:function(q){return q;}}),t1,t2,t3,t4;
-       t1='o' in a;
-       t2=a.o(1)==1;
-
-       a.extend({o:function(q){return q+1;}});
-
-       t3=a.o(1)==2;
-       t4=a.under('o',1)==1;
-       return t1 && t2 && t3 && t4;
-       ]]>
-       </test>
-       </method>
-     */
-    Meta.prototype.under=function(a)
-      {
-        if(!father)return undefined;
-
-        var d=[],
-	    f,
-            i,
-            g=this.under, // cache original this.under
-	    j=arguments.length;
-
-        for(i=1;i<j;i++)
-          d.push(arguments[i]);
-
-        /*
-          Map the "father.prototype.under" method, to "this.under",
-          when the "father" method is called, it's called as "this"
-          if the method called uses "this.under", it will expect the "father.under"
-          thats why it has to be mapped.
-         */
-        this.under=father.prototype.under; // map "this.under" to the "father.under"
-        f=father.prototype[a].apply(this,d);
-        this.under=g; // restore this.under
-        return f;
-      };
-
-    /**
+      /**
        <method name="extend" type="this">
        <param name="o" type="mixed">Function or Object that has the extensions</param>
        <param name="[conf]" type="object">Custom configuration for the extension {exclude:[string,...],params:[]}</param>
@@ -141,12 +91,65 @@ var Meta=window.Meta=function()
        ]]>
        </test>
        </method>
-     */
-    Meta.prototype.extend=function(o,conf)
-    {
-      return ateM().inherit(this,o,conf);
+       */
+      this.extend=function(o,conf)
+      {
+        var a=['under','extend','info'];
+        conf=conf||{};
+        conf.exclude=conf.exclude?conf.exclude.concat(a):a;
+        return ateM().inherit(this,o,conf);
+      };
     };
 
+    if(parent)
+      Meta.prototype=new parent();
+
+    /**
+     <method name="under" type="mixed">
+     <param name="a" type="string">Name of the under method</param>
+     <desc>Use the asked under method</desc>
+     <test>
+     <![CDATA[
+     var a=Meta({o:function(q){return q;}}),t1,t2,t3,t4;
+     t1='o' in a;
+     t2=a.o(1)==1;
+     
+     a.extend({o:function(q){return q+1;}});
+     
+     t3=a.o(1)==2;
+     t4=a.under('o',1)==1;
+     return t1 && t2 && t3 && t4;
+     ]]>
+     </test>
+     </method>
+     */
+    Meta.prototype.under=function(a)
+    {
+      if(!parent)
+        return undefined;
+
+      var d=[],
+	  f,
+          i,
+          g=this.under, // cache original this.under
+          j=arguments.length,
+          p=parent.prototype;
+
+      for(i=1;i<j;i++)
+        d.push(arguments[i]);
+
+      /*
+        Map the "parent.prototype.under" method, to "this.under",
+        when the "parent" method is called, it's called as "this"
+        if the method called uses "this.under", it will expect the "parent.under"
+        thats why it has to be mapped.
+       */
+      this.under=p.under; // map "this.under" to the "parent.under"
+      f=p[a].apply(this,d);
+      this.under=g; // restore this.under
+      return f;
+    };
+    
     return Meta;
   };
   /** </class> */

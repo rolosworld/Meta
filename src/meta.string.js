@@ -22,6 +22,8 @@
 */
 Meta.string=Meta(Meta.core);
 Meta.string.extend({
+  _:'',
+
   /**
    <method name="$" type="Meta.string">
    <desc>Custom $, let it set a value.</desc>

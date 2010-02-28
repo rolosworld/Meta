@@ -22,7 +22,6 @@
  <desc>DOM extensions, elements</desc>
 */
 Meta.dom=Meta(Meta.domevent);
-Meta.dom.info.name="Meta.dom";
 Meta.dom.extend(function()
 {
   // Methods for glue method
@@ -77,6 +76,8 @@ Meta.dom.extend(function()
   };
 
   return {
+    info:{name:"Meta.dom"},
+  
     _doc:document,
 
     /**

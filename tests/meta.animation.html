@@ -38,7 +38,12 @@
 
 <script src="../meta.debug.js"></script>
 <script>
-  var a=Meta.dom.$().select('#test');
+  var a;
+function start(){
+  debugger;
+  a=Meta.dom.$().select('#test');
+};
+start();
 </script>
 
 </body></html>

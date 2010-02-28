@@ -23,6 +23,8 @@
 Meta.array=Meta(Meta.core);
 Meta.array.extend(
 {
+  _:[],
+  
   /**
    <method name="$" type="Meta.array">
    <desc>Custom $, let it set a value</desc>

@@ -86,7 +86,7 @@ Meta.inherit=function(a,b,c)
 {
   var p=[],
       e=[],
-      o={};
+      o={},d;
 
   if(c)
   {
@@ -102,8 +102,9 @@ Meta.inherit=function(a,b,c)
     b=o;
   }
 
-  a=a.constructor?a.constructor.prototype:a;
-  return Meta.extend(a,b,e);
+  d=a.constructor;
+  Meta.extend(d?d.prototype:a,b,e);
+  return a;
 };
 
 
@@ -230,15 +231,6 @@ Meta.its=function(o,a)
     else if(!isFinite(o))
       t=o>0?'infinite':'-infinite';
   }
-
-  if(t=="meta"&&
-    Meta.has(o,'info')&&
-    Meta.has(o.info,'name'))
-      {
-	if(a==t)
-          return true;
-	t=o.info.name;
-      }
 
   if(a)
     return a==t;
