@@ -20,8 +20,7 @@
    <desc>Cookie object</desc>
    <inherit>Meta.core</inherit>
 */
-Meta.cookie=Meta(Meta.core);
-Meta.cookie.extend({
+Meta.cookie=Meta(Meta.core).extend({
   /**
    <method name="create" type="void">
    <desc>

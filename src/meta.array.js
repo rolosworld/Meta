@@ -20,8 +20,7 @@
    <desc>Array extensions</desc>
    <inherit>Meta.core</inherit>
  */
-Meta.array=Meta(Meta.core);
-Meta.array.extend(
+Meta.array=Meta(Meta.core).extend(
 {
   _:[],
   
@@ -473,8 +472,8 @@ Meta.array.extend(
     return this;
   }
 
-});
-
+}).extend(function()
+{
 /**
  <method name="push" type="this">
  <desc>Add the value on the arrays</desc>
@@ -596,8 +595,7 @@ Meta.array.extend(
  </test>
  </method>
  */
-Meta.array.extend(function()
-{
+
   var m=Meta.genProperties;
 
   // Returns this without set
@@ -622,6 +620,4 @@ Meta.array.extend(function()
     function(d){return function(){return this.set(this.wrap(d,arguments));};},
     this);
 });
-
-Meta.extensions.Array=Meta.array;
 /** </class> */

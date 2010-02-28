@@ -20,8 +20,7 @@
  <inherit>Meta.core</inherit>
  <desc>String extensions</desc>
 */
-Meta.string=Meta(Meta.core);
-Meta.string.extend({
+Meta.string=Meta(Meta.core).extend({
   _:'',
 
   /**
@@ -303,6 +302,18 @@ Meta.string.extend({
   {
     return parseInt(this.get().match(/\d/g).join(''),10);
   }
+}).extend(function()
+{
+  var m=Meta.genProperties;
+  // Generate shortcuts for wrapped methods
+  m('replace,concat,substr,substring,slice,toUpperCase,toLowerCase',
+    function(d){return function(){return this.set(this.wrap(d,arguments));};},
+    this);
+
+  // Returns value from method
+  m('charAt,charCodeAt,indexOf,lastIndexOf,search,match,split,valueOf',
+    function(d){return function(){return this.wrap(d,arguments);};},
+    this);
 });
 
 /**
@@ -386,19 +397,5 @@ Meta.string.extend({
  </method>
 
 */
-Meta.string.extend(function()
-{
-  var m=Meta.genProperties;
-  // Generate shortcuts for wrapped methods
-  m('replace,concat,substr,substring,slice,toUpperCase,toLowerCase',
-    function(d){return function(){return this.set(this.wrap(d,arguments));};},
-    this);
 
-  // Returns value from method
-  m('charAt,charCodeAt,indexOf,lastIndexOf,search,match,split,valueOf',
-    function(d){return function(){return this.wrap(d,arguments);};},
-    this);
-});
-
-Meta.extensions.string=Meta.string;
 /** </class> */

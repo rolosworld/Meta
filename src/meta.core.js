@@ -20,8 +20,7 @@
    <inherit>Meta</inherit>
    <desc>Core extension</desc>
  */
-Meta.core=Meta();
-Meta.core.extend({
+Meta.core=Meta().extend({
   /**
    <public name="_" type="array">Internal variable where the data is stored.</public>
    */

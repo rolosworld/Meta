@@ -31,8 +31,7 @@
  <inherit>Meta.core</inherit>
  */
 //Meta.events=Meta(Meta.array);
-Meta.events=Meta(Meta.core);
-Meta.events.extend(function()
+Meta.events=Meta(Meta.core).extend(function()
 {
   /**
    Private and static variable where the events are stored.

@@ -21,8 +21,7 @@
  <inherit>Meta.domevent</inherit>
  <desc>DOM extensions, elements</desc>
 */
-Meta.dom=Meta(Meta.domevent);
-Meta.dom.extend(function()
+Meta.dom=Meta(Meta.domevent).extend(function()
 {
   // Methods for glue method
   // a DOM
@@ -1152,7 +1151,37 @@ Meta.dom.extend(function()
     }
 
   };
-}());
+}()).extend(function()
+{
+  // Generate shortcuts for child method
+  Meta.genProperties('prepend,append,before,after,replace',
+    function c(d){return function(e){return this.glue(e,d);};},
+    this);
+}).extend(function()
+{
+  var map={
+        prependTo:'prepend',
+        appendTo:'append',
+        insertBefore:'before',
+        insertAfter:'after',
+        replaceIn:'replace'
+      };
+
+  // Generate shortcuts for child method
+  Meta.genProperties('prependTo,appendTo,insertBefore,insertAfter,replaceIn',
+    function c(d)
+    {
+      return function(e)
+        {
+          var a=this._;
+          return this.
+            set(e).
+	    glue(a,map[d]).
+	    set(a);
+        };
+    },
+    this);
+});
 
 /**
  <method name="prepend" type="this">
@@ -1179,16 +1208,7 @@ Meta.dom.extend(function()
  <param name="e" type="element">Element to be inserted</param>
  <desc>Replace the elements with the given one</desc>
  </method>
- */
-Meta.dom.extend(function()
-{
-  // Generate shortcuts for child method
-  Meta.genProperties('prepend,append,before,after,replace',
-    function c(d){return function(e){return this.glue(e,d);};},
-    this);
-});
 
-/**
  <method name="prependTo" type="this">
  <param name="e" type="element">Element to be prepended</param>
  <desc>Insert the given element at the start of the elements</desc>
@@ -1214,35 +1234,8 @@ Meta.dom.extend(function()
  <desc>Replace the given element with the actual one.</desc>
  </method>
  */
-Meta.dom.extend(function()
-{
-  var map={
-        prependTo:'prepend',
-        appendTo:'append',
-        insertBefore:'before',
-        insertAfter:'after',
-        replaceIn:'replace'
-      };
-
-  // Generate shortcuts for child method
-  Meta.genProperties('prependTo,appendTo,insertBefore,insertAfter,replaceIn',
-    function c(d)
-    {
-      return function(e)
-        {
-          var a=this._;
-          return this.
-            set(e).
-	    glue(a,map[d]).
-	    set(a);
-        };
-    },
-    this);
-});
 
 /** </class> */
-
-Meta.extensions.element=Meta.dom;
 
 /**
  <function name="Meta.dom.copyNodes" type="element">
