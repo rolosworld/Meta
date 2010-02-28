@@ -46,13 +46,18 @@ var Meta=window.Meta=function()
     if(Meta.its(o,'function'))
       return o;
 
-    var c=Meta().extend(
-      Meta.its(o,'object')
-        ? o
-        : {_:o}
-    );
+    var a=Meta(),
+    b=o.constructor,
+    c=a.constructor,i;
     
-    return c.constructor;
+    if(b)
+      c.prototype=new b();
+    
+    for(i in o)
+      if(o.hasOwnProperty(i))
+        c.prototype[i]=o[i];
+    
+    return c;
   };
 
   /**
