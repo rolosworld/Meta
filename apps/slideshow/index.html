@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>SlideShow Demo</title>
+
+    <link type="text/css" rel="stylesheet" href="css/slideshow.css">
+  </head>
+  <body>
+
+    <div style="text-align:center;"><div id="slide" style="margin:auto;"></div></div>
+
+    <form id="theForm" onsubmit="updateSlideShow();return false;">
+      <table>
+        <tr><td>Preview duration:</td><td><input type="text" name="previewDuration"/></td></tr>
+        <tr><td>Animation duration:</td><td><input type="text" name="animDuration"/></td></tr>
+        <tr><td>Random anim:</td><td><input type="checkbox" name="randomAnim"/></td></tr>
+        <tr><td>Anim type:</td><td id="anim_type_sel"></td></tr>
+        <tr><td>Controls:</td><td><input type="checkbox" name="controlsActive"/></td></tr>
+        <tr><td>Border:</td><td><input type="text" name="borderStyle"/></td></tr>
+        <tr><td colspan="2"><input type="submit" value="update"/></td></tr>
+      </table>
+    </form>
+
+    <script type="text/javascript" src="../../meta.debug.js"></script>
+    <script type="text/javascript" src="js/slideshow.js"></script>
+    <script type="text/javascript">
+
+/** Configuration form **/
+
+var dom=Meta.dom.$().select('#anim_type_sel'),
+sel=['<select name="animType">'],i=15;
+
+while(i--)
+  sel.push('<option value="'+i+'">'+i+'</option>');
+
+sel.push('</select>');
+
+dom.inner(sel.join(''));
+
+var sl;
+
+function updateSlideShow(){
+  dom.$(dom.set(document).select('#theForm').elements()).
+    forEach(function(v){
+      sl[v.name]=v.type=='checkbox'?v.checked:v.value;
+    });
+};
+
+/** Slideshow **/
+
+var imgs=[
+  ["show/big_060909-f217.png","http://www.rolosworld.com"],
+  ["show/big_060909-f228.png","http://www.rolosworld.com"],
+  ["show/big_243.png","http://www.rolosworld.com"]
+];
+
+function init_animation()
+{
+  sl=new SlideShow("slide");
+  sl.imgs=imgs;
+  sl.start();
+  sl.play();
+};
+
+init_animation();
+    </script>
+
+  </body>
+</html>
