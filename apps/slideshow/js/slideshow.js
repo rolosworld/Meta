@@ -49,7 +49,7 @@ function SlideShow(s)
   
   /*** SETUP FATHER ***/
   father.addClass("slideshow").
-  css("display","hidden").
+  //css("display","hidden"). // IE fail if this is not commented.. :-/
   on("mouseover",function()
     {
       if(playing)
