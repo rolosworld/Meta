@@ -241,7 +241,7 @@ Meta.array=Meta(Meta.core).extend(
   /**
      <method name="forEach" type="this">
      <desc>Runs a function on every item in the array.</desc>
-     <param name="a" type="function">Callback</param>
+     <param name="a" type="function">Callback. function( item, index, array )</param>
      <param name="[b]" type="object">Object</param>
      <test>
      <![CDATA[
