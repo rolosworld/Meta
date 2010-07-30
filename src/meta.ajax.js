@@ -17,10 +17,27 @@
 */
 /**
    <function name="Meta.ajax" type="object">
-   <param name="url" type="string">URL</param>
-   <param name="[callback]" type="mixed">Array of functions or a single function, if its an array,the array index is the state callback</param>
-   <param name="[post]" type="string">post</param>
-   <param name="[async]" type="bool">async</param>
+   <param name="conf" type="object">
+Hash with the following items:
+   url
+     required
+     string URL
+   callback
+     optional
+     Array of functions or a single function, if its an array,the array index is the state callback
+   post
+     optional
+     string post
+   async
+     optional
+     bool
+   headers
+     optional
+     hash: {header_type:header_value,...}
+   method
+     optional
+     Request method, either "POST" or "GET". Default is "GET"
+</param>
    <desc>
    Ajax function. Returns the XMLHttpRequest object
 
@@ -62,11 +79,11 @@
        function(a){t.push(parseInt(a.text(),10)==1);}  // Complete
    ];
 
-   Meta.ajax('ajax_test.txt',function(a){t.push(parseInt(a.text(),10)==1);},'',false);
-   Meta.ajax('ajax_test.txt',callbacks,'',false);
+   Meta.ajax({url:'ajax_test.txt',callbacks:function(a){t.push(parseInt(a.text(),10)==1);},async:false});
+   Meta.ajax({url:'ajax_test.txt',callbacks:callbacks,async:false});
 
-   Meta.ajax('ajax_test.txt',function(b){t.push(parseInt(b.text(),10)==1);});
-   Meta.ajax('ajax_test.txt',callbacks);
+   Meta.ajax({url:'ajax_test.txt',callbacks:function(b){t.push(parseInt(b.text(),10)==1);}});
+   Meta.ajax({url:'ajax_test.txt',callbacks:callbacks});
 
    for(var i=0; i < t.length; i++)
      if(!t[i])
@@ -77,10 +94,20 @@
    </test>
    </function>
 */
-Meta.ajax=function(url, callbacks, post, async)
+Meta.ajax=function(conf)
 {
-  post=post||'';
-  async=async===undefined?Meta.ajax.async:async;
+  var method,headers;
+  if(conf['post'])
+  {
+    method='POST';
+    headers={"Content-type":"application/x-www-form-urlencoded"};
+  }
+
+  var callbacks=conf['callbacks'],
+  async=conf['async']===undefined?Meta.ajax.async:conf.async;
+
+  method=conf['method']?conf.method:method;
+  headers=conf['headers']?conf.headers:headers;
 
   var http=isIE
     ? new ActiveXObject("Microsoft.XMLHTTP")
@@ -94,7 +121,7 @@ Meta.ajax=function(url, callbacks, post, async)
   },
   cbIsArray=Meta.its(callbacks,'array');
 
-  http.open("POST", url, async);
+  http.open(method||'GET',conf.url, async);
 
   function onReady()
   {
@@ -107,9 +134,15 @@ Meta.ajax=function(url, callbacks, post, async)
   if(async)
     http.onreadystatechange=onReady;
 
-  http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  if(headers)
+  {
+    for(var i in headers)
+    {
+      http.setRequestHeader(i,headers[i]);
+    }
+  }
   //http.setRequestHeader("Content-length", post.length);
-  http.send(post);
+  http.send(conf['post']);
 
   if(!async)
     onReady();
