@@ -496,7 +496,7 @@ documenter.extend(
 
       Meta.each(me.files,function(v)
                 {
-                  Meta.ajax(v,function(r)
+                  Meta.ajax({url:v,callbacks:function(r)
                             {
 			      if(a)
 				{
@@ -524,7 +524,7 @@ documenter.extend(
                                   me.parse('<doc>'+str+'</doc>');
                                   //Meta.$('ta').value='<doc>'+str+'</doc>';
                                 }
-                            });
+                            }});
                 });
     }
 }
