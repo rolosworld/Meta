@@ -192,7 +192,7 @@ Meta.array=Meta(Meta.core).extend(
      <test>
      <![CDATA[
      var a=Meta.array.$([1,2]);
-     return a.some(function(a){return a==1||a==2;});
+     return a.every(function(a){return a==1||a==2;});
      ]]>
      </test>
      </method>
