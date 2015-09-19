@@ -348,7 +348,7 @@ Meta.has=function(a,b)
 /**
  <function name="Meta.genProperties" type="void">
  <param name="d" type="string">CSV of the names to use</param>
- <param name="c" type="function">Propertie function filler</param>
+ <param name="c" type="function">Property function filler</param>
  <param name="o" type="object">Object where to implement the methods</param>
  <desc>Apply multiple properties to an object, using a function that generates its value.</desc>
  <test>

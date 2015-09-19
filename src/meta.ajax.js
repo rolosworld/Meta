@@ -28,9 +28,6 @@ Hash with the following items:
    post
      optional
      string post
-   async
-     optional
-     bool
    headers
      optional
      hash: {header_type:header_value,...}
@@ -79,8 +76,8 @@ Hash with the following items:
        function(a){t.push(parseInt(a.text(),10)==1);}  // Complete
    ];
 
-   Meta.ajax({url:'ajax_test.txt',callbacks:function(a){t.push(parseInt(a.text(),10)==1);},async:false});
-   Meta.ajax({url:'ajax_test.txt',callbacks:callbacks,async:false});
+   Meta.ajax({url:'ajax_test.txt',callbacks:function(a){t.push(parseInt(a.text(),10)==1);}});
+   Meta.ajax({url:'ajax_test.txt',callbacks:callbacks});
 
    Meta.ajax({url:'ajax_test.txt',callbacks:function(b){t.push(parseInt(b.text(),10)==1);}});
    Meta.ajax({url:'ajax_test.txt',callbacks:callbacks});
@@ -104,7 +101,8 @@ Meta.ajax=function(conf)
   }
 
   var callbacks=conf['callbacks'],
-  async=conf['async']===undefined?Meta.ajax.async:conf.async;
+  async=true; // false is deprecated
+  //async=conf['async']===undefined?Meta.ajax.async:conf.async;
 
   method=conf['method']?conf.method:method;
   headers=conf['headers']?conf.headers:headers;

@@ -689,7 +689,7 @@ Meta.dom=Meta(Meta.domevent).extend(function()
      var a=Meta.dom.$().create('<div><b>1</b></div>'),b,s=Meta.string.$();
      b=a.text()=='1';
      a.text('<br>');
-     return b && s.set(a.text()).unescapeHTML().get().toLowerCase()=='<br>';
+     return b && a.text()=='<br>';
      ]]>
      </test>
      </method>
@@ -703,7 +703,7 @@ Meta.dom=Meta(Meta.domevent).extend(function()
           return null;
 
         a=x[0];
-        return a.innerHTML?a.innerHTML.replace(/<\/?[^>]+>/gi,''):a.text||a.textContent;
+        return a.text||a.textContent||(a.innerHTML?a.innerHTML.replace(/<\/?[^>]+>/gi,''):'');
       }
 
       return this.empty().append(this.doc().createTextNode(a));
