@@ -159,10 +159,8 @@ Meta.events=Meta(Meta.core).extend(function()
    */
   this.getEvent=function(a,b)
   {
-    if(events[a]&&events[a][b])
-      return events[a][b];
-    else
-      return null;
+    var e=events[a];
+    return e&&e[b]?e[b]:null;
   };
 
   /**
