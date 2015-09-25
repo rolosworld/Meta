@@ -71,7 +71,6 @@ Meta.events=Meta(Meta.core).extend(function()
    <param name="a" type="string">Event type</param>
    <param name="b" type="object">Object</param>
    <param name="c" type="mixed">Single function callback or array of callbacks</param>
-   <param name="[e]" type="bool">Repeat flag. Only works for single functions. Default 1, it repeats.</param>
    <test>
    <![CDATA[
    var a=Meta.events.$(),d,b={},c=function(){d=true;};
@@ -85,10 +84,8 @@ Meta.events=Meta(Meta.core).extend(function()
    </test>
    </method>
    */
-  this.addEvent=function(a,b,c,e)
+  this.addEvent=function(a,b,c)
   {
-    e=e===undefined?1:e;
-
     var d=-1,
         me=this;
 
@@ -129,11 +126,7 @@ Meta.events=Meta(Meta.core).extend(function()
       d.fn=arr.get();
     }
     else
-    {
-      // If it should be not repeated, check if it exist, else push it
-      if(e||arr.indexOf(c)<0)
-	arr.push(c);
-    }
+      arr.push(c);
 
     return me;
   };

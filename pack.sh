@@ -11,7 +11,9 @@ meta.events.js
 meta.domevent.js
 meta.select.js
 meta.sandbox.js
-meta.dom.js"
+meta.dom.js
+meta.websocketevent.js
+meta.websocket.js"
 
 echo "Add cookies?"
 read ASK
