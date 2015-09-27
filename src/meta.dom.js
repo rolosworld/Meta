@@ -187,7 +187,6 @@ Meta.dom=Meta(Meta.domevent).extend(function()
           b=b.concat(s(a,c));
         });
       }
-
       else
         b=s(a,me.doc());
 

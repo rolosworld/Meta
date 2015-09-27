@@ -1,15 +1,18 @@
 Meta.websocket=Meta(Meta.websocketevent).extend({
-  connect: function(url) {
+  connect: function(u) {
     var me = this;
-    me.set(new WebSocket(url));
+    me.set(new WebSocket(u));
     me.fire('connect');
   },
   close: function() {
+    var me = this;
     me.get().close();
     me.fire('close');
   },
-  send: function(data) {
-    me.get().send(JSON.encode(data));
-    me.fire('send');
+  send: function(d) {
+    var me = this;
+    var j=JSON.encode(d);
+    me.get().send(j);
+    me.fire('send',j);
   }
 });

@@ -79,11 +79,11 @@ Meta.websocketevent=Meta(Meta.events).extend({
    <param name="a" type="string">Event type</param>
    </method>
    */
-  fire:function(a)
+  fire:function(a,b)
   {
     var me=this;
     var w=me.wrapped(a)?me.get():me;
-    return me.fireEvent(a,w);
+    return me.fireEvent(a,w,b);
   },
 
   /**
