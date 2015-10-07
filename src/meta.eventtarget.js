@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2010 Rolando González Chévere <rolosworld@gmail.com>
+ Copyright (c) 2015 Rolando González Chévere <rolosworld@gmail.com>
  
  This file is part of Meta.
  
@@ -17,28 +17,37 @@
 */
 
 /**
- <class name="Meta.domevent">
- <desc>DOM events manager</desc>
+ <class name="Meta.eventtarget">
+ <desc>WebSocket events manager</desc>
  <inherit>Meta.array</inherit>
  <extend>Meta.events</extend>
  */
-Meta.domevent=Meta(Meta.eventtarget).extend(Meta.array).extend({
-  valid_type:' abort blur change click dblclick error focus keydown keypress keyup load mousedown mousemove mouseout mouseover mouseup reset resize select submit unload ',
-
-  onFireEvent:function(a,b,c)
+Meta.eventtarget=Meta(Meta.events).extend({
+  valid_type:'',
+  wrapped:function(a){
+    return this.valid_type.indexOf(' '+a+' ')!=-1;
+  },
+  
+  onNewEvent:function(a)
   {
-    if(b || !this.wrapped(a.type))
+    if(!this.wrapped(a.type))
       return;
 
-    // Force stop the event
-    c[0].cancelBubble=true;
-    c[0].returnValue=false;
+    if(Meta.has(a.obj,'addEventListener'))
+      a.obj.addEventListener(a.type,a.cb,false);
+    else if(Meta.has(a.obj,'attachEvent'))
+      a.obj.attachEvent("on"+a.type,a.cb);
+  },
 
-    if(c[0].stopPropagation)
-      c[0].stopPropagation();
+  onEmptyEvent:function(a)
+  {
+    if(!this.wrapped(a.type))
+      return;
 
-    if(c[0].preventDefault)
-      c[0].preventDefault();
+    if(Meta.has(a.obj,'removeEventListener'))
+      a.obj.removeEventListener(a.type,a.cb,false);
+    else if(Meta.has(a.obj,'detachEvent'))
+      a.obj.detachEvent('on'+a.type,a.cb);
   },
 
   /**
@@ -56,8 +65,9 @@ Meta.domevent=Meta(Meta.eventtarget).extend(Meta.array).extend({
   on:function(a,b)
   {
     var me=this;
+    var w=me.wrapped(a)?me.get():me;
     if(b)
-      return me.forEach(function(v){me.addEvent(a,v,b);});
+      return me.addEvent(a,w,b);
   },
 
   /**
@@ -69,16 +79,11 @@ Meta.domevent=Meta(Meta.eventtarget).extend(Meta.array).extend({
    <param name="a" type="string">Event type</param>
    </method>
    */
-  fire:function(a)
+  fire:function(a,b)
   {
     var me=this;
-    return me.forEach(function(v)
-      {
-	if(v['on'+a])
-	  v['on'+a]();
-        
-	me.fireEvent(a,v);
-      });
+    var w=me.wrapped(a)?me.get():me;
+    return me.fireEvent(a,w,b);
   },
 
   /**
@@ -91,24 +96,8 @@ Meta.domevent=Meta(Meta.eventtarget).extend(Meta.array).extend({
   rmOn:function(a,b)
   {
     var me=this;
-    return me.forEach(function(v){me.rmEvent(a,v,b);});
-  },
-
-  /**
-   <method name="cleanEvents" type="this">
-   <desc>Remove events that from elements without parentNode</desc>
-   </method>
-  */
-  cleanEvents:function()
-  {
-    return this.flush(function(a,b){return b['parentNode']===null;});
+    var w=me.wrapped(a)?me.get():me;
+    return me.rmEvent(a,w,b);
   }
 });
 /** </class> */
-
-Meta.domevent.addEvent('unload',window,function()
-  {
-    Meta.events.flush();
-    if(document && document.body)
-      Meta.dom.purge(document.body);
-  });

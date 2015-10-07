@@ -8,6 +8,7 @@ meta.core.js
 meta.string.js
 meta.array.js
 meta.events.js
+meta.eventtarget.js
 meta.domevent.js
 meta.select.js
 meta.sandbox.js
