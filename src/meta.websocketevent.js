@@ -19,8 +19,7 @@
 /**
  <class name="Meta.websocketevent">
  <desc>WebSocket events manager</desc>
- <inherit>Meta.array</inherit>
- <extend>Meta.events</extend>
+ <inherit>Meta.eventtarget</inherit>
  */
 Meta.websocketevent=Meta(Meta.eventtarget).extend({
   valid_type:' open message error close '

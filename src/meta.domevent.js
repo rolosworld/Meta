@@ -19,8 +19,8 @@
 /**
  <class name="Meta.domevent">
  <desc>DOM events manager</desc>
- <inherit>Meta.array</inherit>
- <extend>Meta.events</extend>
+ <inherit>Meta.eventtarget</inherit>
+ <extend>Meta.array</extend>
  */
 Meta.domevent=Meta(Meta.eventtarget).extend(Meta.array).extend({
   valid_type:' abort blur change click dblclick error focus keydown keypress keyup load mousedown mousemove mouseout mouseover mouseup reset resize select submit unload ',

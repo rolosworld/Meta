@@ -19,8 +19,7 @@
 /**
  <class name="Meta.eventtarget">
  <desc>WebSocket events manager</desc>
- <inherit>Meta.array</inherit>
- <extend>Meta.events</extend>
+ <inherit>Meta.events</inherit>
  */
 Meta.eventtarget=Meta(Meta.events).extend({
   valid_type:'',
