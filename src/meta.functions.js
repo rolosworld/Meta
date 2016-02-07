@@ -392,3 +392,27 @@ Meta.toggle=function(a,b,c)
     return d.apply(this,arguments);
   };
 };
+
+/**
+ <function name="Meta.getVal" type="function">
+ <param name="a" type="string">String to parse into JS data</param>
+ <param name="[b]" type="object">context</param>
+ <desc>Returns the value from the parsed string.</desc>
+ <test>
+ <![CDATA[
+ var a=Meta.getVal,b={a:{b:{c:1,d:0,e:function(){return 'e';}}}};
+ return a('a.b.c',b)===1 && a('a.b.d',b)===0 && a('a.b.e',b)()==='e' && a('a.c',b)===undefined && a('a.c[-]',b)===undefined;
+ ]]>
+ </test>
+ </function>
+ */
+Meta.getVal=function(a,b)
+{
+  a=a.split('.');
+  var c=b||window,d;
+  while((d=a.shift())!==undefined){
+      c=c[d];
+      if(!c)break;
+  }
+  return c;
+};
