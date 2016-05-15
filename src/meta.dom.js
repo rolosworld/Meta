@@ -332,9 +332,22 @@ Meta.dom=Meta(Meta.domevent).extend(function()
      */
     create:function(e)
     {
-      var d=this.doc().createElement('div'),
-          a=[],
-          b;
+      var a=[],
+          b,
+          d=this.doc().createElement('div'),
+          f,
+          s=Meta.string.$(e),
+          t,
+          u;
+
+      e=s.trim().get();
+
+      t=s.substr(s.lastIndexOf('<'));
+      u=t.indexOf(' ');
+      if(u<0)
+        u=t.indexOf('>');
+
+      t='|'+t.substr(2,u-2).get()+'|';
 
       // XML
       if(this.isXML(d))
@@ -350,14 +363,33 @@ Meta.dom=Meta(Meta.domevent).extend(function()
       // HTML
       else
       {
+        if(t){
+          if(t=='|tr|')
+            e='<table><tbody>'+e+'</tbody></table>';
+          else{
+            if(s.set('|th|td|').indexOf(t))
+              e='<table><tbody><tr>'+e+'</tr></tbody></table>';
+            else
+              e='<table>'+e+'</table>';
+          }
+        }
+
         if(isIE)
         {
 	  // Fix for single script tags in IE
-	  d.innerHTML='<br>'+e;
+	  d.innerHTML=t?e:'<br>'+e;
 	  d.removeChild(d.firstChild);
 	}
 	else
 	  d.innerHTML=e;
+
+        if(t){
+          d=d.firstChild;
+          if(t=='|tr|')
+            d=d.firstChild;
+          else if(s.set('|th|td|').indexOf(t))
+            d=d.firstChild.firstChild;
+        }
       }
 
       while((b=d.firstChild))
