@@ -165,7 +165,7 @@ Meta.dom=Meta(Meta.domevent).extend(function()
     },
 
     /**
-     <method name="select" type="this">
+     <method name="select" type="Meta.dom">
      <param name="a" type="string">CSS rules</param>
      <desc>Select elements from the given document.</desc>
      <test>
@@ -190,8 +190,7 @@ Meta.dom=Meta(Meta.domevent).extend(function()
       else
         b=s(a,me.doc());
 
-      me.set(b);
-      return me;
+      return me.$(b);
     },
 
     /**
@@ -250,7 +249,7 @@ Meta.dom=Meta(Meta.domevent).extend(function()
 
       // Assume its a string
       else if(typeof e == 'string')
-        y.create(e);
+        y=y.create(e);
 
       // Assume its an array of elements
       else
@@ -320,7 +319,7 @@ Meta.dom=Meta(Meta.domevent).extend(function()
     },
 
     /**
-     <method name="create" type="this">
+     <method name="create" type="Meta.dom">
      <param name="e" type="string">Element to be created</param>
      <desc>Create the given HTML|XML into their respective DOM</desc>
      <test>
@@ -348,6 +347,9 @@ Meta.dom=Meta(Meta.domevent).extend(function()
         u=t.indexOf('>');
 
       t='|'+t.substr(2,u-2).get()+'|';
+
+      if(s.set('|caption|colgroup|col|thead|tfoot|tbody|tr|th|td|').indexOf(t)<0)
+        t=0;
 
       // XML
       if(this.isXML(d))
@@ -395,7 +397,7 @@ Meta.dom=Meta(Meta.domevent).extend(function()
       while((b=d.firstChild))
         a.push(d.removeChild(b));
 
-      return this.set(a);
+      return this.$(a);
     },
 
     /**
@@ -708,7 +710,8 @@ Meta.dom=Meta(Meta.domevent).extend(function()
         return s;
       }
 
-      return this.empty().append(a,w);
+      this.empty().append(a,w);
+      return this;
     },
 
     /**
@@ -737,7 +740,8 @@ Meta.dom=Meta(Meta.domevent).extend(function()
         return a.text||a.textContent||(a.innerHTML?a.innerHTML.replace(/<\/?[^>]+>/gi,''):'');
       }
 
-      return this.empty().append(this.doc().createTextNode(a));
+      this.empty().append(this.doc().createTextNode(a));
+      return this;
     },
 
     /**
@@ -1068,18 +1072,18 @@ Meta.dom=Meta(Meta.domevent).extend(function()
     show:function(a){return this.css('display',a||'');},
 
     /**
-     <method name="parent" type="element">
+     <method name="parent" type="Meta.dom">
      <param name="[i]" type="integer">Index of the element.</param>
      <desc>Returns the parentNode of the element.</desc>
      </method>
      */
     parent:function(i)
     {
-      return this.prop('parentNode',i);
+      return this.$(this.prop('parentNode',i));
     },
       
     /**
-     <method name="next" type="element">
+     <method name="next" type="Meta.dom">
      <param name="[i]" type="integer">Index of the element.</param>
      <desc>Returns the nextSibling of the element.</desc>
      </method>
@@ -1088,11 +1092,11 @@ Meta.dom=Meta(Meta.domevent).extend(function()
     {
       i=this.get(i||0);
       while(i&&(i=i.nextSibling)&&i.nodeType!=1){}
-      return i;
+      return this.$(i);
     },
 
     /**
-     <method name="prev" type="element">
+     <method name="prev" type="Meta.dom">
      <param name="[i]" type="integer">Index of the element.</param>
      <desc>Returns the previousSibling of the element.</desc>
      </method>
@@ -1101,11 +1105,11 @@ Meta.dom=Meta(Meta.domevent).extend(function()
     {
       i=this.get(i||0);
       while(i&&(i=i.previousSibling)&&i.nodeType!=1){}
-      return i;
+      return this.$(i);
     },
       
     /**
-     <method name="first" type="element">
+     <method name="first" type="Meta.dom">
      <param name="[i]" type="integer">Index of the element.</param>
      <desc>Returns the firstChild of the element.</desc>
      </method>
@@ -1115,11 +1119,11 @@ Meta.dom=Meta(Meta.domevent).extend(function()
       i=this.prop('firstChild',i);
       while(i&&i.nodeType!=1)
         i=i.nextSibling;
-      return i;
+      return this.$(i);
     },
 
     /**
-     <method name="last" type="element">
+     <method name="last" type="Meta.dom">
      <param name="[i]" type="integer">Index of the element.</param>
      <desc>Returns the lastChild of the element.</desc>
      </method>
@@ -1129,7 +1133,7 @@ Meta.dom=Meta(Meta.domevent).extend(function()
       i=this.prop('lastChild',i);
       while(i&&i.nodeType!=1)
         i=i.previousSibling;
-      return i;
+      return this.$(i);
     },
 
     /**
