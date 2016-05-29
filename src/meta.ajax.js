@@ -140,7 +140,8 @@ Meta.ajax=function(conf)
     }
   }
   //http.setRequestHeader("Content-length", post.length);
-  http.send(conf['post']);
+  var p=conf['post'];
+  http.send(Meta.its(p)=='string'?p:Meta.hashToURI(p));
 
   if(!async)
     onReady();

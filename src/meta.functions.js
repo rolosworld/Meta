@@ -416,3 +416,25 @@ Meta.getVal=function(a,b)
   }
   return c;
 };
+
+/**
+ <function name="Meta.hashToURI" type="function">
+ <param name="a" type="hash">Hash</param>
+ <desc>Return the URI encoded version of the hash</desc>
+ <test>
+ <![CDATA[
+ var a=Meta.hashToURI,b={a:1,b:2};
+ return a(b)==='a=1&b=2';
+ ]]>
+ </test>
+ </function>
+ */
+Meta.hashToURI=function(a)
+{
+  var d=[],v;
+  Meta.each(Object.keys(a),function(k){
+    v=a[k];
+    d.push(encodeURIComponent(k,1)+'='+encodeURIComponent((v===null||v===undefined)?'':v,1));
+  });
+  return d.join('&');
+};
