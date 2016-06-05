@@ -104,6 +104,30 @@ Meta.string=Meta(Meta.core).extend({
   },
 
   /**
+   <method name="toCamelCase" type="string">
+   <desc>Convert string to camel case format</desc>
+   <param name="a" type="string">Delimiter</param>
+   <test>
+   <![CDATA[
+     return Meta.string.$("foo-bar").toCamelCase('-')=="fooBar";
+   ]]>
+   </test>
+   </method>
+   */
+  toCamelCase:function(a)
+  {
+    a=this.split(a);
+    for(var i=1,j=a.length,k;i<j;i++)
+    {
+      k=a[i];
+      a[i]=k.charAt(0).toUpperCase();
+      a[i]+=k.substr(1);
+    }
+
+    return a.join('');
+  },
+
+  /**
    <method name="stripTags" type="this">
    <desc>Strip tags from string object</desc>
    <test>

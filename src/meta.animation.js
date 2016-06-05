@@ -98,7 +98,7 @@ Meta.animation=function()
   };
 
   return Meta.son({
-    data:'data-meta_',
+    data_meta:'data-meta_',
 
     /**
      <method name="cssBackup" type="this">
@@ -115,8 +115,8 @@ Meta.animation=function()
         {
 	  a.set(v);
           
-	  var d=parseInt(a.attr(me.data+'bak'),10)||0;
-	  a.attr(me.data+'bak',d+1);
+	  var d=parseInt(a.attr(me.data_meta+'bak'),10)||0;
+	  a.attr(me.data_meta+'bak',d+1);
 
 	  if(d)
 	    return;
@@ -125,21 +125,21 @@ Meta.animation=function()
             {
 	      c=a.css(v);
 	      if(c!==null)
-                a.attr(me.data+v,c);
+                a.attr(me.data_meta+v,c);
 	    });
           
-	  if(!a.attr(me.data+'size_w'))
+	  if(!a.attr(me.data_meta+'size_w'))
 	  {
 	    c=a.dims();
-	    a.attr(me.data+'size_w',c.width).
-              attr(me.data+'size_h',c.height);
+	    a.attr(me.data_meta+'size_w',c.width).
+              attr(me.data_meta+'size_h',c.height);
 	  }
 
-	  if(!a.attr(me.data+'pos_l'))
+	  if(!a.attr(me.data_meta+'pos_l'))
 	  {
 	    c=a.dims();
-	    a.attr(me.data+'pos_l',c.left).
-              attr(me.data+'pos_t',c.top);
+	    a.attr(me.data_meta+'pos_l',c.left).
+              attr(me.data_meta+'pos_t',c.top);
 	  }
 	});
       },
@@ -158,7 +158,7 @@ Meta.animation=function()
 
       function restore(v)
       {
-	c=a.attr(me.data+v);
+	c=a.attr(me.data_meta+v);
         a.css(v,'');
         if(c!==null)
           a.css(v,c);
@@ -166,7 +166,7 @@ Meta.animation=function()
 
       return me.forEach(function(v)
         {
-	  if(!a.set(v).attr(me.data+'bak'))
+	  if(!a.set(v).attr(me.data_meta+'bak'))
 	    return;
           
 	  if(d)
@@ -193,14 +193,14 @@ Meta.animation=function()
           
 	  Meta.each(b,function(v)
 	    {
-	      a.attr(me.data+v,null);
+	      a.attr(me.data_meta+v,null);
 	    });
 
-	  a.attr(me.data+'bak',null).
-	    attr(me.data+'size_w',null).
-	    attr(me.data+'size_h',null).
-	    attr(me.data+'pos_l',null).
-	    attr(me.data+'pos_t',null);
+	  a.attr(me.data_meta+'bak',null).
+	    attr(me.data_meta+'size_w',null).
+	    attr(me.data_meta+'size_h',null).
+	    attr(me.data_meta+'pos_l',null).
+	    attr(me.data_meta+'pos_t',null);
         });
     },
 

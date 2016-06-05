@@ -54,16 +54,7 @@ Meta.dom=Meta(Meta.domevent).extend(function()
     // Special case
     if(a=='float')a=isIE?'styleFloat':'cssFloat';
 
-    // try to convert css property names to JS css property names
-    a=a.split('-');
-    for(var i=1,j=a.length,k;i<j;i++)
-    {
-      k=a[i];
-      a[i]=k.charAt(0).toUpperCase();
-      a[i]+=k.substr(1);
-    }
-
-    return a.join('');
+    return Meta.string.$(a).toCamelCase('-');
   };
 
   // check if option has a value, else use the option text as the value
@@ -470,6 +461,39 @@ Meta.dom=Meta(Meta.domevent).extend(function()
       return b.getAttribute(a);
     },
 
+
+    /**
+     <method name="data" type="this">
+     <param name="a" type="string">Data name</param>
+     <param name="[v]" type="mixed">Data value</param>
+     <desc>Get|Set Element data value</desc>
+     <test>
+     <![CDATA[
+     var a=document.createElement('div'),t='',b=Meta.dom.$(a);
+     a['data-id']='1';
+     t=b.data('id')=='1';
+     b.data('id','2');
+     return t && b.data('id')=='2';
+     ]]>
+     </test>
+     </method>
+     */
+    data:function(a,v)
+    {
+      var x=this._,
+          w,
+          y=Meta.string.$(a).toCamelCase('-'),
+          i=x.length;
+
+      if(v===undefined)
+        return i?x[0].dataset[y]:null;
+      
+      while(i--)
+        x[i].dataset[y]=v;
+      
+      return this;
+    },
+
     /**
      <method name="css" type="this">
      <param name="a" type="string">Style name</param>
@@ -578,7 +602,7 @@ Meta.dom=Meta(Meta.domevent).extend(function()
 	    {
               a=b[i];
               a.selected=false;
-	      if(o(v,optVal(a),1)>-1)
+	      if(o(v,a.value,1)>-1)
                 a.selected=true;
 	    }
           }
@@ -598,11 +622,11 @@ Meta.dom=Meta(Meta.domevent).extend(function()
         return v.value||null;
       
       if(!v.multiple)
-        return optVal(v.options[v.selectedIndex]);
+        return v.options[v.selectedIndex].value;
 
       v=v.options;
       for(i in v)
-        if(v[i].selected)a.push(optVal(v[i]));
+        if(v[i].selected)a.push(v[i].value);
       return a;
     },
 

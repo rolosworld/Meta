@@ -141,10 +141,10 @@ Meta.ajax=function(conf)
   }
   //http.setRequestHeader("Content-length", post.length);
   var p=conf['post'];
-  if(!conf['data']){
+  if(p&&!conf['data']){
     conf.data = Meta.its(p)=='string'?p:Meta.hashToURI(p);
   }
-  http.send(Meta.its(p)=='string'?p:Meta.hashToURI(p));
+  http.send(!p||Meta.its(p)=='string'?p:Meta.hashToURI(p));
 
   if(!async)
     onReady();
