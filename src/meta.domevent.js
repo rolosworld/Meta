@@ -96,7 +96,7 @@ Meta.domevent=Meta(Meta.eventtarget).extend(Meta.array).extend({
 
   /**
    <method name="cleanEvents" type="this">
-   <desc>Remove events that from elements without parentNode</desc>
+   <desc>Remove events from elements without parentNode</desc>
    </method>
   */
   cleanEvents:function()

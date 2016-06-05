@@ -114,7 +114,7 @@ Meta.ajax=function(conf)
   h={
     status:function(){return http.status;},
       text:function(){return http.responseText;},
-      json:function(){return eval('('+(h.text()||'null')+')');},
+      json:function(){return JSON.parse(http.responseText);},
        xml:function(){return http.responseXML;}
   },
   cbIsArray=Meta.its(callbacks,'array');
@@ -141,6 +141,9 @@ Meta.ajax=function(conf)
   }
   //http.setRequestHeader("Content-length", post.length);
   var p=conf['post'];
+  if(!conf['data']){
+    conf.data = Meta.its(p)=='string'?p:Meta.hashToURI(p);
+  }
   http.send(Meta.its(p)=='string'?p:Meta.hashToURI(p));
 
   if(!async)
