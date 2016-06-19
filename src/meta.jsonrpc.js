@@ -22,22 +22,33 @@
  */
 Meta.jsonrpc=Meta(Meta.array).extend({
   /**
+     <method name="url" type="this">
+     <desc>Set the default URL for the JSONRPCv2 server</desc>
+     <param name="u" type="string">JSONRPCv2 URL</param>
+     </method>
+  */
+  url:function(u) {
+    this.url=u;
+    return this;
+  },
+
+  /**
      <method name="send" type="this">
      <desc>Send a single JSONRPC request</desc>
-     <param name="u" type="string">JSONRPCv2 URL</param>
      <param name="d" type="hash">Data hash with the method, params and id</param>
      <param name="[c]" type="function">Callback</param>
      </method>
   */
-  send:function(u,d,c) {
+  send:function(d,c) {
+    var me=this;
     Meta.ajax({
-      url: u,
+      url: me.url,
       method:'POST',
       headers:{'Content-Type':'application/json'},
       data:JSON.stringify(d),
       callbacks:c
     });
-    return this;
+    return me;
   },
 
   /**
@@ -50,10 +61,9 @@ Meta.jsonrpc=Meta(Meta.array).extend({
   /**
      <method name="execute" type="this">
      <desc>Merge all the JSONRPCv2 queries in the array and send them. Set the id to be the array index. Clears the requests array after sending the requests.</desc>
-     <param name="u" type="string">JSONRPCv2 URL</param>
      </method>
   */
-  execute:function(u) {
+  execute:function() {
     var a=[],s,b,me=this;
     me.forEach(function(v,i){
       s={
@@ -66,7 +76,7 @@ Meta.jsonrpc=Meta(Meta.array).extend({
     });
     b=me._;
     me._=[];
-    me.send(u,a,function(r){
+    me.send(a,function(r){
       me.$(r.json()).forEach(function(v){
         b[v.id].callback(v);
       });
