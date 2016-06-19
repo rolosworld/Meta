@@ -846,7 +846,7 @@ Meta.dom=Meta(Meta.domevent).extend(function()
           d.push(f+encodeURIComponent((e===null||e===undefined)?'':e,1));
       }
 
-      Meta.ajax({url:x[0].action,callbacks:a,post:d.join('&')});
+      Meta.ajax({url:x[0].action,callbacks:a,method:'POST',data:d.join('&')});
       return this;
     },
       

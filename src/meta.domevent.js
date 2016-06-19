@@ -23,7 +23,7 @@
  <extend>Meta.array</extend>
  */
 Meta.domevent=Meta(Meta.eventtarget).extend(Meta.array).extend({
-  valid_type:' abort blur change click dblclick error focus keydown keypress keyup load mousedown mousemove mouseout mouseover mouseup reset resize select submit unload ',
+  valid_type:' abort blur change click dblclick error focus keydown keypress keyup load mousedown mousemove mouseout mouseover mouseup reset resize select submit unload hashchange ',
 
   onFireEvent:function(a,b,c)
   {

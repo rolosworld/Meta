@@ -25,9 +25,9 @@ Hash with the following items:
    callback
      optional
      Array of functions or a single function, if its an array,the array index is the state callback
-   post
+   data
      optional
-     string post
+     string data
    headers
      optional
      hash: {header_type:header_value,...}
@@ -94,12 +94,6 @@ Hash with the following items:
 Meta.ajax=function(conf)
 {
   var method,headers;
-  if(conf['post'])
-  {
-    method='POST';
-    headers={"Content-type":"application/x-www-form-urlencoded"};
-  }
-
   var callbacks=conf['callbacks'],
   async=true; // false is deprecated
   //async=conf['async']===undefined?Meta.ajax.async:conf.async;
@@ -140,11 +134,7 @@ Meta.ajax=function(conf)
     }
   }
   //http.setRequestHeader("Content-length", post.length);
-  var p=conf['post'];
-  if(p&&!conf['data']){
-    conf.data = Meta.its(p)=='string'?p:Meta.hashToURI(p);
-  }
-  http.send(!p||Meta.its(p)=='string'?p:Meta.hashToURI(p));
+  http.send(conf['data']);
 
   if(!async)
     onReady();

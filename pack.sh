@@ -7,6 +7,7 @@ meta.ajax.js
 meta.core.js
 meta.string.js
 meta.array.js
+meta.jsonrpc.js
 meta.events.js
 meta.eventtarget.js
 meta.domevent.js
@@ -16,47 +17,47 @@ meta.dom.js
 meta.websocketevent.js
 meta.websocket.js"
 
-echo "Add cookies?"
-read ASK
-if [ "y" == "${ASK}" ]; then
-    FILES="${FILES} meta.cookie.js"
-fi
+#echo "Add cookies?"
+#read ASK
+#if [ "y" == "${ASK}" ]; then
+#    FILES="${FILES} meta.cookie.js"
+#fi
 
-echo "Add debug libs?"
-read ASK
-if [ "y" == "${ASK}" ]; then
-    FILES="${FILES} meta.popup.js meta.log.js meta.assert.js"
-fi
+#echo "Add debug libs?"
+#read ASK
+#if [ "y" == "${ASK}" ]; then
+#    FILES="${FILES} meta.popup.js meta.log.js meta.assert.js"
+#fi
 
-echo "Add gui?"
-read ASK
-if [ "y" == "${ASK}" ]; then
-    FILES="${FILES} meta.guiengine.js"
-fi
+#echo "Add gui?"
+#read ASK
+#if [ "y" == "${ASK}" ]; then
+#    FILES="${FILES} meta.guiengine.js"
+#fi
 
-echo "Add animation?"
-read ASK
-if [ "y" == "${ASK}" ]; then
-    FILES="${FILES} meta.animation.js"
-fi
+#echo "Add animation?"
+#read ASK
+#if [ "y" == "${ASK}" ]; then
+#    FILES="${FILES} meta.animation.js"
+#fi
 
-echo "Add animation.clip?"
-read ASK
-if [ "y" == "${ASK}" ]; then
-    FILES="${FILES} meta.animation.clip.js"
-fi
+#echo "Add animation.clip?"
+#read ASK
+#if [ "y" == "${ASK}" ]; then
+#    FILES="${FILES} meta.animation.clip.js"
+#fi
 
-echo "Add animation.fade?"
-read ASK
-if [ "y" == "${ASK}" ]; then
-    FILES="${FILES} meta.animation.fade.js"
-fi
+#echo "Add animation.fade?"
+#read ASK
+#if [ "y" == "${ASK}" ]; then
+#    FILES="${FILES} meta.animation.fade.js"
+#fi
 
-echo "Add animation.slide?"
-read ASK
-if [ "y" == "${ASK}" ]; then
-    FILES="${FILES} meta.animation.slide.js"
-fi
+#echo "Add animation.slide?"
+#read ASK
+#if [ "y" == "${ASK}" ]; then
+#    FILES="${FILES} meta.animation.slide.js"
+#fi
 
 FILES="${FILES} meta.foot.js"
 
@@ -77,7 +78,7 @@ PACK=`cat meta.min.js`
 (
 cat<<EOF
 /*
- Copyright (c) 2010 Rolando González Chévere <rolosworld@gmail.com>
+ Copyright (c) 2016 Rolando González Chévere <rolosworld@gmail.com>
  
  This file is part of Meta.
  
