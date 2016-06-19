@@ -7,8 +7,8 @@ meta.ajax.js
 meta.core.js
 meta.string.js
 meta.array.js
-meta.jsonrpc.js
 meta.events.js
+meta.jsonrpc.js
 meta.eventtarget.js
 meta.domevent.js
 meta.select.js

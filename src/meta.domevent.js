@@ -82,13 +82,13 @@ Meta.domevent=Meta(Meta.eventtarget).extend(Meta.array).extend({
   },
 
   /**
-   <method name="rmOn" type="this">
+   <method name="off" type="this">
    <desc>Remove the given event callback</desc>
    <param name="a" type="string">Event type</param>
    <param name="[b]" type="function">Callback on current event</param>
    </method>
    */
-  rmOn:function(a,b)
+  off:function(a,b)
   {
     var me=this;
     return me.forEach(function(v){me.rmEvent(a,v,b);});

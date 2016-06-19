@@ -285,9 +285,9 @@ Meta.guiEngine=Meta(function()
       return;
     
     win.
-      rmOn('mousemove',mmv).
-      rmOn('mousedown',md).
-      rmOn('mouseup',mu);
+      off('mousemove',mmv).
+      off('mousedown',md).
+      off('mouseup',mu);
     
     started=0;
   };

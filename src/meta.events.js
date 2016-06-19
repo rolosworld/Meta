@@ -36,8 +36,8 @@ Meta.events=Meta(Meta.core).extend(function()
   /**
    Private and static variable where the events are stored.
    */
-  var events={},
-      arr=Meta.array.$();
+  var arr=Meta.array.$();
+  this.events={};
 
   /**
    <method name="onNewEvent" type="void">
@@ -90,8 +90,8 @@ Meta.events=Meta(Meta.core).extend(function()
         me=this;
 
     // Event type not initialized, so initialize it
-    if(!events[a])
-      events[a]=[];
+    if(!me.events[a])
+      me.events[a]=[];
 
     // Check if object is defined on the event, else add it
     else
@@ -112,11 +112,11 @@ Meta.events=Meta(Meta.core).extend(function()
 	fn:[]
       };
 
-      events[a].push(d);
+      me.events[a].push(d);
       me.onNewEvent(d);
     }
     else
-      d=events[a][d];
+      d=me.events[a][d];
 
     // Add the callback function, can be repeated
     arr.set(d.fn);
@@ -152,7 +152,7 @@ Meta.events=Meta(Meta.core).extend(function()
    */
   this.getEvent=function(a,b)
   {
-    var e=events[a];
+    var e=this.events[a];
     return e&&e[b]?e[b]:null;
   };
 
@@ -182,11 +182,11 @@ Meta.events=Meta(Meta.core).extend(function()
         c,
         me=this;
     
-    for(var i in events)
+    for(var i in me.events)
     {
       c=me.indexOfEvent(i,a);
       if(c>-1)
-        b.push(events[i][c]);
+        b.push(me.events[i][c]);
     }
     
     return b;
@@ -210,10 +210,10 @@ Meta.events=Meta(Meta.core).extend(function()
    */
   this.indexOfEvent=function(a,b)
   {
-    var c=-1;
-    if(!events[a])
+    var c=-1,me=this;
+    if(!me.events[a])
       return c;
-    arr.set(events[a]).every(function(v,i)
+    arr.set(me.events[a]).every(function(v,i)
       {
 	if(v.obj==b)
 	{
@@ -255,7 +255,7 @@ Meta.events=Meta(Meta.core).extend(function()
     if(d<0)
       return false;
 
-    f=events[a][d];
+    f=me.events[a][d];
 
     // Create array of arguments
     c=[];
@@ -298,12 +298,13 @@ Meta.events=Meta(Meta.core).extend(function()
     var d,
         e=-1,
         f,
-        g=this.indexOfEvent(a,b);
+        me=this,
+        g=me.indexOfEvent(a,b);
     
     if(g<0)
-      return this;
+      return me;
     
-    d=events[a][g];
+    d=me.events[a][g];
 
     // Remove all the callbacks
     if(!c)
@@ -320,10 +321,10 @@ Meta.events=Meta(Meta.core).extend(function()
     // Remove the whole event for the given object
     if(!d.fn.length)
     {
-      arr.set(events[a]).drop(g);
-      this.onEmptyEvent(d);
+      arr.set(me.events[a]).drop(g);
+      me.onEmptyEvent(d);
     }
-    return this;
+    return me;
   };
 
   /**
@@ -344,7 +345,7 @@ Meta.events=Meta(Meta.core).extend(function()
   this.rmObject=function(a)
   {
     var me=this;
-    Meta.each(events,function(v,i)
+    Meta.each(me.events,function(v,i)
       {
 	me.rmEvent(i,a);
       },1);
@@ -379,7 +380,7 @@ Meta.events=Meta(Meta.core).extend(function()
         b=[],
         j;
     
-    Meta.each(events,function(v,i)
+    Meta.each(me.events,function(v,i)
       {
 	j=v.length;
 	while(j--)
@@ -394,12 +395,59 @@ Meta.events=Meta(Meta.core).extend(function()
 
     j=b.length;
     while(j--)
-      delete events[b[j]];
+      delete me.events[b[j]];
 
     return me;
   };
 
+  /**
+     <method name="on" type="this">
+     <param name="a" type="string">Event type</param>
+     <param name="b" type="function">Callback for the event</param>
+     <desc>
+     Adds a new event. If the callback returns false it stops the
+     event from propagation. The callback is called the same way
+     it would be called by the browser event, "this" is the element
+     and received the event as an argument.
+     </desc>
+     </method>
+  */
+  this.on=function(a,b)
+  {
+    var me=this;
+    return me.addEvent(a,me,b);
+  };
+
+  /**
+     <method name="off" type="this">
+     <desc>Remove the given event callback</desc>
+     <param name="a" type="string">Event type</param>
+     <param name="[b]" type="function">Callback on current event</param>
+     </method>
+  */
+  this.off=function(a,b)
+  {
+    var me=this;
+    return me.rmEvent(a,me,b);
+  };
+
+  /**
+     <method name="fire" type="mixed">
+     <desc>
+     Fires the given event type.
+     Returns this.
+     </desc>
+     <param name="a" type="string">Event type</param>
+     </method>
+  */
+  this.fire=function(a,b)
+  {
+    var me=this;
+    return me.fireEvent(a,me,b);
+  };
+
+
   // For debug
-  this.ev=events;
+  //this.ev=events;
 });
 /** </class> */

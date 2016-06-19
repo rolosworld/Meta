@@ -20,7 +20,9 @@
    <desc>JSONRPCv2 handler</desc>
    <inherit>Meta.array</inherit>
  */
-Meta.jsonrpc=Meta(Meta.array).extend({
+Meta.jsonrpc=Meta(Meta(Meta.events).extend(Meta.array)).extend({
+  events:{},
+
   /**
      <method name="url" type="this">
      <desc>Set the default URL for the JSONRPCv2 server</desc>
@@ -57,6 +59,12 @@ Meta.jsonrpc=Meta(Meta.array).extend({
      <param name="a" type="hash">Hash with the JSONRPCv2 request data. Format: {method:<required:method_name>, params:<optional:hash_or_array>, id:<optional:string or number>}</param>
      </method>
   */
+  push:function(a) {
+    var me=this;
+    me.under('push',a);
+    me.fire(a.method);
+    return me;
+  },
 
   /**
      <method name="execute" type="this">

@@ -86,13 +86,13 @@ Meta.eventtarget=Meta(Meta.events).extend({
   },
 
   /**
-   <method name="rmOn" type="this">
+   <method name="off" type="this">
    <desc>Remove the given event callback</desc>
    <param name="a" type="string">Event type</param>
    <param name="[b]" type="function">Callback on current event</param>
    </method>
    */
-  rmOn:function(a,b)
+  off:function(a,b)
   {
     var me=this;
     var w=me.wrapped(a)?me.get():me;
