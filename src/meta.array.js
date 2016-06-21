@@ -70,7 +70,7 @@ Meta.array=Meta(Meta.core).extend(
   */
   get:function(i)
   {
-    var a=this.under('get');
+    var a=this.$super('get');
     return Meta.its(i,'number')?a[i]:a;
   },
 
@@ -96,7 +96,7 @@ Meta.array=Meta(Meta.core).extend(
     {
       if(!Meta.its(a,'array'))
         a=[a];
-      this.under('set',a);
+      this.$super('set',a);
     }
     return this;
   },

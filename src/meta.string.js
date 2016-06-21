@@ -55,7 +55,7 @@ Meta.string=Meta(Meta.core).extend({
    */
   set:function(a)
   {
-    return this.under('set',''+a);
+    return this.$super('set',''+a);
   },
 
   /**

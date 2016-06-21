@@ -24,7 +24,7 @@
    <test>
    <![CDATA[
    var a=Meta();
-   return 'extend' in a && 'under' in a;
+   return 'extend' in a && '$super' in a;
    ]]>
    </test>
    </function>
@@ -99,7 +99,7 @@ var Meta=window.Meta=function()
        */
       this.extend=function(o,conf)
       {
-        var a=['under','extend','info'];
+        var a=['$super','extend','info'];
         conf=conf||{};
         conf.exclude=conf.exclude?conf.exclude.concat(a):a;
         return ateM().inherit(this,o,conf);
@@ -110,9 +110,9 @@ var Meta=window.Meta=function()
       Meta.prototype=new parent();
 
     /**
-     <method name="under" type="mixed">
-     <param name="a" type="string">Name of the under method</param>
-     <desc>Use the asked under method</desc>
+     <method name="$super" type="mixed">
+     <param name="a" type="string">Name of the super method</param>
+     <desc>Use the asked super method</desc>
      <test>
      <![CDATA[
      var a=Meta({o:function(q){return q;}}),t1,t2,t3,t4;
@@ -122,13 +122,13 @@ var Meta=window.Meta=function()
      a.extend({o:function(q){return q+1;}});
      
      t3=a.o(1)==2;
-     t4=a.under('o',1)==1;
+     t4=a.$super('o',1)==1;
      return t1 && t2 && t3 && t4;
      ]]>
      </test>
      </method>
      */
-    Meta.prototype.under=function(a)
+    Meta.prototype.$super=function(a)
     {
       if(!parent)
         return undefined;
@@ -136,7 +136,7 @@ var Meta=window.Meta=function()
       var d=[],
 	  f,
           i,
-          g=this.under, // cache original this.under
+          g=this.$super, // cache original this.$super
           j=arguments.length,
           p=parent.prototype;
 
@@ -144,14 +144,14 @@ var Meta=window.Meta=function()
         d.push(arguments[i]);
 
       /*
-        Map the "parent.prototype.under" method, to "this.under",
+        Map the "parent.prototype.$super" method, to "this.$super",
         when the "parent" method is called, it's called as "this"
-        if the method called uses "this.under", it will expect the "parent.under"
+        if the method called uses "this.$super", it will expect the "parent.$super"
         thats why it has to be mapped.
        */
-      this.under=p.under; // map "this.under" to the "parent.under"
+      this.$super=p.$super; // map "this.$super" to the "parent.$super"
       f=p[a].apply(this,d);
-      this.under=g; // restore this.under
+      this.$super=g; // restore this.$super
       return f;
     };
     

@@ -93,7 +93,7 @@ Meta.dom=Meta(Meta.domevent).extend(function()
         a=a.concat(Meta.obj2array(b));
       
       // Use $ from Meta.array
-      return this.under.apply(this,a);
+      return this.$super.apply(this,a);
     },
 
     /**
@@ -111,7 +111,7 @@ Meta.dom=Meta(Meta.domevent).extend(function()
      */
     set:function(a,i)
     {
-      return this.under('set',a||this.doc(),i);
+      return this.$super('set',a||this.doc(),i);
     },
 
     /**
@@ -470,7 +470,7 @@ Meta.dom=Meta(Meta.domevent).extend(function()
      <test>
      <![CDATA[
      var a=document.createElement('div'),t='',b=Meta.dom.$(a);
-     a['data-id']='1';
+     a.dataset['id']='1';
      t=b.data('id')=='1';
      b.data('id','2');
      return t && b.data('id')=='2';
@@ -567,7 +567,7 @@ Meta.dom=Meta(Meta.domevent).extend(function()
      t=b.val()=='perro';
      b.val('gato');
      t=t&&b.val()=='gato';
-     b.create('<select><option>1</option><option selected="selected">2</option></select>');
+     b=b.create('<select><option value="1">1</option><option selected="selected" value="2">2</option></select>');
      t=t&&b.val()=='2';
      b.val('1');
      return t&&b.val()=='1';

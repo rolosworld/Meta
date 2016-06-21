@@ -56,12 +56,12 @@ Meta.jsonrpc=Meta(Meta(Meta.events).extend(Meta.array)).extend({
   /**
      <method name="push" type="this">
      <desc>Add a JSONRPCv2 request that will be sent once execute runs</desc>
-     <param name="a" type="hash">Hash with the JSONRPCv2 request data. Format: {method:<required:method_name>, params:<optional:hash_or_array>, id:<optional:string or number>}</param>
+     <param name="a" type="hash">Hash with the JSONRPCv2 request data.</param>
      </method>
   */
   push:function(a) {
     var me=this;
-    me.under('push',a);
+    me.$super('push',a);
     me.fire(a.method);
     return me;
   },
@@ -94,3 +94,4 @@ Meta.jsonrpc=Meta(Meta(Meta.events).extend(Meta.array)).extend({
   }
   
 });
+/** </class> */
