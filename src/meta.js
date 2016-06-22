@@ -133,15 +133,9 @@ var Meta=window.Meta=function()
       if(!parent)
         return undefined;
 
-      var d=[],
-	  f,
-          i,
+      var f,
           g=this.$super, // cache original this.$super
-          j=arguments.length,
           p=parent.prototype;
-
-      for(i=1;i<j;i++)
-        d.push(arguments[i]);
 
       /*
         Map the "parent.prototype.$super" method, to "this.$super",
@@ -150,7 +144,7 @@ var Meta=window.Meta=function()
         thats why it has to be mapped.
        */
       this.$super=p.$super; // map "this.$super" to the "parent.$super"
-      f=p[a].apply(this,d);
+      f=p[a].apply(this,Array.prototype.slice.call(arguments,1));
       this.$super=g; // restore this.$super
       return f;
     };
