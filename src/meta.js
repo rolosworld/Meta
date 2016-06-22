@@ -77,6 +77,7 @@ var Meta=window.Meta=function()
     function Meta(){
       // Constructor fix
       this.constructor=Meta;
+      this.$new=function(){return new Meta()};
 
       /**
        <public name="info" type="object">Stores information of the library</public>
@@ -144,7 +145,7 @@ var Meta=window.Meta=function()
         thats why it has to be mapped.
        */
       this.$super=p.$super; // map "this.$super" to the "parent.$super"
-      f=p[a].apply(this,Array.prototype.slice.call(arguments,1));
+      f=p[a].apply(this,ateM().args2array(arguments,1));
       this.$super=g; // restore this.$super
       return f;
     };

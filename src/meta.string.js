@@ -39,7 +39,7 @@ Meta.string=Meta(Meta.core).extend({
    */
   $:function(a)
   {
-    return (new this.constructor()).set(a||'');
+    return this.$new().set(a||'');
   },
 
   /**

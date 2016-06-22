@@ -40,7 +40,7 @@ Meta.array=Meta(Meta.core).extend(
    */
   $:function()
   {
-    var b=new this.constructor(),
+    var b=this.$new(),
         c;
     b.set([]);
 

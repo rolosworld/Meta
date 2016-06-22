@@ -35,9 +35,8 @@ Meta.son=function(a)
 {
   function b(){};
   b.prototype=a;
-  a=new b();
-  a.constructor=b;
-  return a;
+  b.prototype.constructor=b;
+  return new b();
 };
 
 
@@ -258,6 +257,17 @@ Meta.its=function(o,a)
  </test>
  </function>
  */
+Meta.args2array=function(a,b)
+{
+  if(!isIE)
+    return Array.prototype.slice.call(a,b);
+  else
+  {
+    var c=[];
+    Meta.each(a,function(v,i){if(i>=b)c.push(v);});
+    return c;
+  }
+};
 Meta.obj2array=function(a,c)
 {
   if(!c&&!isIE)

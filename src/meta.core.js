@@ -40,7 +40,7 @@ Meta.core=Meta().extend({
    */
   $:function(a)
   {
-    return (new this.constructor()).set(a);
+    return this.$new().set(a);
   },
 
   /**
@@ -153,8 +153,7 @@ Meta.core=Meta().extend({
    */
   callback:function(a)
   {
-    var me=this,b=[],i=1,c=arguments;
-    for(;i<c.length;i++)b.push(c[i]);
+    var me=this,b=Meta.args2array(arguments,1);
     return function(){return me[a].apply(me,b);};
   },
 

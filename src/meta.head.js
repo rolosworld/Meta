@@ -23,6 +23,6 @@
        info={
          name:"Meta",
          author:"Rolando González, rolosworld@gmail.com",
-         version:"2010.02.10" // Year.Month.Day
+         version:"2016.06.22" // Year.Month.Day
        };
 

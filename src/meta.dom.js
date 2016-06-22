@@ -90,7 +90,7 @@ Meta.dom=Meta(Meta.domevent).extend(function()
       if(!b.length)
         a.push(this.doc());
       else
-        a=a.concat(Meta.obj2array(b));
+        a=a.concat(Meta.args2array(b));
       
       // Use $ from Meta.array
       return this.$super.apply(this,a);
