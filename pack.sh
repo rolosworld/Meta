@@ -17,47 +17,47 @@ meta.dom.js
 meta.websocketevent.js
 meta.websocket.js"
 
-#echo "Add cookies?"
-#read ASK
-#if [ "y" == "${ASK}" ]; then
-#    FILES="${FILES} meta.cookie.js"
-#fi
+echo "Add cookies?"
+read ASK
+if [ "y" == "${ASK}" ]; then
+    FILES="${FILES} meta.cookie.js"
+fi
 
-#echo "Add debug libs?"
-#read ASK
-#if [ "y" == "${ASK}" ]; then
-#    FILES="${FILES} meta.popup.js meta.log.js meta.assert.js"
-#fi
+echo "Add debug libs?"
+read ASK
+if [ "y" == "${ASK}" ]; then
+    FILES="${FILES} meta.popup.js meta.log.js meta.assert.js"
+fi
 
-#echo "Add gui?"
-#read ASK
-#if [ "y" == "${ASK}" ]; then
-#    FILES="${FILES} meta.guiengine.js"
-#fi
+echo "Add gui?"
+read ASK
+if [ "y" == "${ASK}" ]; then
+    FILES="${FILES} meta.guiengine.js"
+fi
 
-#echo "Add animation?"
-#read ASK
-#if [ "y" == "${ASK}" ]; then
-#    FILES="${FILES} meta.animation.js"
-#fi
+echo "Add animation?"
+read ASK
+if [ "y" == "${ASK}" ]; then
+    FILES="${FILES} meta.animation.js"
+fi
 
-#echo "Add animation.clip?"
-#read ASK
-#if [ "y" == "${ASK}" ]; then
-#    FILES="${FILES} meta.animation.clip.js"
-#fi
+echo "Add animation.clip?"
+read ASK
+if [ "y" == "${ASK}" ]; then
+    FILES="${FILES} meta.animation.clip.js"
+fi
 
-#echo "Add animation.fade?"
-#read ASK
-#if [ "y" == "${ASK}" ]; then
-#    FILES="${FILES} meta.animation.fade.js"
-#fi
+echo "Add animation.fade?"
+read ASK
+if [ "y" == "${ASK}" ]; then
+    FILES="${FILES} meta.animation.fade.js"
+fi
 
-#echo "Add animation.slide?"
-#read ASK
-#if [ "y" == "${ASK}" ]; then
-#    FILES="${FILES} meta.animation.slide.js"
-#fi
+echo "Add animation.slide?"
+read ASK
+if [ "y" == "${ASK}" ]; then
+    FILES="${FILES} meta.animation.slide.js"
+fi
 
 FILES="${FILES} meta.foot.js"
 

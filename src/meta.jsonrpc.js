@@ -30,7 +30,7 @@ Meta.jsonrpc=Meta(Meta(Meta.events).extend(Meta.array)).extend({
      </method>
   */
   url:function(u) {
-    this.url=u;
+    this._url=u;
     return this;
   },
 
@@ -44,7 +44,7 @@ Meta.jsonrpc=Meta(Meta(Meta.events).extend(Meta.array)).extend({
   send:function(d,c) {
     var me=this;
     Meta.ajax({
-      url: me.url,
+      url: me._url,
       method:'POST',
       headers:{'Content-Type':'application/json'},
       data:JSON.stringify(d),
@@ -73,6 +73,7 @@ Meta.jsonrpc=Meta(Meta(Meta.events).extend(Meta.array)).extend({
   */
   execute:function() {
     var a=[],s,b,me=this;
+    if(!me.len())return;
     me.forEach(function(v,i){
       s={
         jsonrpc:'2.0',
