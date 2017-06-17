@@ -58,8 +58,11 @@ Meta.websocket=Meta(Meta.websocketevent).extend({
   */
   send: function(d) {
     var me = this;
-    var j=JSON.encode(d);
-    me.get().send(j);
+    var j=JSON.stringify(d);
+    var a = me.get();
+    if (a) {
+        a.send(j);
+    }
     me.fire('send',j);
     return me;
   }
