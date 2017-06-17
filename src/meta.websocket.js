@@ -42,7 +42,10 @@ Meta.websocket=Meta(Meta.websocketevent).extend({
   */
   close: function() {
     var me = this;
-    me.get().close();
+    var a = me.get();
+    if (a) {
+        a.close();
+    }
     me.fire('close');
     return me;
   },

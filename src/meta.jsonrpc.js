@@ -87,7 +87,13 @@ Meta.jsonrpc=Meta(Meta(Meta.events).extend(Meta.array)).extend({
     me._=[];
     me.send(a,function(r){
       me.$(r.json()).forEach(function(v){
-        b[v.id].callback(v);
+        var m = b[v.id];
+        if (m.callback(v)) {
+            me.fire(m.method + ':TRUE');
+        }
+        else {
+            me.fire(m.method + ':FALSE');
+        }
       });
       b=null;
     });
