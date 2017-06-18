@@ -43,6 +43,7 @@ Meta.jsonrpc=Meta(Meta(Meta.events).extend(Meta.array)).extend({
   */
   send:function(d,c) {
     var me=this;
+    me.fire('send');
     Meta.ajax({
       url: me._url,
       method:'POST',
