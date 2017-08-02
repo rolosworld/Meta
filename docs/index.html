@@ -56,12 +56,8 @@ position:absolute;
 <div id="footer"><p>copyrights reserverd by Rolando Gonzalez</p></div>
 </div>
 
-<!-- <script type="text/javascript" src="../meta.debug.js"></script> -->
-<script type="text/javascript" src="../meta.min.js"></script>
-<script type="text/javascript" src="../src/meta.popup.js"></script>
-<script type="text/javascript" src="../src/meta.log.js"></script>
-<script type="text/javascript" src="../src/meta.assert.js"></script>
-<!-- <script type="text/javascript" src="../src/meta.sandbox.js"></script> -->
+<!-- <script type="text/javascript" src="meta.debug.js"></script> -->
+<script type="text/javascript" src="meta.min.js"></script>
 <script type="text/javascript" src="docs.js"></script>
 
 <script type="text/javascript">
@@ -69,13 +65,10 @@ var sandbox;
 
 function start() {
 sandbox=Meta.sandbox();
-sandbox.include('../meta.debug.js');
-//sandbox.include('../meta.popup.js');
-//sandbox.include('../meta.log.js');
-//sandbox.include('../meta.assert.js');
+sandbox.include('meta.debug.js');
 
 
-documenter.files=['../meta.debug.js'];
+documenter.files=['meta.debug.js'];
 
 documenter.domList=Meta.dom.$().select('#list');
 documenter.domOut=Meta.dom.$().select('#box');
