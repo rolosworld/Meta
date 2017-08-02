@@ -181,7 +181,7 @@ Meta.dom=Meta(Meta.domevent).extend(function()
       else
         b=s(a,me.doc());
 
-      return b.length ? me.$(b) : null;
+      return me.$(b);
     },
 
     /**
