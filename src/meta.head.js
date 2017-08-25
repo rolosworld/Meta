@@ -1,3 +1,4 @@
+"use strict";
 /*
  Copyright (c) 2010 Rolando González Chévere <rolosworld@gmail.com>
  
@@ -15,11 +16,10 @@
  You should have received a copy of the GNU General Public License
  along with Meta.  If not, see <http://www.gnu.org/licenses/>.
 */
-(function()
+(function(global)
  {
-   var window=this,
-       undefined,
-       isIE=!!window.ActiveXObject,
+   var undefined,
+       isIE=!!global.ActiveXObject,
        info={
          name:"Meta",
          author:"Rolando González, rolosworld@gmail.com",

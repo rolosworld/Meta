@@ -29,7 +29,7 @@
    </test>
    </function>
 */
-var Meta=window.Meta=function()
+var Meta=global.Meta=function()
 {
   // Get outside Meta
   function ateM(){return Meta;};
