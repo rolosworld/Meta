@@ -14,31 +14,49 @@ function start() {
 
   var a = Meta(Meta.core).
     extend({
-      a: 'a',
+      a:'a',
       b:function(){
-        alert('a');
+        console.log('a');
       }
   });
 
-  var b = Meta(Meta.core).
+  var b = Meta(a).
     extend({
-      a: 'b',
+      a:'b',
       b:function(){
-        alert('b');
+        console.log('b');
+        this.$super('b');
       }
     });
 
   var c = Meta(b).
     extend(a).
     extend({
-      a: 'c',
+      a:'c',
       b:function(){
-        alert('c');
-        this.under('b');
+        console.log('c');
+        this.$super('b');
       }
   });
 
   c.b();
+
+  var d = Meta(function(){
+      this.a='e';
+      this.b=function(){
+        console.log('e');
+      }
+    }).
+    extend(a).
+    extend({
+      a:'d',
+      b:function(){
+        console.log('d');
+        this.$super('b');
+      }
+  });
+
+  d.b();
 };
 
 start();
