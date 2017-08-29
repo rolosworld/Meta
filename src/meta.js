@@ -74,6 +74,19 @@ var Meta=global.Meta=function()
     function Meta(){
       // Constructor fix
       this.constructor=Meta;
+
+      /**
+       <method name="$new" type="this">
+       <desc>Create a new object of the same type</desc>
+       <test>
+       <![CDATA[
+       var a=Meta({a:1}),b;
+       b=a.$new();
+       return b.a==a.a;
+       ]]>
+       </test>
+       </method>
+       */
       this.$new=function(){return new Meta()};
 
       /**
