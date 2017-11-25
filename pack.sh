@@ -5,6 +5,7 @@ meta.js
 meta.functions.js
 meta.ajax.js
 meta.core.js
+meta.queue.js
 meta.string.js
 meta.array.js
 meta.events.js
