@@ -319,7 +319,7 @@ Meta.inherit=function(a,b,c)
 /**
  <function name="Meta.each" type="bool">
  <param name="a" type="array">Array to loop</param>
- <param name="f" type="function">Callback function, its called with this as the value and can accept index and value attributes, function(index,value)</param>
+ <param name="f" type="function">Callback function, its called with this as the value and can accept index and value attributes, function(value,index)</param>
  <param name="[m]" type="bool">Method flag, default is numerical</param>
  <desc>
    Execute given function on each array value, if the call returns false it breaks the loop.
@@ -2565,10 +2565,11 @@ Meta.jsonrpc=Meta(Meta(Meta.events).extend(Meta.array)).extend({
 
   /**
      <method name="execute" type="this">
+     <param name="[c]" type="function">Callback</param>
      <desc>Merge all the JSONRPCv2 queries in the array and send them. Set the id to be the array index. Clears the requests array after sending the requests.</desc>
      </method>
   */
-  execute:function() {
+  execute:function(c) {
     var a=[],s,b,me=this;
     if(!me.len())return;
     me.forEach(function(v,i){
@@ -2593,6 +2594,7 @@ Meta.jsonrpc=Meta(Meta(Meta.events).extend(Meta.array)).extend({
         }
       });
       b=null;
+      if(c)c();
     });
     return me;
   }
