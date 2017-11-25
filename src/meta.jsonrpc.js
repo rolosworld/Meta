@@ -69,10 +69,11 @@ Meta.jsonrpc=Meta(Meta(Meta.events).extend(Meta.array)).extend({
 
   /**
      <method name="execute" type="this">
+     <param name="[c]" type="function">Callback</param>
      <desc>Merge all the JSONRPCv2 queries in the array and send them. Set the id to be the array index. Clears the requests array after sending the requests.</desc>
      </method>
   */
-  execute:function() {
+  execute:function(c) {
     var a=[],s,b,me=this;
     if(!me.len())return;
     me.forEach(function(v,i){
@@ -97,6 +98,7 @@ Meta.jsonrpc=Meta(Meta(Meta.events).extend(Meta.array)).extend({
         }
       });
       b=null;
+      if(c)c();
     });
     return me;
   }
