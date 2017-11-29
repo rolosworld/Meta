@@ -23,6 +23,7 @@
 Meta.queue=Meta(Meta.core).extend(
 {
     cnt:null,
+    started:0,
 
   /**
    <method name="increase" type="void">
@@ -39,17 +40,18 @@ Meta.queue=Meta(Meta.core).extend(
    </method>
    */
     decrease: function(){
-        if (!--this.cnt) {
+        if (!--this.cnt && this.started) {
             this._();
         }
     },
 
   /**
-   <method name="tryRun" type="void">
+   <method name="start" type="void">
    <desc>Try running the callback</desc>
    </method>
    */
-    tryRun: function(){
+    start: function(){
+        this.started = 1;
         if (!this.cnt) {
             this._();
         }
