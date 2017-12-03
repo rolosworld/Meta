@@ -37,8 +37,8 @@ if [ "y" == "${ASK}" ]; then
 fi
 
 echo "Add animation?"
-read ASK
-if [ "y" == "${ASK}" ]; then
+read ANIMATION
+if [ "y" == "${ANIMATION}" ]; then
     FILES="${FILES} meta.animation.js"
 fi
 
@@ -60,8 +60,6 @@ if [ "y" == "${ASK}" ]; then
     FILES="${FILES} meta.animation.slide.js"
 fi
 
-FILES="${FILES} meta.foot.js"
-
 #####################
 
 echo "Merging files: ${FILES}"
@@ -71,6 +69,12 @@ do
     echo "Merging ${i}"
     cat src/${i} >> meta.debug.js
 done
+
+if [ "y" == "${ANIMATION}" ]; then
+    echo "Meta.dom.extend(Meta.animation);" >> meta.debug.js
+fi
+
+echo "}(window));" >> meta.debug.js
 
 echo "Compiling"
 java -jar compiler/compiler.jar --js=meta.debug.js --js_output_file=meta.min.js

@@ -317,7 +317,7 @@ Meta.string=Meta(Meta.core).extend({
    <desc>Returns true if there's an int on the string, else returns false.</desc>
    <test>
    <![CDATA[
-     return Meta.string.$("1a2b3").hasInt()=="123";
+     return Meta.string.$("1a2b3").hasInt()===true;
    ]]>
    </test>
    </method>

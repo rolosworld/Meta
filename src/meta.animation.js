@@ -246,4 +246,3 @@ Meta.animation=function()
   });
 }();
 /** </class> */
-Meta.dom.extend(Meta.animation);
