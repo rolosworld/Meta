@@ -1364,7 +1364,7 @@ Meta.string=Meta(Meta.core).extend({
   */
   isInt:function()
   {
-    return this.get().match(/^\d$/g) !== null;
+    return this.get().match(/^\d+$/g) !== null;
   },
 
   /**
