@@ -102,6 +102,16 @@ Meta.domevent=Meta(Meta.eventtarget).extend(Meta.array).extend({
   cleanEvents:function()
   {
     return this.flush(function(a,b){return b['parentNode']===null;});
+  },
+
+  /**
+   <method name="getTarget" type="element">
+   <desc>Remove events from elements without parentNode</desc>
+   </method>
+  */
+  getTarget:function(event)
+  {
+      return event.explicitOriginalTarget || event.relatedTarget || document.activeElement || {};
   }
 });
 /** </class> */
