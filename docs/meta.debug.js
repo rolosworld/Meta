@@ -2882,6 +2882,16 @@ Meta.domevent=Meta(Meta.eventtarget).extend(Meta.array).extend({
   cleanEvents:function()
   {
     return this.flush(function(a,b){return b['parentNode']===null;});
+  },
+
+  /**
+   <method name="getTarget" type="element">
+   <desc>Remove events from elements without parentNode</desc>
+   </method>
+  */
+  getTarget:function(event)
+  {
+      return event.explicitOriginalTarget || event.relatedTarget || document.activeElement || {};
   }
 });
 /** </class> */
@@ -3610,6 +3620,51 @@ Meta.dom=Meta(Meta.domevent).extend(function()
       for(i=0;i<j;i++)
         a.push(me._values(x[i]));
       return a;
+    },
+
+    /**
+     <method name="intVal" type="mixed">
+     <desc>
+       Get Element INT Value.
+       If the element is a SELECT, return the selected OPTION value.
+       If the SELECT has multiple attribute set, return an array with all the selected OPTION's values.
+       If the OPTION has no value set, returns the value in the OPTION.
+       Returns int or null
+     </desc>
+     <test>
+     <![CDATA[
+     var a=document.createElement('input'),t='',b=Meta.dom.$(a);
+     a.type="text";
+     a.value='12';
+     t=b.intVal()===12;
+     b.val('22');
+     t=t&&b.intVal()===22;
+     b=b.create('<select><option value="1">1</option><option selected="selected" value="2">2</option></select>');
+     t=t&&b.intVal()===2;
+     b.val('1');
+     return t&&b.intVal()===1;
+     ]]>
+     </test>
+     </method>
+     */
+    intVal:function()
+    {
+        var v,i=0,me=this;
+
+        v=me.val();
+
+        if(!v && v !== 0)
+            return null;
+
+        if(Meta.its(v,'array'))
+        {
+            for(;i<v.length;i++)
+                v[i]=parseInt(v[i],10);
+
+            return v;
+        }
+
+        return parseInt(v,10);
     },
 
     /**
