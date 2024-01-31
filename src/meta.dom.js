@@ -554,6 +554,7 @@ Meta.dom=Meta(Meta.domevent).extend(function()
         if (n.multiple) {
             n=n.options;
             var a = [];
+            var i;
             for(i in n)
               if(n[i].selected)a.push(n[i].value);
             return a;
