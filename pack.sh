@@ -9,14 +9,29 @@ meta.queue.js
 meta.string.js
 meta.array.js
 meta.events.js
-meta.jsonrpc.js
 meta.eventtarget.js
 meta.domevent.js
 meta.select.js
-meta.sandbox.js
-meta.dom.js
-meta.websocketevent.js
-meta.websocket.js"
+meta.dom.js"
+
+echo "Add websockets?"
+read ASK
+if [ "y" == "${ASK}" ]; then
+    FILES="${FILES} meta.websocketevent.js"
+    FILES="${FILES} meta.websocket.js"
+fi
+
+echo "Add jsonrpc?"
+read ASK
+if [ "y" == "${ASK}" ]; then
+    FILES="${FILES} meta.jsonrpc.js"
+fi
+
+echo "Add sandbox?"
+read ASK
+if [ "y" == "${ASK}" ]; then
+    FILES="${FILES} meta.sandbox.js"
+fi
 
 echo "Add cookies?"
 read ASK
